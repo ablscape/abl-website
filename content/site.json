@@ -45,49 +45,49 @@
   },
   "process": {
     "intro": [
-      "ABL is a practice of three. A client's first conversation is with the people who will study the site, prepare the drawings and remain with the work, alongside the contractor, until it is built; no part of a project passes to staff the client has not met.",
-      "Decades of practice in Lexington and Rockbridge County have given the firm a working knowledge of the place: its contractors, the plants that establish well in its soils, and the boards and offices through which a project must pass. Arthur Bartenstein serves on the City of Lexington's Tree Committee and its Architectural Review Board. Kelly Morikawa, a certified arborist, owned and operated a landscape design, installation and maintenance company in the area for eighteen years and knows how a drawing becomes built work.",
-      "The firm approaches a site as a preservationist would, by learning first how the ground came to its present form and what was intended for it. New work is then designed to be, in Arthur Bartenstein's phrase, \"registered in terms of place, but also registered in terms of time\": fitted to what surrounds it and candid about its own date. Each design is tested before it is built, in photo simulations, scale models and material samples and in full-scale mock-ups on the site, and it is developed throughout with the client, with the architects and engineers on the project, and with the people who will use and maintain the grounds.",
+      "ABL is a practice of three. The people a client meets first are the people who study the site, make the drawings and stay with the work, alongside the contractor, until it is built.",
+      "Its members have worked in Lexington and Rockbridge County for decades, with many of the same contractors, and they know which plants do well here. Arthur Bartenstein serves on the City of Lexington's Tree Committee and its Architectural Review Board and is president of the Rockbridge Historical Society. Kelly Morikawa, a certified arborist, owned and operated a landscape design, installation and maintenance company in the area for eighteen years.",
+      "The firm approaches a site as a preservationist does. It learns the story behind a place before it draws, so that the work is, in Arthur Bartenstein's words, \"registered in terms of place, but also registered in terms of time.\" The design is then developed with the client, with the architects and engineers on the project, and with the people who will use and maintain the grounds.",
       "The work ranges from private gardens to the Virginia Horse Center and the campuses of Washington and Lee University and the Virginia Military Institute. Before founding ABL, Arthur Bartenstein practiced with Peter Walker and Partners and the SWA Group in California and with Hill Studio in Roanoke and Frazier Associates in Staunton, on projects in Florida, California, Northern Virginia, Japan and China."
     ],
-    "introNote": "Rewritten November 11, 2026 from Arthur's list of what is distinctive about the firm and from the firm's own text on the People page. The quotation is Arthur's, from the meeting that day. The firm to confirm every fact and the wording.",
+    "introNote": "Rewritten November 12, 2026 in plainer terms, from Arthur's list of what is distinctive about the firm, the firm's own text on the People page and the Rockbridge Historical Society's list of its officers. The quotation is Arthur's, from the November 11 meeting. The firm to confirm every fact and the wording.",
     "dialogue": {
       "text": [
-        "Arthur Bartenstein draws every project as a triangle whose corners are the client, the site and the design team, with arrows running between them. The client states what is wanted; the site, once those wishes are tested against it, determines part of the answer; and a scheme that fails on the ground returns to the client for another conversation. The arrows are that dialogue, and the design is its result."
+        "Arthur Bartenstein explains the firm's work with this diagram. The client, the site and the design team stand at its three corners. The client says what is wanted; the site tests the idea and dictates part of the answer; and the arrows between the three are the dialogue in which the design is worked out."
       ],
       "reviewNote": "Rewritten from Arthur's explanation of his diagram at the November 11 meeting. The firm to confirm the wording."
     },
-    "stepsIntro": "No two projects proceed alike, but each begins with the same three steps, and at every stage the client is told where the work stands.",
+    "stepsIntro": "A project begins with the three steps below. The firm then stays with it through design, construction and the establishment of the planting.",
     "steps": [
       {
         "title": "First meeting",
-        "text": "The work begins on the property, in conversation with the client about what is wanted of the place, how it is used, what has failed, and what budget is available."
+        "text": "The firm meets the client, hears what is wanted of the place and walks the site."
       },
       {
         "title": "Research",
-        "text": "Before anything is drawn, the firm studies the land itself and the history of the property and of the area around it."
+        "text": "The firm studies the land, the property and the area around it, and their history. For Courthouse Square in Lexington that meant the act of 1777 that created the county and called for a town at the seat of its court, and Court Day, the monthly session on which the county came to town to trade and talk."
       },
       {
         "title": "Brainstorming and mock-ups",
-        "text": "Ideas are worked out with the client in sketches and models, and the chosen scheme is mocked up at full scale on the site before construction begins, so that the client sees the result in place while it can still be changed."
+        "text": "Ideas are worked out with the client in sketches, photo simulations and scale models. The chosen design is mocked up at full scale on the site, with samples of its materials, before it is built; Arthur Bartenstein calls the mock-up \"the secret to getting good work.\""
       }
     ],
-    "stepsNote": "The firm named these three steps at the November 11 meeting and will set down those that follow. The descriptions are Claude's, rewritten the same day; the firm to confirm them.",
+    "stepsNote": "The firm named these three steps at the November 11 meeting and will set down those that follow. The descriptions are Claude's, rewritten November 12 from the meeting and the firm's own text; the Courthouse Square example comes from that project's page. The firm to confirm them.",
     "services": {
-      "intro": "Every project, whatever its size, receives the same research and the same attention through construction. For a house, a garden or a farm, the firm is most often engaged in one of four ways.",
+      "intro": "The firm researches every property it works on and mocks up what it designs, on a small job as on a large one. For a house, a garden or a farm it is engaged in one of four ways.",
       "reviewNote": "Service descriptions drafted by Claude from the November 11 meeting and rewritten the same day. The firm to confirm the scope of each and the wording.",
       "items": [
         {
           "name": "Consultation",
-          "text": "A visit to the property and a conversation about what it could become, concluding in recommendations the owner can act upon."
+          "text": "A visit to the property and the firm's recommendations for it."
         },
         {
           "name": "Planting plan",
-          "text": "A plan of what to plant and where, prepared for the property's soil, light and upkeep by people who know which plants establish well in this region."
+          "text": "A plan of what to plant and where, drawn by Kelly Morikawa and Bugs Utsey, who know which plants do well in this region."
         },
         {
           "name": "Master plan",
-          "text": "A complete design for the property: research, the plan itself, drawings from which a contractor can build, and the firm's involvement until the work is finished."
+          "text": "A design for the whole property: the research, the plan, drawings from which a contractor can build, and the firm's visits to the site until the work is finished."
         },
         {
           "name": "Single elements",
