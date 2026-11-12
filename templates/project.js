@@ -3,7 +3,7 @@
 const { esc, paragraphs, picture, toCome, reviewNote } = require('../lib/html');
 const { STORY_PARTS } = require('../lib/content');
 
-// One project page: lead photograph, the story, the facts in a title block, more photographs.
+// One project page: lead photograph, the story, the facts in a title block, the firm's drawings, more photographs.
 module.exports = function projectPage(ctx, project, next) {
   const { u } = ctx;
 
@@ -42,6 +42,15 @@ module.exports = function projectPage(ctx, project, next) {
     </figure>`).join('\n    ')}
   </div>` : '';
 
+  // Drawings: the firm's plans and sketches, shown on a sheet of yellow trace.
+  const drawings = project.drawings.length ? `<section class="project-drawings" aria-label="Drawings">
+    <h2>Drawings</h2>
+    ${project.drawings.map((d) => `<figure>
+      ${picture(ctx, project, d, { sizes: '(min-width: 1100px) 1100px, 100vw' })}
+      ${d.caption ? `<figcaption>${esc(d.caption)}</figcaption>` : ''}
+    </figure>`).join('\n    ')}
+  </section>` : '';
+
   const nextLink = next && next !== project ? `<nav class="project-next" aria-label="More work">
     <a href="${u(next.url)}"><span class="next-label">Next project</span> <span class="next-title">${esc(next.title)}</span></a>
     <a class="all-work" href="${u('/work/')}">All work</a>
@@ -69,6 +78,7 @@ module.exports = function projectPage(ctx, project, next) {
     </div>
     ${titleBlock}
   </div>
+  ${drawings}
   ${gallery}
   ${nextLink}
 </article>`,

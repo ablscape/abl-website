@@ -26,23 +26,22 @@ function person(ctx, p) {
   </article>`;
 }
 
-// Studio: the firm's own account of itself, and its people. How it works is on the Process page.
+// People: the firm's own account of itself, and the people in it. How it works is on the Process page.
 module.exports = function studio(ctx) {
   const { site, people } = ctx;
   const s = site.studio;
 
   return {
-    title: 'Studio',
+    title: 'People',
     description: `The people of ${site.name} and how the studio works with clients.`,
     body: `<div class="page-head">
-  <h1>Studio</h1>
+  <h1>People</h1>
 </div>
 <section class="studio-intro">
   ${paragraphs(s.intro)}
   ${s.note ? `<p class="studio-note">${esc(s.note)}</p>` : ''}
 </section>
 <section class="people">
-  <h2>People</h2>
   ${people.map((p) => person(ctx, p)).join('\n  ')}
 </section>`,
   };

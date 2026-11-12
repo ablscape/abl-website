@@ -25,7 +25,7 @@
     };
     var start = function () {
       if (timer || paused || slides.length < 2) return;
-      timer = window.setInterval(function () { show(index + 1); }, 7000);
+      timer = window.setInterval(function () { show(index + 1); }, 11000);
     };
     var stop = function () {
       window.clearInterval(timer);

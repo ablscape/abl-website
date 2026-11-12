@@ -4,7 +4,7 @@ const { esc } = require('../lib/html');
 
 const NAV = [
   ['Work', '/work/'],
-  ['Studio', '/studio/'],
+  ['People', '/people/'],
   ['Process', '/process/'],
   ['Contact', '/contact/'],
 ];

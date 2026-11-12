@@ -129,7 +129,7 @@ function write(pagePath, section, render) {
 write('/', '/', home);
 write('/work/', '/work/', work);
 visible.forEach((p, i) => write(p.url, '/work/', (ctx) => projectPage(ctx, p, visible[(i + 1) % visible.length])));
-write('/studio/', '/studio/', studio);
+write('/people/', '/people/', studio);
 write('/process/', '/process/', processPage);
 write('/contact/', '/contact/', contact);
 write('/contact/sent/', '/contact/', sent);
