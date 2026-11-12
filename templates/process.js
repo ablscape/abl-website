@@ -23,7 +23,7 @@ const DIALOGUE_SVG = `<svg class="dialogue-drawing" viewBox="0 0 400 350" role="
       <text class="dg-center" x="200" y="212" text-anchor="middle">Dialogue</text>
     </svg>`;
 
-// Process: what is distinctive about the firm, the Dialogue diagram, the steps of a commission,
+// Process: what is distinctive about the firm, the Dialogue diagram, the steps of a project,
 // and the ways to engage the firm.
 module.exports = function process(ctx) {
   const { site } = ctx;

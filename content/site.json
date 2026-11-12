@@ -45,7 +45,7 @@
   },
   "process": {
     "intro": [
-      "ABL is a practice of three. A client's first conversation is with the people who will study the site, prepare the drawings and remain with the work, alongside the contractor, until it is built; no part of a commission passes to staff the client has not met.",
+      "ABL is a practice of three. A client's first conversation is with the people who will study the site, prepare the drawings and remain with the work, alongside the contractor, until it is built; no part of a project passes to staff the client has not met.",
       "Decades of practice in Lexington and Rockbridge County have given the firm a working knowledge of the place: its contractors, the plants that establish well in its soils, and the boards and offices through which a project must pass. Arthur Bartenstein serves on the City of Lexington's Tree Committee and its Architectural Review Board. Kelly Morikawa, a certified arborist, owned and operated a landscape design, installation and maintenance company in the area for eighteen years and knows how a drawing becomes built work.",
       "The firm approaches a site as a preservationist would, by learning first how the ground came to its present form and what was intended for it. New work is then designed to be, in Arthur Bartenstein's phrase, \"registered in terms of place, but also registered in terms of time\": fitted to what surrounds it and candid about its own date. Each design is tested before it is built, in photo simulations, scale models and material samples and in full-scale mock-ups on the site, and it is developed throughout with the client, with the architects and engineers on the project, and with the people who will use and maintain the grounds.",
       "The work ranges from private gardens to the Virginia Horse Center and the campuses of Washington and Lee University and the Virginia Military Institute. Before founding ABL, Arthur Bartenstein practiced with Peter Walker and Partners and the SWA Group in California and with Hill Studio in Roanoke and Frazier Associates in Staunton, on projects in Florida, California, Northern Virginia, Japan and China."
@@ -53,11 +53,11 @@
     "introNote": "Rewritten November 11, 2026 from Arthur's list of what is distinctive about the firm and from the firm's own text on the People page. The quotation is Arthur's, from the meeting that day. The firm to confirm every fact and the wording.",
     "dialogue": {
       "text": [
-        "Arthur Bartenstein draws every commission as a triangle whose corners are the client, the site and the design team, with arrows running between them. The client states what is wanted; the site, once those wishes are tested against it, determines part of the answer; and a scheme that fails on the ground returns to the client for another conversation. The arrows are that dialogue, and the design is its result."
+        "Arthur Bartenstein draws every project as a triangle whose corners are the client, the site and the design team, with arrows running between them. The client states what is wanted; the site, once those wishes are tested against it, determines part of the answer; and a scheme that fails on the ground returns to the client for another conversation. The arrows are that dialogue, and the design is its result."
       ],
       "reviewNote": "Rewritten from Arthur's explanation of his diagram at the November 11 meeting. The firm to confirm the wording."
     },
-    "stepsIntro": "No two commissions proceed alike, but each begins with the same three steps, and at every stage the client is told where the work stands.",
+    "stepsIntro": "No two projects proceed alike, but each begins with the same three steps, and at every stage the client is told where the work stands.",
     "steps": [
       {
         "title": "First meeting",
@@ -74,7 +74,7 @@
     ],
     "stepsNote": "The firm named these three steps at the November 11 meeting and will set down those that follow. The descriptions are Claude's, rewritten the same day; the firm to confirm them.",
     "services": {
-      "intro": "Every commission, whatever its size, receives the same research and the same attention through construction. For a house, a garden or a farm, the firm is most often engaged in one of four ways.",
+      "intro": "Every project, whatever its size, receives the same research and the same attention through construction. For a house, a garden or a farm, the firm is most often engaged in one of four ways.",
       "reviewNote": "Service descriptions drafted by Claude from the November 11 meeting and rewritten the same day. The firm to confirm the scope of each and the wording.",
       "items": [
         {
@@ -125,7 +125,7 @@
     }
   ],
   "work": {
-    "intro": "Campus, civic and preservation commissions in Lexington, Rockbridge County and elsewhere in Virginia: built work, shown with the plans and studies that precede it.",
+    "intro": "Campus, civic and preservation projects in Lexington, Rockbridge County and elsewhere in Virginia: built work, shown with the plans and studies that precede it.",
     "introNote": "Drafted by Claude on November 11, 2026. The firm to confirm the wording."
   }
 }

@@ -120,6 +120,7 @@ The site should read as the firm writes: composed, exact and unhurried. The mode
 - No slogans, superlatives, exclamation points or rhetorical questions, and no contrast formulas of the "not this, but that" kind.
 - Use the precise word, including the technical one when it is the right one. Explain a term only where a general reader would be lost.
 - Sentence case for headings. Refer to the firm as "ABL" or "the firm".
+- Say "project", not "commission".
 - When the person gives you their own wording, keep their wording. Fix only spelling and obvious slips, and say what you fixed.
 - When you draft text yourself from notes, set a `reviewNote` saying so, and keep `status` at `draft` until the person approves it.
 

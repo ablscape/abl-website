@@ -49,7 +49,7 @@ The build stops with a plain-language list if content is malformed, a photograph
 
 ## Design settings
 
-Colors and typefaces are variables in the first block of `static/assets/css/site.css`. The palette is white paper, near-black type, the green of the logo, and one warm accent (terracotta) for short rules, numerals and links on hover. Yellow tracing paper appears only in preview notes. The typeface is Barlow throughout, in four weights, self-hosted under the SIL Open Font License; the firm may name the typeface from its drawings to replace it.
+Colors, typefaces and the eight text sizes are variables in the first block of `static/assets/css/site.css`. Every rule takes its size from one of the eight names, and a heading is never smaller than the text it stands over. The palette is white paper, near-black type, the green of the logo, and one warm accent (terracotta) for short rules, numerals and links on hover. Yellow tracing paper appears only in preview notes. The typeface is Barlow throughout, in four weights, self-hosted under the SIL Open Font License; the firm may name the typeface from its drawings to replace it.
 
 The firm's own plans carry much of the design: one sits behind the home-page statement (`backdrop` in `content/site.json`), three stand in a row lower on that page (`drawings`), and a project may lead with a drawing (`cover`).
 
