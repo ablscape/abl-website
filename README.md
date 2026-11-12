@@ -49,7 +49,11 @@ The build stops with a plain-language list if content is malformed, a photograph
 
 ## Design settings
 
-Colors and typefaces are variables in the first block of `static/assets/css/site.css`. The palette is white paper, soft gray type, and the green of the logo for links. Yellow tracing paper appears only in preview notes. The typeface is Barlow throughout, self-hosted under the SIL Open Font License; the firm may name the typeface from its drawings to replace it.
+Colors and typefaces are variables in the first block of `static/assets/css/site.css`. The palette is white paper, near-black type, the green of the logo, and one warm accent (terracotta) for short rules, numerals and links on hover. Yellow tracing paper appears only in preview notes. The typeface is Barlow throughout, in four weights, self-hosted under the SIL Open Font License; the firm may name the typeface from its drawings to replace it.
+
+The firm's own plans carry much of the design: one sits behind the home-page statement (`backdrop` in `content/site.json`), three stand in a row lower on that page (`drawings`), and a project may lead with a drawing (`cover`).
+
+Once the header has scrolled away, the "abl" of the logo stays at the top right of the window, green over the page and white over photographs, and the links return when the visitor scrolls up. The mark is a vector redrawn from the 230-pixel logo (`MARK_PATH` in `lib/html.js`); replace the path when the firm supplies its own artwork.
 
 ## Before launch
 

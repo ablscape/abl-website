@@ -1,0 +1,54 @@
+{
+  "title": "Visitor Arrival to James Madison's Montpelier",
+  "location": "Orange County, Virginia",
+  "client": "",
+  "year": "",
+  "type": "Preservation",
+  "role": "Conceptual and schematic design",
+  "collaborators": [],
+  "status": "draft",
+  "featured": false,
+  "order": 8,
+  "summary": "A revised entrance to James Madison's Montpelier, closer in character to the eighteenth-century approach and suited to buses and heavy visitation.",
+  "reviewNote": "Existing text from the current site. That page gives the location as Madison, VA; Montpelier is in Orange County, and the firm should confirm the line. The client, the year and the four-part story are still to come.",
+  "description": [
+    "Conceptual and schematic design for revised entrance to historic Montpelier estate. New entrance is both more in character with 18th century arrival to estate and better suited for contemporary bus and high visitation traffic. Project directed by Arthur Bartenstein while Senior Landscape Architect with Hill Studio."
+  ],
+  "cover": "01",
+  "photos": [
+    {
+      "file": "01",
+      "alt": "Entrance road curving uphill toward a rust-colored truss bridge, with trees in spring leaf",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "02",
+      "alt": "Brick sign pavilion with a painted view of the mansion, beside a tree in pink flower at the entrance drive",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "03",
+      "alt": "White entrance gate between brick piers, with woods in spring behind",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "04",
+      "alt": "Yellow wood-frame depot building with a metal roof and deep eaves",
+      "caption": "",
+      "credit": ""
+    }
+  ],
+  "drawings": [
+    {
+      "file": "05",
+      "alt": "Plan in line and green wash of the entrance road leaving the highway, crossing the railway and curving through trees",
+      "caption": "Plan of the entrance"
+    }
+  ],
+  "legacyUrls": [
+    "montpelier.html"
+  ]
+}

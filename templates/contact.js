@@ -21,7 +21,7 @@ module.exports = function contact(ctx) {
       <p><a href="${telHref(site.phone)}">${esc(site.phone)}</a></p>
       ${site.emails.map((e) => `<p>${esc(e.label)}<br><a href="mailto:${esc(e.address)}">${esc(e.address)}</a></p>`).join('\n      ')}
     </address>
-    <p class="contact-pointer">Not sure what to ask for? <a href="${u('/process/')}">See how a project goes.</a></p>
+    <p class="contact-pointer">Before writing, it may help to read <a class="text-link" href="${u('/process/')}">how a project proceeds</a>.</p>
   </div>
   <form class="inquiry" name="inquiry" method="POST" action="${u('/contact/sent/')}" data-netlify="true" netlify-honeypot="website">
     <h2>Tell us about your project</h2>

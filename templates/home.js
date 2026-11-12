@@ -1,9 +1,10 @@
 'use strict';
 
 const { esc, picture } = require('../lib/html');
-const { projectCard } = require('./parts');
+const { projectCard, sectionLabel } = require('./parts');
 
-// Home: a few photographs, the firm's statement, and the featured projects.
+// Home: photographs the width of the screen; the firm's statement set over one of its own plans;
+// the featured projects; a row of the firm's drawings; and a short account of the firm.
 module.exports = function home(ctx) {
   const { site, projects, u } = ctx;
 
@@ -22,7 +23,7 @@ module.exports = function home(ctx) {
       ${picture(ctx, s.project, s.photo, { sizes: '100vw', lazy: i > 0 })}
     </div>`).join('\n    ');
     hero = `<section class="hero" data-hero aria-label="Photographs of selected projects">
-  <div class="hero-frame">
+  <div class="hero-frame" data-photo>
     ${frames}
   </div>
   <div class="hero-bar">
@@ -32,26 +33,58 @@ module.exports = function home(ctx) {
 </section>`;
   }
 
-  const featured = projects.filter((p) => p.featured);
-  const shown = featured.length ? featured : projects.slice(0, 3);
-  const selected = shown.length ? `<section class="selected">
-  <h2>Selected work</h2>
-  <ul class="collage">
-    ${shown.map((p) => `<li>${projectCard(ctx, p, '(min-width: 900px) 60vw, 100vw')}</li>`).join('\n    ')}
-  </ul>
-  <p class="more"><a href="${u('/work/')}">All work</a></p>
-</section>` : '';
-
-  // A plan of the firm's, faint, behind the statement: "backdrop" in site.json names a project and one of its drawings.
-  let backdrop = '';
+  // A plan of the firm's behind the statement: "backdrop" in site.json names a project and one of its drawings.
+  let plan = '';
+  let planCredit = '';
   if (site.backdrop && site.backdrop.project) {
     const project = projects.find((p) => p.slug === site.backdrop.project);
     const drawing = project && project.drawings.find((d) => d.file === site.backdrop.file);
     if (drawing) {
-      const biggest = drawing.variants[drawing.variants.length - 1].name;
-      backdrop = ` has-backdrop" style="--backdrop: url('${u(`/work/${project.slug}/photos/${biggest}`)}')`;
+      const base = `/work/${project.slug}/photos/`;
+      const srcset = drawing.variants.map((v) => `${u(base + v.name)} ${v.width}w`).join(', ');
+      const biggest = drawing.variants[drawing.variants.length - 1];
+      plan = `<div class="statement-plan" aria-hidden="true"><img src="${u(base + biggest.name)}" srcset="${srcset}" sizes="100vw" width="${drawing.width}" height="${drawing.height}" alt="" loading="lazy" decoding="async"></div>`;
+      planCredit = `<p class="statement-credit"><a href="${u(project.url)}">${esc(drawing.caption || 'Plan')}, ${esc(project.title)}</a></p>`;
     }
   }
+
+  const featured = projects.filter((p) => p.featured);
+  const shown = featured.length ? featured : projects.slice(0, 3);
+  const selected = shown.length ? `<section class="selected">
+  ${sectionLabel('Selected work')}
+  <ul class="collage">
+    ${shown.map((p) => `<li>${projectCard(ctx, p, '(min-width: 900px) 60vw, 100vw')}</li>`).join('\n    ')}
+  </ul>
+  <p class="more"><a class="text-link" href="${u('/work/')}">All work</a></p>
+</section>` : '';
+
+  // The firm's own plans and sketches, each linked to its project.
+  const sheets = site.drawings
+    .map((entry) => {
+      const project = projects.find((p) => p.slug === entry.project);
+      const drawing = project && project.drawings.find((d) => d.file === entry.file);
+      return project && drawing ? { project, drawing } : null;
+    })
+    .filter(Boolean);
+  const drawings = sheets.length ? `<section class="drawings">
+  ${sectionLabel('Plans and drawings')}
+  <ul class="drawing-row">
+    ${sheets.map(({ project, drawing }) => `<li><a class="card" href="${u(project.url)}">
+      <span class="drawing-image">${picture(ctx, project, drawing, { sizes: '(min-width: 900px) 30vw, 100vw' })}</span>
+      <span class="card-title">${esc(project.title)}</span>
+      <span class="card-meta">${esc(drawing.caption || 'Plan')}</span>
+    </a></li>`).join('\n    ')}
+  </ul>
+</section>` : '';
+
+  const intro = Array.isArray(site.studio.intro) && site.studio.intro.length ? site.studio.intro[0] : '';
+  const firm = intro ? `<section class="firm">
+  ${sectionLabel('The firm')}
+  <div class="firm-text">
+    <p>${esc(intro)}</p>
+    <p class="firm-links"><a class="text-link" href="${u('/people/')}">People</a><a class="text-link" href="${u('/process/')}">Process</a></p>
+  </div>
+</section>` : '';
 
   return {
     title: '',
@@ -59,9 +92,15 @@ module.exports = function home(ctx) {
     image: slides.length ? `/work/${slides[0].project.slug}/photos/${slides[0].photo.variants[slides[0].photo.variants.length - 1].name}` : '',
     body: `<h1 class="visually-hidden">${esc(site.name)}</h1>
 ${hero}
-<section class="statement${backdrop}">
-  <p>${esc(site.statement)}</p>
+<section class="statement${plan ? ' has-plan' : ''}">
+  ${plan}
+  <div class="statement-inner">
+    <p class="statement-text">${esc(site.statement)}</p>
+  </div>
+  ${planCredit}
 </section>
-${selected}`,
+${selected}
+${drawings}
+${firm}`,
   };
 };

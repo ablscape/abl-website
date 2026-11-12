@@ -27,7 +27,7 @@ The website of ABL Landscape Architecture, a landscape architecture firm in Lexi
 |---|---|
 | `content/projects/<slug>/project.json` | One project: its facts, its text, its photo list |
 | `content/projects/<slug>/photos/` | That project's photographs, already resized |
-| `content/site.json` | Firm name, address, phone, emails, home-page statement and photographs, the People page introduction, the Process page (what is distinctive about the firm, the Dialogue text, the steps of a project, the services), contact form choices |
+| `content/site.json` | Firm name, address, phone, emails; the home page (statement, photographs, the plan behind the statement, the row of drawings); the Work page introduction; the People page introduction; the Process page (what is distinctive about the firm, the Dialogue text, the steps of a project, the services); contact form choices |
 | `content/people.json` | The people on the People page |
 | `static/assets/img/people/` | Portraits named in `people.json` |
 | `static/assets/css/site.css` | All styling. Colors and typefaces are set in the first block |
@@ -88,7 +88,8 @@ python3 tools/prepare_photos.py content/projects/<slug> a.jpg b.jpg   # prepare 
    - `order` sorts projects, lowest first.
    - Each part of `story` is a list of paragraphs. A part may be left out. If the person gives one block of text and no four-part story, put it in `"description": ["..."]` and leave `story` out.
    - `reviewNote` is a note to the firm about text that still needs checking. It shows in previews only.
-   - `drawings` lists the firm's own plans and sketches for the project, prepared with the same tool into the same `photos/` folder and written the same way as photos (`file`, `alt`, `caption`). They appear large on white between the opening and the story. Only drawings the firm made.
+   - `drawings` lists the firm's own plans and sketches for the project, prepared with the same tool into the same `photos/` folder and written the same way as photos (`file`, `alt`, `caption`). They appear large on white between the opening and the story. Only drawings the firm made, or drawings made for the firm that it credits; put the credit in the caption ("Perspective by Peter Giraudeau.").
+   - `cover` names the image shown in the collages and at the head of the project page. It may be a photograph or a drawing. A project that is a plan or a study may have drawings and no photographs.
    - `legacyUrls` lists the page's address on the old site, such as `"vmi.html"`, so old links keep working.
 5. **Write alt text for every photograph.** Say what is visible, in one plain sentence fragment under 200 characters: "Two tiers of limestone retaining walls planted with shrubs". No "photo of". No names of people. If you cannot tell what a photograph shows, ask.
 6. **Build and check.** Run `node build.js`. Read its output. Open the built page in `dist/work/<slug>/index.html` and confirm the text and photographs are right.
@@ -100,7 +101,9 @@ python3 tools/prepare_photos.py content/projects/<slug> a.jpg b.jpg   # prepare 
 - **Add or replace photographs.** Run the prepare tool, add the entries to `photos`, write alt text. To remove a photograph, delete its entry and its files.
 - **Add a plan or sketch.** Export it as a JPEG, run the prepare tool on it, and add the entry to `drawings` with alt text and a caption saying what drawing it is.
 - **Put a plan behind the home-page statement.** Set `backdrop` in `content/site.json` to a drawing that already exists: `"backdrop": { "project": "courthouse-square", "file": "05" }`. It shows faintly behind the statement. Leave `backdrop` out to show plain white. The build refuses a project or drawing that does not exist.
-- **Change the home page photographs.** Edit `hero` in `content/site.json`. Each entry names a project folder and a photo number. Four or five photographs at most. Choose ones that show the design clearly.
+- **Change the home page photographs.** Edit `hero` in `content/site.json`. Each entry names a project folder and a photo number. Four or five photographs at most. Choose ones that show the design clearly, and never one that is also the cover of a featured project: no photograph appears twice on a page.
+- **Change the row of plans on the home page.** Edit `drawings` in `content/site.json`. Each entry names a project folder and one of its drawings. Three reads best.
+- **Change the Work page introduction.** `work.intro` in `content/site.json`. Clear `work.introNote` when the firm approves the text.
 - **Change the People page.** People are in `content/people.json`. The introduction is in `content/site.json` under `studio`. A portrait goes in `static/assets/img/people/` at about 1200 pixels wide, 4:5 proportion, and its file name goes in that person's `photo`.
 - **Change the Process page.** Everything on it is in `content/site.json` under `process`: `intro` (what is distinctive about the firm), `dialogue` (the Client, Site, Design team text), `steps` (the steps of a project, in order) and `services` (the ways to work with the firm). Each part has a review note field; clear it when the firm approves the text.
 - **Change contact details or the form's project types.** `content/site.json` under `address`, `phone`, `emails` and `contact`.
@@ -109,12 +112,14 @@ python3 tools/prepare_photos.py content/projects/<slug> a.jpg b.jpg   # prepare 
 
 ## Writing for this site
 
-The firm wants its site to sound like the firm: experienced, local, direct. It does not want marketing language.
+The site should read as the firm writes: composed, exact and unhurried. The model is the introduction on the People page, which is the firm's own text. It does not want marketing language, and it does not want notes.
 
-- Plain sentences. Sentence case. No slogans, no exclamation points, no superlatives.
-- State what happened: the problem, what the firm learned, what it designed, what resulted. Let facts carry the weight.
-- Write for a reader who is not a designer: a facilities director, a city manager, a homeowner. Define a technical term or avoid it.
-- Refer to the firm as "ABL" in project text.
+- Write for a professional reader: a university facilities director, a city manager, a trustee, an architect. They read closely.
+- Write composed sentences. When a thought carries a condition or a reason, keep it in the same sentence, in a subordinate clause. Do not break one thought into a string of short declarative sentences, and do not write fragments.
+- State what happened and why it mattered, in specifics: names, dates, dimensions, materials. One exact detail does more than three general ones.
+- No slogans, superlatives, exclamation points or rhetorical questions, and no contrast formulas of the "not this, but that" kind.
+- Use the precise word, including the technical one when it is the right one. Explain a term only where a general reader would be lost.
+- Sentence case for headings. Refer to the firm as "ABL" or "the firm".
 - When the person gives you their own wording, keep their wording. Fix only spelling and obvious slips, and say what you fixed.
 - When you draft text yourself from notes, set a `reviewNote` saying so, and keep `status` at `draft` until the person approves it.
 

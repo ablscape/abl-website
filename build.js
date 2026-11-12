@@ -68,6 +68,7 @@ function openItems() {
     if (!isText(person.photo)) items.push(`${person.name}: photograph is missing`);
     if (!Array.isArray(person.bio) || !person.bio.length) items.push(`${person.name}: biography is missing`);
   });
+  if (site.work && isText(site.work.introNote)) items.push(`Work: the introduction has a review note ("${site.work.introNote}")`);
   const pr = site.process || {};
   if (isText(pr.introNote)) items.push(`Process: the introduction has a review note ("${pr.introNote}")`);
   if (!pr.dialogue || !Array.isArray(pr.dialogue.text) || !pr.dialogue.text.length) items.push('Process: the Dialogue text is missing');
@@ -111,7 +112,7 @@ copyDir(path.join(ROOT, 'static'), OUT);
 visible.forEach((p) => {
   const to = path.join(OUT, 'work', p.slug, 'photos');
   fs.mkdirSync(to, { recursive: true });
-  p.photos.forEach((photo) => photo.variants.forEach((v) => {
+  p.photos.concat(p.drawings).forEach((image) => image.variants.forEach((v) => {
     fs.copyFileSync(path.join(ROOT, 'content/projects', p.slug, 'photos', v.name), path.join(to, v.name));
   }));
 });

@@ -1,19 +1,19 @@
 'use strict';
 
 const { TYPES } = require('../lib/content');
+const { esc, reviewNote } = require('../lib/html');
 const { projectCard } = require('./parts');
 
-// Work: every project as a photograph in a staggered collage, with one row of buttons to narrow the list.
+// Work: every project in a staggered collage, with one row of buttons to narrow the list.
 module.exports = function work(ctx) {
-  const { projects } = ctx;
+  const { projects, site } = ctx;
   const types = TYPES.filter((type) => projects.some((p) => p.type === type));
   const hasFeatured = projects.some((p) => p.featured);
   const hasOthers = projects.some((p) => !p.featured);
-  const defaultFilter = hasFeatured && hasOthers ? 'featured' : 'all';
+  const defaultFilter = 'all';
 
-  const buttons = [];
-  if (hasFeatured && hasOthers) buttons.push(['featured', 'Featured']);
-  buttons.push(['all', 'All']);
+  const buttons = [['all', 'All']];
+  if (hasFeatured && hasOthers) buttons.push(['featured', 'Selected']);
   types.forEach((type) => buttons.push([type, type]));
 
   const filters = buttons.length > 2 ? `<div class="filters" data-filters hidden>
@@ -26,11 +26,18 @@ module.exports = function work(ctx) {
   </li>`).join('\n  ')}
 </ul>` : '<p class="empty">Project pages are on their way.</p>';
 
+  const w = site.work || {};
+  const intro = w.intro ? `<div class="page-lead">
+    ${reviewNote(ctx, w.introNote)}
+    <p>${esc(w.intro)}</p>
+  </div>` : '';
+
   return {
     title: 'Work',
-    description: `Selected projects by ${ctx.site.name}: campus, civic, preservation and residential landscapes.`,
-    body: `<div class="page-head">
+    description: `Selected projects by ${site.name}: campus, civic, preservation and residential landscapes.`,
+    body: `<div class="page-head${intro ? ' has-lead' : ''}">
   <h1>Work</h1>
+  ${intro}
 </div>
 ${filters}
 ${grid}`,

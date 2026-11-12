@@ -20,16 +20,20 @@
   ],
   "hero": [
     {
+      "project": "main-street-triangle",
+      "photo": "02"
+    },
+    {
       "project": "washington-and-lee-university",
       "photo": "01"
     },
     {
-      "project": "virginia-military-institute",
-      "photo": "01"
+      "project": "virginia-horse-center",
+      "photo": "02"
     },
     {
-      "project": "washington-and-lee-university",
-      "photo": "03"
+      "project": "montpelier-visitor-arrival",
+      "photo": "01"
     }
   ],
   "studio": {
@@ -41,53 +45,53 @@
   },
   "process": {
     "intro": [
-      "ABL is a small firm. The people you meet at the first conversation draw the plans, walk the site with the contractor and stay with the job until it is built. No one at the top hands the work down.",
-      "We know this place. Decades of work in Lexington and Rockbridge County mean we know the contractors, the soils, the plants that do well here and the way the city and the county go about approving a project. Arthur serves on the city's tree committee and its Architectural Review Board.",
-      "Our approach is a preservationist's. Before we draw, we learn the story of a place, so that what we add belongs to it and to its time. We mock up designs at full size before they are built, we bring in the engineers and architects a job needs, and we do not present a plan as a final answer.",
-      "The work runs from gardens to the Virginia Horse Center and the campuses of Washington and Lee and VMI. Before ABL, Arthur worked on large projects for some of the country's largest firms, in Florida, California, Northern Virginia, Japan and China."
+      "ABL is a practice of three. A client's first conversation is with the people who will study the site, prepare the drawings and remain with the work, alongside the contractor, until it is built; no part of a commission passes to staff the client has not met.",
+      "Decades of practice in Lexington and Rockbridge County have given the firm a working knowledge of the place: its contractors, the plants that establish well in its soils, and the boards and offices through which a project must pass. Arthur Bartenstein serves on the City of Lexington's Tree Committee and its Architectural Review Board. Kelly Morikawa, a certified arborist, owned and operated a landscape design, installation and maintenance company in the area for eighteen years and knows how a drawing becomes built work.",
+      "The firm approaches a site as a preservationist would, by learning first how the ground came to its present form and what was intended for it. New work is then designed to be, in Arthur Bartenstein's phrase, \"registered in terms of place, but also registered in terms of time\": fitted to what surrounds it and candid about its own date. Each design is tested before it is built, in photo simulations, scale models and material samples and in full-scale mock-ups on the site, and it is developed throughout with the client, with the architects and engineers on the project, and with the people who will use and maintain the grounds.",
+      "The work ranges from private gardens to the Virginia Horse Center and the campuses of Washington and Lee University and the Virginia Military Institute. Before founding ABL, Arthur Bartenstein practiced with Peter Walker and Partners and the SWA Group in California and with Hill Studio in Roanoke and Frazier Associates in Staunton, on projects in Florida, California, Northern Virginia, Japan and China."
     ],
-    "introNote": "Drafted by Claude from Arthur's list of what is distinctive about the firm at the November 11, 2026 meeting. The firm to confirm every fact and the wording.",
+    "introNote": "Rewritten November 11, 2026 from Arthur's list of what is distinctive about the firm and from the firm's own text on the People page. The quotation is Arthur's, from the meeting that day. The firm to confirm every fact and the wording.",
     "dialogue": {
       "text": [
-        "Arthur draws every project as a triangle: the client, the site and the design team, with arrows between them. The client says what they want. The site tests those ideas and dictates part of the answer; a plan that does not work on the ground goes back to the client. The arrows are the dialogue, and the design comes out of it."
+        "Arthur Bartenstein draws every commission as a triangle whose corners are the client, the site and the design team, with arrows running between them. The client states what is wanted; the site, once those wishes are tested against it, determines part of the answer; and a scheme that fails on the ground returns to the client for another conversation. The arrows are that dialogue, and the design is its result."
       ],
-      "reviewNote": "Drafted from Arthur's explanation of his diagram at the November 11 meeting. The firm to confirm the wording."
+      "reviewNote": "Rewritten from Arthur's explanation of his diagram at the November 11 meeting. The firm to confirm the wording."
     },
-    "stepsIntro": "No two jobs run the same way, but every one starts with these three steps, and we say where things stand as it goes.",
+    "stepsIntro": "No two commissions proceed alike, but each begins with the same three steps, and at every stage the client is told where the work stands.",
     "steps": [
       {
-        "title": "Initial meeting",
-        "text": "We meet you on the property and listen: what you want from the place, how you use it, what is not working, and what you want to spend."
+        "title": "First meeting",
+        "text": "The work begins on the property, in conversation with the client about what is wanted of the place, how it is used, what has failed, and what budget is available."
       },
       {
-        "title": "Site and land research",
-        "text": "We study the ground before we draw: soils, water and light, what grows there, what the property and the area have been, and what the city or county will allow."
+        "title": "Research",
+        "text": "Before anything is drawn, the firm studies the land itself and the history of the property and of the area around it."
       },
       {
         "title": "Brainstorming and mock-ups",
-        "text": "We try ideas with you in sketches and models, then mock up the design at full size on the site before anything is built, so you see what you are getting."
+        "text": "Ideas are worked out with the client in sketches and models, and the chosen scheme is mocked up at full scale on the site before construction begins, so that the client sees the result in place while it can still be changed."
       }
     ],
-    "stepsNote": "The firm named these three steps at the November 11 meeting and will set down the steps that follow. Claude drafted the descriptions.",
+    "stepsNote": "The firm named these three steps at the November 11 meeting and will set down those that follow. The descriptions are Claude's, rewritten the same day; the firm to confirm them.",
     "services": {
-      "intro": "Every job, whatever its size, gets research, a mock-up and our attention until it is built. For a house or a farm, these are the usual ways to work with us.",
-      "reviewNote": "Service descriptions drafted by Claude from the November 11 meeting. The firm to confirm the scope of each and the wording.",
+      "intro": "Every commission, whatever its size, receives the same research and the same attention through construction. For a house, a garden or a farm, the firm is most often engaged in one of four ways.",
+      "reviewNote": "Service descriptions drafted by Claude from the November 11 meeting and rewritten the same day. The firm to confirm the scope of each and the wording.",
       "items": [
         {
           "name": "Consultation",
-          "text": "A visit to your property and a conversation about what is possible, with directions you can act on."
+          "text": "A visit to the property and a conversation about what it could become, concluding in recommendations the owner can act upon."
         },
         {
           "name": "Planting plan",
-          "text": "A plan of what to plant and where, drawn for your soil, light and upkeep by people who know which plants do well here."
+          "text": "A plan of what to plant and where, prepared for the property's soil, light and upkeep by people who know which plants establish well in this region."
         },
         {
           "name": "Master plan",
-          "text": "A full design for the property: research, the plan, drawings a contractor can build from, and our involvement until it is finished."
+          "text": "A complete design for the property: research, the plan itself, drawings from which a contractor can build, and the firm's involvement until the work is finished."
         },
         {
-          "name": "Small jobs",
-          "text": "Sometimes people just want help building a stair. Ask us."
+          "name": "Single elements",
+          "text": "One part of a property, a stair for example, designed and seen through construction."
         }
       ]
     }
@@ -101,5 +105,27 @@
       "Residential",
       "Something else"
     ]
+  },
+  "backdrop": {
+    "project": "lime-kiln-theater",
+    "file": "01"
+  },
+  "drawings": [
+    {
+      "project": "green-spring",
+      "file": "03"
+    },
+    {
+      "project": "montpelier-visitor-arrival",
+      "file": "05"
+    },
+    {
+      "project": "virginia-tech-war-memorial",
+      "file": "04"
+    }
+  ],
+  "work": {
+    "intro": "Campus, civic and preservation commissions in Lexington, Rockbridge County and elsewhere in Virginia: built work, shown with the plans and studies that precede it.",
+    "introNote": "Drafted by Claude on November 11, 2026. The firm to confirm the wording."
   }
 }

@@ -33,7 +33,7 @@ Nothing reaches the live site until you say publish.
 
 ## Yellow notes and drafts
 
-- Yellow notes in a preview mark text or photographs still to come. They never appear on the live site.
+- Yellow notes in a preview mark text or photographs still to come. They never appear on the live site. The "Hide notes" button in the yellow bar at the top shows a page as it will look without them.
 - A project marked "Draft" appears in previews only. Tell Claude "publish the Courthouse Square project" when its text and facts are final.
 
 ## If something looks wrong

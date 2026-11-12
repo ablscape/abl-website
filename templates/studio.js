@@ -15,7 +15,7 @@ function person(ctx, p) {
   return `<article class="person${photo ? '' : ' person-no-photo'}">
     ${photo ? `<div class="person-photo">${photo}</div>` : ''}
     <div class="person-text">
-      <h3>${esc(p.name)}${p.credentials ? `, <span class="credentials">${esc(p.credentials)}</span>` : ''}</h3>
+      <h2 class="person-name">${esc(p.name)}${p.credentials ? `, <span class="credentials">${esc(p.credentials)}</span>` : ''}</h2>
       ${p.title ? `<p class="person-title">${esc(p.title)}</p>` : ''}
       ${p.email ? `<p class="person-email"><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></p>` : ''}
       ${bio}
@@ -30,17 +30,25 @@ function person(ctx, p) {
 module.exports = function studio(ctx) {
   const { site, people } = ctx;
   const s = site.studio;
+  const paras = Array.isArray(s.intro) ? s.intro : [];
+
+  // The first paragraph is the lead, set large beside the heading; the rest follow in the text column.
+  const lead = paras.length ? `<div class="page-lead">
+    <p>${esc(paras[0])}</p>
+  </div>` : '';
+  const rest = paras.length > 1 || s.note ? `<section class="studio-intro">
+  ${paragraphs(paras.slice(1))}
+  ${s.note ? `<p class="studio-note">${esc(s.note)}</p>` : ''}
+</section>` : '';
 
   return {
     title: 'People',
     description: `The people of ${site.name} and how the studio works with clients.`,
-    body: `<div class="page-head">
+    body: `<div class="page-head${lead ? ' has-lead' : ''}">
   <h1>People</h1>
+  ${lead}
 </div>
-<section class="studio-intro">
-  ${paragraphs(s.intro)}
-  ${s.note ? `<p class="studio-note">${esc(s.note)}</p>` : ''}
-</section>
+${rest}
 <section class="people">
   ${people.map((p) => person(ctx, p)).join('\n  ')}
 </section>`,

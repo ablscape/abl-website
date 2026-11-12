@@ -3,8 +3,8 @@
 const { esc, paragraphs, picture, toCome, reviewNote } = require('../lib/html');
 const { STORY_PARTS } = require('../lib/content');
 
-// One project page: lead photograph; the title, the facts and the first part of the story side by side;
-// then the firm's plan on plain white, and the rest of the story interleaved with the photographs.
+// One project page: the lead image; the title, the facts and the first part of the story side by side;
+// then the firm's drawings on plain white, and the rest of the story interleaved with the photographs.
 module.exports = function projectPage(ctx, project, next) {
   const { u } = ctx;
 
@@ -15,7 +15,6 @@ module.exports = function projectPage(ctx, project, next) {
     ['Completed', project.year ? esc(project.year) : toCome(ctx, 'year')],
     ['Role', project.role ? esc(project.role) : toCome(ctx, 'role')],
     ['With', project.collaborators.length ? project.collaborators.map(esc).join('<br>') : ''],
-    ['Type', esc(project.type)],
   ].filter(([, value]) => value);
 
   const titleBlock = `<dl class="title-block" aria-label="Project facts">
@@ -34,13 +33,19 @@ module.exports = function projectPage(ctx, project, next) {
           ${paragraphs(project.description)}
         </div>`];
 
+  const caption = (image) => {
+    const text = [image.caption ? esc(image.caption) : '', image.credit ? `Photograph: ${esc(image.credit)}.` : ''].filter(Boolean).join(' ');
+    return text ? `<figcaption>${text}</figcaption>` : '';
+  };
+
   const photoFigure = (photo, sizes) => `<figure>
-      ${picture(ctx, project, photo, { sizes })}
-      ${photo.caption ? `<figcaption>${esc(photo.caption)}${photo.credit ? ` Photograph: ${esc(photo.credit)}.` : ''}</figcaption>` : (photo.credit ? `<figcaption>Photograph: ${esc(photo.credit)}.</figcaption>` : '')}
+      <div class="frame" data-photo>${picture(ctx, project, photo, { sizes })}</div>
+      ${caption(photo)}
     </figure>`;
 
   // Photographs other than the lead, dealt out as one wide, then a pair, then one wide.
-  const rest = project.photos.filter((photo) => photo !== project.coverPhoto);
+  const cover = project.coverPhoto;
+  const rest = project.photos.filter((photo) => photo !== cover);
   const groups = [];
   for (let i = 0; i < rest.length;) {
     if (groups.length % 2 === 0 || i === rest.length - 1) { groups.push(rest.slice(i, i + 1)); i += 1; }
@@ -51,8 +56,8 @@ module.exports = function projectPage(ctx, project, next) {
     : `<div class="photo-row photo-pair">\n    ${group.map((p) => photoFigure(p, '(min-width: 1100px) 520px, 100vw')).join('\n    ')}\n  </div>`;
 
   const drawingHtml = (d) => `<figure class="plan">
-      ${picture(ctx, project, d, { sizes: '(min-width: 1100px) 1000px, 100vw' })}
-      ${d.caption ? `<figcaption>${esc(d.caption)}</figcaption>` : ''}
+      ${picture(ctx, project, d, { sizes: '(min-width: 1100px) 1100px, 100vw' })}
+      ${caption(d)}
     </figure>`;
 
   // Lay the page out: first part beside the title; drawings; then photographs and parts in turn.
@@ -60,6 +65,7 @@ module.exports = function projectPage(ctx, project, next) {
   const opening = parts.shift() || '';
   body.push(`<div class="project-opening">
     <div class="project-head">
+      <p class="project-kind">${esc(project.type)}</p>
       <h1>${esc(project.title)}</h1>
       <p class="project-summary">${esc(project.summary)}</p>
       ${titleBlock}
@@ -69,7 +75,7 @@ module.exports = function projectPage(ctx, project, next) {
       ${opening}
     </div>
   </div>`);
-  project.drawings.forEach((d) => body.push(drawingHtml(d)));
+  project.drawings.filter((d) => d !== cover).forEach((d) => body.push(drawingHtml(d)));
   let g = 0;
   parts.forEach((part) => {
     if (g < groups.length) body.push(groupHtml(groups[g++]));
@@ -79,10 +85,9 @@ module.exports = function projectPage(ctx, project, next) {
 
   const nextLink = next && next !== project ? `<nav class="project-next" aria-label="More work">
     <a href="${u(next.url)}"><span class="next-label">Next project</span> <span class="next-title">${esc(next.title)}</span></a>
-    <a class="all-work" href="${u('/work/')}">All work</a>
+    <a class="text-link all-work" href="${u('/work/')}">All work</a>
   </nav>` : '';
 
-  const cover = project.coverPhoto;
   const largest = cover.variants[cover.variants.length - 1].name;
 
   return {
@@ -91,9 +96,9 @@ module.exports = function projectPage(ctx, project, next) {
     image: `/work/${project.slug}/photos/${largest}`,
     bodyClass: 'project-page',
     body: `<article class="project">
-  <figure class="project-hero">
-    ${picture(ctx, project, cover, { sizes: '100vw', lazy: false })}
-    ${cover.caption ? `<figcaption>${esc(cover.caption)}</figcaption>` : ''}
+  <figure class="project-hero ${cover.isDrawing ? 'is-drawing' : 'is-photo'}">
+    <div class="frame"${cover.isDrawing ? '' : ' data-photo'}>${picture(ctx, project, cover, { sizes: '100vw', lazy: false })}</div>
+    ${caption(cover)}
   </figure>
   <div class="project-body">
   ${body.join('\n  ')}
