@@ -28,6 +28,17 @@
   var header = document.querySelector('.site-header');
   if (mark && header) {
     var nav = header.querySelector('.site-nav');
+    var drawLinks = function (kind) {
+      var row = document.createElement('span');
+      row.className = 'float-links' + (kind ? ' float-links-' + kind : '');
+      row.setAttribute('aria-hidden', 'true');
+      each(nav.querySelectorAll('a'), function (a) {
+        var word = document.createElement('span');
+        word.textContent = a.textContent;
+        row.appendChild(word);
+      });
+      return row;
+    };
     each(document.querySelectorAll('[data-photo], [data-sheet]'), function (frame) {
       var kind = frame.hasAttribute('data-photo') ? 'on-photo' : 'on-sheet';
       var copy = document.createElement('span');
@@ -36,24 +47,15 @@
       copy.innerHTML = mark.innerHTML;
       frame.classList.add('carries-mark');
       frame.appendChild(copy);
+      if (nav) frame.appendChild(drawLinks(kind));
     });
 
-    // The links come back when the visitor scrolls up, on a veil of frosted white across the top of the
-    // window, with a green copy of the mark at its right. The veil blurs and lightens whatever lies
-    // beneath, so the links read clearly over text, drawings and photographs alike.
+    // The links come back when the visitor scrolls up, drawn the way the mark is: one copy for the page
+    // and one inside every picture, with the links themselves on top of everything, unseen, to take the
+    // pointer and the keyboard.
     var floating = null;
     if (nav) {
-      var veil = document.createElement('div');
-      veil.className = 'float-veil';
-      veil.setAttribute('aria-hidden', 'true');
-      document.body.appendChild(veil);
-      var veilMark = document.createElement('a');
-      veilMark.className = 'travel-mark travel-mark-on-veil';
-      veilMark.href = mark.getAttribute('href');
-      veilMark.tabIndex = -1;
-      veilMark.setAttribute('aria-hidden', 'true');
-      veilMark.innerHTML = mark.innerHTML;
-      document.body.appendChild(veilMark);
+      document.body.appendChild(drawLinks(''));
       floating = document.createElement('nav');
       floating.className = 'float-nav';
       floating.setAttribute('aria-label', 'Main, repeated while scrolling');

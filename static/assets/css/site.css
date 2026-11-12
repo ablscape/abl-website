@@ -37,10 +37,10 @@
   --edge: max(var(--gutter), calc((100vw - var(--page)) / 2 + var(--gutter))); /* window edge to content edge */
   --mark-w: 6.25rem;       /* width of the traveling "abl" */
   --mark-top: 1.75rem;
-  --veil-h: calc(var(--mark-top) + var(--mark-w) * 0.44 + 2.4rem);  /* the frosted veil behind the returning links */
 
-  /* The white haze around the mark where it is green: over the page and over drawings. */
+  /* The white haze around the mark and the returning links wherever they are dark: over the page and over drawings. */
   --haze: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 5px var(--paper)) drop-shadow(0 0 11px rgba(255, 255, 255, 0.9));
+  --haze-text: 0 0 2px var(--paper), 0 0 4px var(--paper), 0 0 7px var(--paper), 0 0 11px var(--paper), 0 0 16px var(--paper), 0 0 22px rgba(255, 255, 255, 0.9);
   --haze-deep: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 4px var(--paper)) drop-shadow(0 0 8px var(--paper)) drop-shadow(0 0 13px var(--paper)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.95));
 }
 @media (max-width: 40rem) { :root { --mark-w: 4.25rem; --mark-top: 1rem; } }
@@ -101,7 +101,7 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
   display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
   max-width: var(--page); margin: 0 auto; padding: 1.75rem var(--gutter) 1.5rem;
 }
-.site-nav, .float-nav { display: flex; flex-wrap: wrap; gap: clamp(1.1rem, 2.4vw, 2.1rem); font-size: var(--fs-small); line-height: 1; }
+.site-nav, .float-nav, .float-links { display: flex; flex-wrap: wrap; gap: clamp(1.1rem, 2.4vw, 2.1rem); font-size: var(--fs-small); line-height: 1; }
 .site-nav a, .float-nav a { padding: 0.35rem 0 0.4rem; color: var(--ink); border-bottom: 1px solid transparent; }
 .site-nav a:hover, .float-nav a:hover { color: var(--ink-strong); border-bottom-color: var(--accent); }
 .site-nav a[aria-current="page"], .float-nav a[aria-current="page"] { color: var(--ink-strong); border-bottom-color: var(--accent); }
@@ -109,7 +109,7 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 @media (max-width: 36rem) {
   .site-header { flex-direction: column-reverse; align-items: flex-start; padding-block: 1.1rem 0.9rem; }
   .logo img { width: 178px; }
-  .site-nav, .float-nav { gap: 1.15rem; font-size: var(--fs-small); }
+  .site-nav, .float-nav, .float-links { gap: 1.15rem; font-size: var(--fs-small); }
 }
 
 /* The traveling mark: once the header has scrolled away, "abl" stays at the top right of the window.
@@ -132,29 +132,29 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* Rules later in this file that set "position" on a picture (the plan behind the statement) still apply. */
 .carries-mark { position: relative; z-index: 2; clip-path: inset(0); }
 
-/* The links return when the visitor scrolls back up, on a veil of frosted white across the top of the
-   window. Whatever lies beneath is blurred and lightened, so the links and a green copy of the mark read
-   clearly over text, drawings and photographs alike. The veil has no lower edge: it thins out downward. */
-.float-veil {
-  position: fixed; inset: 0 0 auto 0; z-index: 4; height: var(--veil-h); pointer-events: none;
-  background: rgba(255, 255, 255, 0.8);
-  -webkit-backdrop-filter: blur(14px) saturate(1.15); backdrop-filter: blur(14px) saturate(1.15);
-  -webkit-mask-image: linear-gradient(#000 58%, transparent); mask-image: linear-gradient(#000 58%, transparent);
-  opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0s linear 0.35s;
-}
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .float-veil { background: rgba(255, 255, 255, 0.95); } }
-.float-nav {
-  position: fixed; top: calc(var(--mark-top) - 0.55rem); left: calc(var(--edge) - 0.9rem); z-index: 5;
-  padding: 0.7rem 0.9rem;
+/* The links return when the visitor scrolls back up, drawn the way the mark is. Over the page and over
+   drawings they are dark, in medium weight, on a patch of white haze that has no edge. Over photographs
+   they are white with a dark shadow close around the letters. Each picture carries its own copy. The
+   links themselves lie on top, unseen, to take the pointer and the keyboard, and show only their
+   terracotta rule. */
+.float-nav, .float-links {
+  position: fixed; top: calc(var(--mark-top) - 0.55rem); left: calc(var(--edge) - 0.9rem);
+  padding: 0.7rem 0.9rem; font-weight: 500;
   opacity: 0; visibility: hidden; transform: translateY(-0.4rem);
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
 }
-.float-nav a { color: var(--ink-strong); }
-.travel-mark-on-veil { z-index: 5; filter: none; }
-.mark-on .travel-mark-on-veil { opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0s linear 0.35s; }
-.nav-on .float-veil { opacity: 1; visibility: visible; transition: opacity 0.35s ease; }
-.nav-on .float-nav { opacity: 1; visibility: visible; transform: none; transition: opacity 0.3s ease, transform 0.3s ease; }
-.nav-on .travel-mark-on-veil { opacity: 1; visibility: visible; transition: opacity 0.35s ease; }
+.float-nav { z-index: 5; }
+.float-nav a, .float-nav a:hover, .float-nav a[aria-current="page"] { color: transparent; }
+.float-links {
+  z-index: 1; pointer-events: none; white-space: nowrap;
+  font-style: normal; letter-spacing: 0; text-transform: none; text-align: left;
+  color: var(--ink-strong); text-shadow: var(--haze-text);
+}
+.float-links span { padding: 0.35rem 0 0.4rem; border-bottom: 1px solid transparent; }
+.float-links::before { content: ""; position: absolute; z-index: -1; inset: 0.2rem 0; border-radius: 1.5rem; background: var(--paper); filter: blur(0.45rem); }
+.float-links-on-photo { color: #fff; text-shadow: 0 0 2px rgba(0, 0, 0, 0.65), 0 1px 3px rgba(0, 0, 0, 0.55), 0 2px 16px rgba(0, 0, 0, 0.5); }
+.float-links-on-photo::before { content: none; }
+.nav-on .float-nav, .nav-on .float-links { opacity: 1; visibility: visible; transform: none; transition: opacity 0.3s ease, transform 0.3s ease; }
 
 /* Home: photographs the width of the screen, with the caption at the right below them. */
 .hero { margin: 0; }
@@ -480,6 +480,6 @@ address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px 
 .js :is(.collage > .reveal.is-in .card, .drawing-row > .reveal.is-in .card, .photo-row.reveal.is-in figure, .plan.reveal.is-in, .stage-figure.reveal.is-in, .person.reveal.is-in) > * { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-slide, .card-image img, .drawing-image img, .travel-mark, .float-nav, .float-veil { transition: none; }
+  .hero-slide, .card-image img, .drawing-image img, .travel-mark, .float-nav, .float-links { transition: none; }
   .js .reveal, .js :is(.collage > .reveal .card, .drawing-row > .reveal .card, .photo-row.reveal figure, .plan.reveal, .stage-figure.reveal, .person.reveal) > * { opacity: 1; transition: none; }
 }
