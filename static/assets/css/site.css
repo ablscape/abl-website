@@ -203,6 +203,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 
 /* The firm's plans in a row. */
 .drawing-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.75rem var(--col-gap); margin: 0; padding: 0; list-style: none; }
+.drawing-row .drawing-image { aspect-ratio: 2 / 1; }
+.drawing-row .drawing-image img { height: 100%; object-fit: cover; }
 .drawing-row .card-title { margin-top: 1rem; }
 @media (min-width: 48rem) { .drawing-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
@@ -251,7 +253,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .project-head h1 { font-size: clamp(2rem, 3.2vw, 2.9rem); font-weight: 300; letter-spacing: -0.015em; }
 .project-summary { max-width: 24em; margin: 0.9rem 0 2rem; font-size: 1.2rem; line-height: 1.45; color: var(--slate); }
 .project-lead, .project-text { max-width: 40rem; }
-.story-part + .story-part { margin-top: 2rem; }
+.story-part + .story-part { margin-top: 2.75rem; }
 .story-part h2 { margin-bottom: 0.8rem; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; color: var(--slate); }
 .story-part p { font-size: 1.16rem; line-height: 1.62; }
 .story-part p:last-child { margin-bottom: 0; }
@@ -266,6 +268,10 @@ a.travel-mark:hover { color: var(--ink-strong); }
   .project-head { grid-column: 1 / span 4; }
   .project-lead { grid-column: 6 / span 7; }
   .project-text { margin-left: calc((100% + var(--col-gap)) / 12 * 5); }
+}
+/* On a wide, tall window the title and facts stay beside a long story while it is read. */
+@media (min-width: 56rem) and (min-height: 46rem) {
+  .project-head { position: sticky; top: 6.5rem; align-self: start; }
 }
 
 /* A plan or sketch, large, on the white of the page. */

@@ -61,8 +61,10 @@ module.exports = function projectPage(ctx, project, next) {
     </figure>`;
 
   // Lay the page out: first part beside the title; drawings; then photographs and parts in turn.
+  // When no drawing or photograph falls between the parts, the whole story reads as one column beside the title.
   const body = [];
-  const opening = parts.shift() || '';
+  const extraDrawings = project.drawings.filter((d) => d !== cover);
+  const opening = !groups.length && !extraDrawings.length ? parts.splice(0).join('\n      ') : (parts.shift() || '');
   body.push(`<div class="project-opening">
     <div class="project-head">
       <p class="project-kind">${esc(project.type)}</p>
@@ -75,7 +77,7 @@ module.exports = function projectPage(ctx, project, next) {
       ${opening}
     </div>
   </div>`);
-  project.drawings.filter((d) => d !== cover).forEach((d) => body.push(drawingHtml(d)));
+  extraDrawings.forEach((d) => body.push(drawingHtml(d)));
   let g = 0;
   parts.forEach((part) => {
     if (g < groups.length) body.push(groupHtml(groups[g++]));
