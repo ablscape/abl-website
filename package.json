@@ -1,0 +1,14 @@
+{
+  "name": "abl-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The ABL Landscape Architecture website. Built by build.js with no dependencies.",
+  "scripts": {
+    "build": "node build.js",
+    "check": "node build.js --check",
+    "preview": "node build.js --portable"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

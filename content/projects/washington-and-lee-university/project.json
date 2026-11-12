@@ -1,0 +1,45 @@
+{
+  "title": "Washington and Lee University",
+  "location": "Lexington, Virginia",
+  "client": "Washington and Lee University",
+  "year": "",
+  "type": "Campus",
+  "role": "",
+  "collaborators": [],
+  "status": "draft",
+  "featured": false,
+  "order": 3,
+  "summary": "Campus projects including Woods Plaza, the Belfield estate feasibility study and the siting of the Vernon W. Holleman monument.",
+  "reviewNote": "Existing text from the current site. The year, the role and the four-part story are still to come.",
+  "description": [
+    "Miscellaneous landscape projects for Washington & Lee University including Woods Plaza, Belfield Estate feasibility study, and Vernon W. Holleman monument siting. Arthur Bartenstein also assisted Washington & Lee with relocation of the Lexington Train Station and site planning for the new Lenfest Center Fine Arts Building while with Frazier Associates."
+  ],
+  "cover": "01",
+  "photos": [
+    {
+      "file": "01",
+      "alt": "Brick plaza with a circular inscribed stone ring, seen from above, with people walking the paths between benches",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "02",
+      "alt": "The inscribed stone ring set in herringbone brick paving, with benches and campus buildings beyond",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "03",
+      "alt": "Formal boxwood garden with a central fountain and a stone garden pavilion",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "04",
+      "alt": "Hand-colored sketch of a courtyard with two figures, an arcade and brick walls",
+      "caption": "",
+      "credit": ""
+    }
+  ],
+  "legacyUrls": ["wlu.html"]
+}

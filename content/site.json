@@ -1,0 +1,53 @@
+{
+  "name": "ABL Landscape Architecture",
+  "url": "https://www.ablscape.com",
+  "description": "ABL Landscape Architecture is an award-winning, client-focused landscape architecture firm based in Lexington, Virginia offering expertise in institutional, civic, residential and commercial landscape architecture projects.",
+  "statement": "ABL Landscape Architecture is principally devoted to the adaptation of historic, environmentally sensitive landscapes to contemporary needs and goals.",
+  "address": ["104 White Street", "Lexington, Virginia 24450"],
+  "phone": "540.464.3736",
+  "emails": [
+    { "label": "Arthur Bartenstein", "address": "arthur@ablscape.com" },
+    { "label": "Kelly Morikawa", "address": "kelly@ablscape.com" }
+  ],
+  "hero": [
+    { "project": "washington-and-lee-university", "photo": "01" },
+    { "project": "virginia-military-institute", "photo": "01" },
+    { "project": "washington-and-lee-university", "photo": "03" }
+  ],
+  "studio": {
+    "intro": [
+      "The firm seeks to distill the essence of a site, and to respond to its innate character and context with creative, enduring design. ABL assists clients through all phases from initial concept to landscape establishment and maturation. We embrace open dialogue and exploration with clients, allied professionals, contractors, and end-users.",
+      "Mindful of the client's need to visualize the final product and also of the client's cost constraints in landscape construction and maintenance, ABL seeks every reasonable means to narrow the uncertainty between design incubation and the desired outcome. Such techniques include photo simulation, 3D scale models, material samples, full scale mock-ups, detailed review of pricing, dialogue with both grounds staff and end-users, and frequent site visits."
+    ],
+    "note": "ABL is a SWaM certified small business.",
+    "dialogue": {
+      "text": [
+        "Each project is a dialogue among the client, the site and the design team. The client's goals are tested against the conditions of the site, and the design develops from that exchange."
+      ],
+      "reviewNote": "Placeholder wording for the Dialogue framework. The firm to replace it with its own."
+    },
+    "process": [
+      { "title": "Initial meeting", "text": "" },
+      { "title": "Site and land research", "text": "" },
+      { "title": "Brainstorming and mock-ups", "text": "" }
+    ]
+  },
+  "contact": {
+    "projectTypes": [
+      "Campus or institution",
+      "Civic or municipal",
+      "Commercial",
+      "Historic site or preservation",
+      "Residential",
+      "Something else"
+    ],
+    "residential": {
+      "intro": "",
+      "services": [
+        { "name": "Consultation", "text": "" },
+        { "name": "Planting plan", "text": "" },
+        { "name": "Master plan", "text": "" }
+      ]
+    }
+  }
+}

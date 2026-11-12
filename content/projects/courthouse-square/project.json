@@ -1,0 +1,51 @@
+{
+  "title": "Courthouse Square",
+  "location": "Lexington, Virginia",
+  "client": "Main Street Lexington",
+  "year": "2026",
+  "type": "Civic",
+  "role": "Landscape architect",
+  "collaborators": [
+    "Robert L. Faulkner & Son, Inc.",
+    "Garrett Landscapes"
+  ],
+  "status": "draft",
+  "featured": true,
+  "order": 1,
+  "summary": "A three-terrace renovation of the square in front of the old Rockbridge County courthouse, opened in April 2026.",
+  "reviewNote": "Text drafted from public sources (Main Street Lexington, The News-Gazette, Rockbridge Report). The firm to correct it and add its own research and intent. The photograph is a placeholder from the current site; new photography to come.",
+  "story": {
+    "problem": [
+      "The square in front of the old Rockbridge County courthouse had gathered additions over many years without an overall plan. Its brick paving had heaved and cracked, and steep steps stood at its entrance. Wheelchairs and strollers could not cross it easily."
+    ],
+    "research": [
+      "In 1777 the General Assembly established Rockbridge County and the town of Lexington to place a court on this ground. On Court Day each month, people from across the county gathered at the square to trade, hear the news and see one another."
+    ],
+    "response": [
+      "The design divides the square into three terraces of pervious pavers, with large planting beds on both sides. Ramps replace the steep steps. The Veterans Memorial moved about 25 feet north, to stand directly in front of the courthouse."
+    ],
+    "result": [
+      "The square opened on April 30, 2026. At least 13 donors paid for the work, Washington and Lee University and Virginia Military Institute among them."
+    ]
+  },
+  "cover": "01",
+  "photos": [
+    {
+      "file": "01",
+      "alt": "White arched doorway of a brick building, with stone steps and clipped boxwoods",
+      "caption": "",
+      "credit": ""
+    }
+  ],
+  "legacyUrls": ["courthousesquare.html"],
+  "sources": [
+    "https://www.mainstreetlexington.org/court-house-square.html",
+    "https://www.mainstreetlexington.org/court-house-square-faqs.html",
+    "https://www.mainstreetlexington.org/court-house-square-press-release-july-2025.html",
+    "https://www.thenews-gazette.com/article/14098,new-day-for-the-square",
+    "https://www.thenews-gazette.com/article/11141,courthouse-square-project-to-start",
+    "https://www.thenews-gazette.com/article/9054,revamping-courthouse-square",
+    "https://rockbridgereport.academic.wlu.edu/2026/04/09/lexington-business-owners-hope-courthouse-square-renovations-increase-foot-traffic/",
+    "https://rockbridgereport.academic.wlu.edu/2025/02/13/main-street-lexington-seeks-funds-for-1-million-courthouse-square-renovations-after-grant-is-denied/"
+  ]
+}
