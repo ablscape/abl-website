@@ -48,7 +48,7 @@ ${ctx.showNotes ? '<p class="preview-bar">Preview build. Yellow notes mark text 
   <nav class="site-nav" aria-label="Main">
       ${links(true)}
   </nav>
-  <a class="logo" href="${u('/')}"><img src="${u('/assets/img/logo.jpg')}" width="230" height="39" alt="${esc(site.name)}"></a>
+  <a class="logo" href="${u('/')}"><img src="${u('/assets/img/logo.svg')}" width="232" height="40" alt="${esc(site.name)}"></a>
 </header>
 <a class="travel-mark" href="${u('/')}" aria-label="${esc(site.name)}, home" data-travel-mark>${markSvg()}</a>
 <main id="main">

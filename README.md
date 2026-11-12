@@ -53,11 +53,11 @@ Colors and typefaces are variables in the first block of `static/assets/css/site
 
 The firm's own plans carry much of the design: one sits behind the home-page statement (`backdrop` in `content/site.json`), three stand in a row lower on that page (`drawings`), and a project may lead with a drawing (`cover`).
 
-Once the header has scrolled away, the "abl" of the logo stays at the top right of the window, green over the page and over drawings and white over photographs, and the links return when the visitor scrolls up. Over the page the mark sits on a strip of paper, so text passing beneath it is covered and is never printed over; a picture marked `data-photo` or `data-sheet` in the templates carries its own copy of the mark instead. The mark is a vector redrawn from the 230-pixel logo (`MARK_PATH` in `lib/html.js`); replace the path when the firm supplies its own artwork.
+Once the header has scrolled away, the "abl" of the logo stays at the top right of the window, green over the page and over drawings and white over photographs, and the links return when the visitor scrolls up. Wherever they are dark, the mark and the returning links carry a soft white haze, so that text or linework passing beneath fades out around the letters; there is no box behind either. A picture marked `data-photo` or `data-sheet` in the templates carries its own copies, clipped to its frame. The mark is a vector redrawn from the 230-pixel logo and fitted to it by measurement (`MARK_PATH` in `lib/html.js`). The header logo, `static/assets/img/logo.svg`, is a drawing too: the same mark, with the two words set in Crimson Text (an open-licensed typeface chosen as the nearest of ten compared against the old file) and converted to outlines, so it stays sharp on every screen and loads no font.
 
 ## Before launch
 
-- [ ] Replace the logo with a vector file (`static/assets/img/logo.jpg` is the 230-pixel JPEG from the old site).
+- [ ] Replace the redrawn logo with the firm's own artwork (AI, EPS, PDF or SVG from whoever designed it). `static/assets/img/logo.svg` is a redrawing; `logo.jpg` beside it is the 230-pixel file from the old site that it was drawn from, kept for reference.
 - [ ] `node build.js --check` reports nothing unfinished that matters.
 - [ ] Turn on form detection in Netlify (Forms) and set the notification email for the `inquiry` form.
 - [ ] Delete the `X-Robots-Tag` block in `netlify.toml`.

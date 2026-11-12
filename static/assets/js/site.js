@@ -20,26 +20,41 @@
     notesToggle.addEventListener('click', function () { setNotes(!root.classList.contains('notes-off')); });
   }
 
-  // The traveling mark. Once the header has scrolled out of view, "abl" stays at the top right, on a
-  // strip of paper that covers any text passing beneath it. Every photograph gets a white copy of the
-  // mark and every drawing a green one, fixed at the same spot and clipped to the picture, so the mark
-  // reads green over the page and over drawings, and white over photographs.
+  // The traveling mark. Once the header has scrolled out of view, "abl" stays at the top right. Every
+  // photograph gets a white copy of the mark and every drawing a green one, fixed at the same spot and
+  // clipped to the picture, so the mark reads green over the page and over drawings, and white over
+  // photographs. The links that return on scrolling up are drawn the same way.
   var mark = document.querySelector('[data-travel-mark]');
   var header = document.querySelector('.site-header');
   if (mark && header) {
+    var nav = header.querySelector('.site-nav');
+    var drawLinks = function (kind) {
+      var row = document.createElement('span');
+      row.className = 'float-links' + (kind ? ' float-links-' + kind : '');
+      row.setAttribute('aria-hidden', 'true');
+      each(nav.querySelectorAll('a'), function (a) {
+        var word = document.createElement('span');
+        word.textContent = a.textContent;
+        row.appendChild(word);
+      });
+      return row;
+    };
     each(document.querySelectorAll('[data-photo], [data-sheet]'), function (frame) {
+      var kind = frame.hasAttribute('data-photo') ? 'on-photo' : 'on-sheet';
       var copy = document.createElement('span');
-      copy.className = 'travel-mark ' + (frame.hasAttribute('data-photo') ? 'travel-mark-on-photo' : 'travel-mark-on-sheet');
+      copy.className = 'travel-mark travel-mark-' + kind;
       copy.setAttribute('aria-hidden', 'true');
       copy.innerHTML = mark.innerHTML;
       frame.classList.add('carries-mark');
       frame.appendChild(copy);
+      if (nav) frame.appendChild(drawLinks(kind));
     });
 
-    // The links come back, on a strip of paper, when the visitor scrolls up.
-    var nav = header.querySelector('.site-nav');
+    // The links come back when the visitor scrolls up: one drawn copy for the page, and the links
+    // themselves on top of everything, unseen, to take the pointer and the keyboard.
     var floating = null;
     if (nav) {
+      document.body.appendChild(drawLinks(''));
       floating = document.createElement('nav');
       floating.className = 'float-nav';
       floating.setAttribute('aria-label', 'Main, repeated while scrolling');
