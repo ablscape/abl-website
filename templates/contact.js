@@ -1,6 +1,7 @@
 'use strict';
 
 const { esc } = require('../lib/html');
+const { pageHead } = require('./parts');
 const { telHref } = require('./layout');
 
 // Contact: where the studio is, and one form that also screens new inquiries. Services are on the Process page.
@@ -11,9 +12,9 @@ module.exports = function contact(ctx) {
   return {
     title: 'Contact',
     description: `Contact ${site.name} at ${site.address.join(', ')}, or send a project inquiry.`,
-    body: `<div class="page-head">
+    body: `${pageHead(ctx, site.contact && site.contact.backdrop, `<div class="page-head">
   <h1>Contact</h1>
-</div>
+</div>`)}
 <div class="contact-grid">
   <div class="contact-details">
     <address>

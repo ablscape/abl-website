@@ -1,6 +1,7 @@
 'use strict';
 
 const { esc, paragraphs, toCome } = require('../lib/html');
+const { pageHead } = require('./parts');
 
 function person(ctx, p) {
   const { u } = ctx;
@@ -44,10 +45,10 @@ module.exports = function studio(ctx) {
   return {
     title: 'People',
     description: `The people of ${site.name} and how the studio works with clients.`,
-    body: `<div class="page-head${lead ? ' has-lead' : ''}">
+    body: `${pageHead(ctx, site.studio && site.studio.backdrop, `<div class="page-head${lead ? ' has-lead' : ''}">
   <h1>People</h1>
   ${lead}
-</div>
+</div>`)}
 ${rest}
 <section class="people">
   ${people.map((p) => person(ctx, p)).join('\n  ')}

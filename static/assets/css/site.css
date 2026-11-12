@@ -40,8 +40,8 @@
 
   /* The white haze around the mark and the returning links wherever they are dark: over the page and over drawings. */
   --haze: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 5px var(--paper)) drop-shadow(0 0 11px rgba(255, 255, 255, 0.9));
-  --haze-text: 0 0 2px var(--paper), 0 0 4px var(--paper), 0 0 7px var(--paper), 0 0 11px var(--paper), 0 0 16px var(--paper), 0 0 22px rgba(255, 255, 255, 0.9);
-  --haze-deep: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 4px var(--paper)) drop-shadow(0 0 8px var(--paper)) drop-shadow(0 0 13px var(--paper)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.95));
+  --haze-text: 0 0 2px var(--paper), 0 0 4px var(--paper), 0 0 8px var(--paper), 0 0 14px rgba(255, 255, 255, 0.8);
+  --haze-deep: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 5px var(--paper)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 15px rgba(255, 255, 255, 0.55));
 }
 @media (max-width: 40rem) { :root { --mark-w: 4.25rem; --mark-top: 1rem; } }
 
@@ -151,7 +151,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
   color: var(--ink-strong); text-shadow: var(--haze-text);
 }
 .float-links span { padding: 0.35rem 0 0.4rem; border-bottom: 1px solid transparent; }
-.float-links::before { content: ""; position: absolute; z-index: -1; inset: 0.2rem 0; border-radius: 1.5rem; background: var(--paper); filter: blur(0.45rem); }
+.float-links::before { content: ""; position: absolute; z-index: -1; inset: 0.5rem 0.3rem; border-radius: 1.5rem; background: var(--paper); filter: blur(0.4rem); opacity: 0.86; }
 .float-links-on-photo { color: #fff; text-shadow: 0 0 2px rgba(0, 0, 0, 0.65), 0 1px 3px rgba(0, 0, 0, 0.55), 0 2px 16px rgba(0, 0, 0, 0.5); }
 .float-links-on-photo::before { content: none; }
 .nav-on .float-nav, .nav-on .float-links { opacity: 1; visibility: visible; transform: none; transition: opacity 0.3s ease, transform 0.3s ease; }
@@ -386,6 +386,13 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .dg-node { fill: var(--ink-strong); }
 .dg-label { fill: var(--ink-strong); font: 500 17px var(--sans); }
 .dg-center { fill: var(--accent); font: 300 21px var(--sans); letter-spacing: 0.02em; }
+
+/* Work, People and Contact open over one of the firm's plans too, named in "backdrop" under each page in site.json. */
+.page-statement { margin-top: 0; }
+.page-statement.has-plan { min-height: min(50vh, 32rem); }
+.page-statement .page-head, .page-statement .page-head.has-lead { display: block; max-width: none; margin: 0; padding: 0; }
+.page-statement .page-lead { max-width: 36rem; margin-top: clamp(1.25rem, 2.5vw, 2rem); }
+.page-statement + * { margin-top: clamp(2rem, 4vw, 3.5rem); }
 
 /* Process: the title and opening over one of the firm's plans, as the statement is on the home page. */
 .process-head { margin-top: 0; }

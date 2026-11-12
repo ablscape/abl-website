@@ -2,7 +2,7 @@
 
 const { TYPES } = require('../lib/content');
 const { esc, reviewNote } = require('../lib/html');
-const { projectCard } = require('./parts');
+const { projectCard, pageHead } = require('./parts');
 
 // Work: every project in a staggered collage, with one row of buttons to narrow the list.
 module.exports = function work(ctx) {
@@ -35,10 +35,10 @@ module.exports = function work(ctx) {
   return {
     title: 'Work',
     description: `Selected projects by ${site.name}: campus, civic, preservation and residential landscapes.`,
-    body: `<div class="page-head${intro ? ' has-lead' : ''}">
+    body: `${pageHead(ctx, site.work && site.work.backdrop, `<div class="page-head${intro ? ' has-lead' : ''}">
   <h1>Work</h1>
   ${intro}
-</div>
+</div>`)}
 ${filters}
 ${grid}`,
   };

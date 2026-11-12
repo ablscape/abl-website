@@ -41,7 +41,11 @@
       "The firm seeks to distill the essence of a site, and to respond to its innate character and context with creative, enduring design. ABL assists clients through all phases from initial concept to landscape establishment and maturation. We embrace open dialogue and exploration with clients, allied professionals, contractors, and end-users.",
       "Mindful of the client's need to visualize the final product and also of the client's cost constraints in landscape construction and maintenance, ABL seeks every reasonable means to narrow the uncertainty between design incubation and the desired outcome. Such techniques include photo simulation, 3D scale models, material samples, full scale mock-ups, detailed review of pricing, dialogue with both grounds staff and end-users, and frequent site visits."
     ],
-    "note": "ABL is a SWaM certified small business."
+    "note": "ABL is a SWaM certified small business.",
+    "backdrop": {
+      "project": "childrens-garden-carrier-arboretum",
+      "file": "04"
+    }
   },
   "process": {
     "backdrop": {
@@ -113,7 +117,11 @@
       "Historic site or preservation",
       "Residential",
       "Something else"
-    ]
+    ],
+    "backdrop": {
+      "project": "virginia-tech-war-memorial",
+      "file": "04"
+    }
   },
   "backdrop": {
     "project": "lime-kiln-theater",
@@ -135,6 +143,10 @@
   ],
   "work": {
     "intro": "Campus, civic and preservation projects in Lexington, Rockbridge County and elsewhere in Virginia: built work, shown with the plans and studies that precede it.",
-    "introNote": "Drafted by Claude on November 11, 2026. The firm to confirm the wording."
+    "introNote": "Drafted by Claude on November 11, 2026. The firm to confirm the wording.",
+    "backdrop": {
+      "project": "montpelier-visitor-arrival",
+      "file": "05"
+    }
   }
 }
