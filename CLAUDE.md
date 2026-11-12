@@ -37,7 +37,7 @@ The website of ABL Landscape Architecture, a landscape architecture firm in Lexi
 ## Commands
 
 ```
-node build.js               # build into dist/ with drafts and yellow preview notes
+node build.js               # build into dist/ with drafts and gray preview notes
 node build.js --production  # build exactly what the live site will show
 node build.js --check       # list everything still unfinished
 node build.js --portable    # build into preview/ so the pages open straight from a folder
@@ -100,7 +100,7 @@ python3 tools/prepare_photos.py content/projects/<slug> a.jpg b.jpg   # prepare 
 - **Change text on a project.** Edit that project's `project.json`.
 - **Add or replace photographs.** Run the prepare tool, add the entries to `photos`, write alt text. To remove a photograph, delete its entry and its files.
 - **Add a plan or sketch.** Export it as a JPEG, run the prepare tool on it, and add the entry to `drawings` with alt text and a caption saying what drawing it is.
-- **Put a plan behind the home-page statement.** Set `backdrop` in `content/site.json` to a drawing that already exists: `"backdrop": { "project": "courthouse-square", "file": "05" }`. It shows faintly behind the statement. Leave `backdrop` out to show plain white. The build refuses a project or drawing that does not exist. The Work, People, Process and Contact pages each open over a plan in the same way: set `backdrop` under `work`, `studio`, `process` or `contact`. Do not name a drawing that is also the cover of a project on the Work page.
+- **Put a plan behind the home-page statement.** Set `backdrop` in `content/site.json` to a drawing that already exists: `"backdrop": { "project": "courthouse-square", "file": "05" }`. It shows faintly behind the statement. Leave `backdrop` out to show plain white. The build refuses a project or drawing that does not exist. The Work, People, Process and Contact pages each open over a plan in the same way: set `backdrop` under `work`, `studio`, `process` or `contact`. Do not name a drawing that is also the cover of a project on the Work page. Choose a drawing on white or gray paper with clear greens; one on cream or tan paper reads as yellow behind text. A plan behind a heading is shown a few degrees greener than it was drawn (`--plan-key` in the stylesheet); the same drawing keeps its own colors on its project page.
 - **Change the home page photographs.** Edit `hero` in `content/site.json`. Each entry names a project folder and a photo number. Four or five photographs at most. Choose ones that show the design clearly, and never one that is also the cover of a featured project: no photograph appears twice on a page.
 - **Change the row of plans on the home page.** Edit `drawings` in `content/site.json`. Each entry names a project folder and one of its drawings. Three reads best.
 - **Change the Work page introduction.** `work.intro` in `content/site.json`. Clear `work.introNote` when the firm approves the text.
@@ -131,7 +131,7 @@ The site should read as the firm writes: composed, exact and unhurried. The mode
 3. Push the branch and open a pull request against `main`. Use `gh pr create --fill` when `gh` is available; otherwise use the session's own pull request button.
 4. Netlify builds a preview of the pull request within a minute or two. Find its address with `gh pr checks` or in the pull request's Netlify comment. It looks like `https://deploy-preview-<number>--<site-name>.netlify.app`.
 5. Tell the person, in this form:
-   > Here is the preview: (link). Yellow notes mark anything still to come; they never appear on the live site. Look at it on your phone and your computer. Tell me what to change, or say "publish".
+   > Here is the preview: (link). Gray notes mark anything still to come; they never appear on the live site. Look at it on your phone and your computer. Tell me what to change, or say "publish".
 6. When they say to publish, merge the pull request (`gh pr merge --squash --delete-branch`). If you cannot merge, give them the pull request link and ask them to press the green "Merge pull request" button. The live site updates a minute or two later. Confirm when it has.
 7. If they ask to undo something already published, make a new pull request that reverses it. Do not rewrite history.
 

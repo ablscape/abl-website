@@ -26,14 +26,14 @@ Nothing reaches the live site until you say publish.
 
 ## What helps Claude get it right
 
-- **Give the facts.** Client, year, the firm's role, who else worked on it. Claude will not guess them. It will ask, or leave a yellow "To come" note in the preview.
+- **Give the facts.** Client, year, the firm's role, who else worked on it. Claude will not guess them. It will ask, or leave a gray "To come" note in the preview.
 - **Tell the story in four parts** when you can: the problem, what the firm studied, what it designed, what resulted. Rough notes are fine. Claude will tidy them and mark the text for your review.
 - **Send the largest photograph files you have.** At least 2560 pixels wide is the target. Say who took each one if it was not the firm.
 - **Say whether a private client has agreed** to be named or shown.
 
-## Yellow notes and drafts
+## Gray notes and drafts
 
-- Yellow notes in a preview mark text or photographs still to come. They never appear on the live site. The "Hide notes" button in the yellow bar at the top shows a page as it will look without them.
+- Gray notes in a preview mark text or photographs still to come. They never appear on the live site. The "Hide notes" button in the bar at the top shows a page as it will look without them.
 - A project marked "Draft" appears in previews only. Tell Claude "publish the Courthouse Square project" when its text and facts are final.
 
 ## If something looks wrong

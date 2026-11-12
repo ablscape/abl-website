@@ -5,7 +5,7 @@
   var root = document.documentElement;
   var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
 
-  // Preview builds only: a button in the yellow bar hides the notes, to show the pages as they will look.
+  // Preview builds only: a button in the bar at the top hides the notes, to show the pages as they will look.
   var notesToggle = document.querySelector('[data-notes-toggle]');
   if (notesToggle) {
     var setNotes = function (off) {

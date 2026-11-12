@@ -37,7 +37,7 @@ netlify.toml             build settings
 Needs Node 18 or later. No `npm install`.
 
 ```
-node build.js               # preview view: drafts and yellow notes included
+node build.js               # preview view: drafts and gray notes included
 node build.js --production  # live-site view: published projects only
 node build.js --check       # list everything unfinished
 node build.js --portable    # preview/ folder that opens from disk, for sending to someone
@@ -49,9 +49,9 @@ The build stops with a plain-language list if content is malformed, a photograph
 
 ## Design settings
 
-Colors, typefaces and the four text sizes are variables in the first block of `static/assets/css/site.css`. Every rule takes its size from one of the four names, and a heading is never smaller than the text it stands over. The palette is white paper, near-black type, the green of the logo, and one warm accent (terracotta) for short rules, numerals and links on hover. Yellow tracing paper appears only in preview notes. The typeface is Barlow throughout, in four weights, self-hosted under the SIL Open Font License; the firm may name the typeface from its drawings to replace it.
+Colors, typefaces and the four text sizes are variables in the first block of `static/assets/css/site.css`. Every rule takes its size from one of the four names, and a heading is never smaller than the text it stands over. The palette is white paper, near-black type, the green of the logo, and one warm accent (terracotta) for short rules, numerals and links on hover. Preview notes are gray, so that they lend the pages no color while the design is judged; they never appear on the live site. No gray on the site is warm: the empty frames are a cool gray. The typeface is Barlow throughout, in four weights, self-hosted under the SIL Open Font License; the firm may name the typeface from its drawings to replace it.
 
-The firm's own plans carry much of the design: one sits behind the home-page statement (`backdrop` in `content/site.json`), three stand in a row lower on that page (`drawings`), and a project may lead with a drawing (`cover`).
+The firm's own plans carry much of the design: one sits behind the home-page statement and behind the heading of the Work, People, Process and Contact pages (`backdrop` in `content/site.json`), three stand in a row lower on the home page (`drawings`), and a project may lead with a drawing (`cover`). A plan set behind a heading is turned a few degrees from yellow toward green (`--plan-key` in the stylesheet; set it to `none` to show the plans as drawn). The same drawing keeps its own colors on its project page and wherever else it appears.
 
 Once the header has scrolled away, the "abl" of the logo stays at the top right of the window, green over the page and over drawings and white over photographs, and the links return when the visitor scrolls up. Where it is green the mark carries a soft white haze, so that text or linework passing beneath fades out around the letters; a picture marked `data-photo` or `data-sheet` in the templates carries its own copy, clipped to its frame. The returning links are drawn the way the mark is: dark, in medium weight, on a patch of white haze over the page and over drawings; white with a close dark shadow over photographs. Pages fade one into the next where the browser supports it. The mark is a vector redrawn from the 230-pixel logo and fitted to it by measurement (`MARK_PATH` in `lib/html.js`). The header logo, `static/assets/img/logo.svg`, is a drawing too: the same mark, with the two words set in Crimson Text (an open-licensed typeface chosen as the nearest of ten compared against the old file) and converted to outlines, so it stays sharp on every screen and loads no font.
 

@@ -4,7 +4,7 @@
 // Builds the whole site from content/ into dist/. Uses only what ships with Node:
 // there is nothing to install.
 //
-//   node build.js              build with drafts and yellow preview notes (for review)
+//   node build.js              build with drafts and gray preview notes (for review)
 //   node build.js --production build exactly what the live site will show
 //   node build.js --portable   build into preview/ with links that work when opened from a folder
 //   node build.js --check      print what is still unfinished, without building
