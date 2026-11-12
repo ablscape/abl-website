@@ -71,10 +71,9 @@ function openItems() {
   if (site.work && isText(site.work.introNote)) items.push(`Work: the introduction has a review note ("${site.work.introNote}")`);
   const pr = site.process || {};
   if (isText(pr.introNote)) items.push(`Process: the introduction has a review note ("${pr.introNote}")`);
-  if (!pr.dialogue || !Array.isArray(pr.dialogue.text) || !pr.dialogue.text.length) items.push('Process: the Dialogue text is missing');
-  if (pr.dialogue && isText(pr.dialogue.reviewNote)) items.push(`Process: Dialogue text has a review note ("${pr.dialogue.reviewNote}")`);
-  if (isText(pr.stepsNote)) items.push(`Process: the steps have a review note ("${pr.stepsNote}")`);
-  (pr.steps || []).forEach((step) => { if (!isText(step.text)) items.push(`Process: step "${step.title}" has no description`); });
+  if (!isText(pr.lead)) items.push('Process: the opening is missing');
+  if (isText(pr.sectionsNote)) items.push(`Process: the parts of the process have a review note ("${pr.sectionsNote}")`);
+  (pr.sections || []).forEach((sec) => { if (!Array.isArray(sec.text) || !sec.text.length) items.push(`Process: the part "${sec.title}" has no text`); });
   const services = pr.services || {};
   if (isText(services.reviewNote)) items.push(`Process: the services have a review note ("${services.reviewNote}")`);
   (services.items || []).forEach((service) => { if (!isText(service.text)) items.push(`Process: service "${service.name}" has no description`); });

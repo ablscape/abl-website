@@ -25,8 +25,8 @@
 
   /* Type: eight sizes, largest first. A heading is never smaller than the text it stands over.
      Set a size by one of these names; do not write a size into a rule. */
-  --fs-title: clamp(2.1rem, 3.4vw, 3rem);          /* the title of a page or a project; the numerals of the steps */
-  --fs-statement: clamp(1.7rem, 3.1vw, 2.85rem);   /* the statement on the home page */
+  --fs-title: clamp(2.1rem, 3.4vw, 3rem);          /* the title of a page or a project */
+  --fs-statement: clamp(1.7rem, 3.1vw, 2.85rem);   /* the statement on the home page; a remark set large */
   --fs-heading: clamp(1.45rem, 2.1vw, 1.8rem);     /* the heading of a section; a person's name; the next project */
   --fs-lead: clamp(1.25rem, 1.8vw, 1.5rem);        /* the opening paragraph under a title */
   --fs-subhead: 1.3rem;                            /* a heading inside a section: a step, a service, a part of a story, a project in a list */
@@ -372,24 +372,43 @@ a.travel-mark:hover { color: var(--ink-strong); }
   .approach > .section-label { grid-column: 1 / span 4; }
   .approach > :not(.section-label) { grid-column: 5 / span 8; }
 }
-.steps-intro, .services-intro { max-width: 40rem; font-size: var(--fs-text); line-height: 1.62; }
+.services-intro, .services-outro { max-width: 40rem; font-size: var(--fs-text); line-height: 1.62; }
 
-.dialogue { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; gap: 1.5rem var(--col-gap); }
-.dialogue-drawing { width: 100%; max-width: 24rem; height: auto; }
+.dialogue-drawing { display: block; width: 100%; max-width: 27rem; height: auto; margin-top: 2.25rem; }
 .dg-line { fill: none; stroke: var(--ink-strong); stroke-width: 1.1; }
 .dg-head { fill: none; stroke: var(--ink-strong); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
 .dg-node { fill: var(--ink-strong); }
 .dg-label { fill: var(--ink-strong); font: 500 17px var(--sans); }
 .dg-center { fill: var(--accent); font: 300 21px var(--sans); letter-spacing: 0.02em; }
-.dialogue-text { max-width: 36rem; font-size: var(--fs-text); line-height: 1.62; }
-.dialogue-text p:last-child { margin-bottom: 0; }
-@media (min-width: 48rem) { .dialogue { grid-template-columns: minmax(15rem, 23rem) minmax(0, 1fr); } }
 
-.process { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr)); gap: 2.25rem var(--col-gap); margin: 2rem 0 0; padding: 0; list-style: none; counter-reset: step; }
-.process li { padding-top: 1.1rem; border-top: 1px solid var(--ink-strong); counter-increment: step; }
-.process li::before { content: "0" counter(step); display: block; margin-bottom: 1.1rem; color: var(--accent); font-size: var(--fs-title); font-weight: 300; line-height: 1; }
-.process h3 { font-size: var(--fs-subhead); font-weight: 500; }
-.process p { margin: 0.55rem 0 0; font-size: var(--fs-text); line-height: 1.55; }
+/* Process: the title and opening over one of the firm's plans, as the statement is on the home page. */
+.process-head { margin-top: 0; }
+.process-head.has-plan { min-height: min(66vh, 44rem); }
+.process-head h1 { margin-bottom: clamp(1.25rem, 2.5vw, 2rem); font-size: var(--fs-title); font-weight: 300; letter-spacing: -0.015em; }
+.process-lead { max-width: 25em; margin: 0; font-size: var(--fs-lead); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
+.process-head + .process-intro { padding-top: clamp(2.5rem, 5vw, 4rem); }
+
+/* The parts of the process: the heading at the left; the text, then a drawing or photograph from a project. */
+.stage-body > p { max-width: 40rem; font-size: var(--fs-text); line-height: 1.62; }
+.stage-figure { margin: 2.5rem 0 0; }
+.stage-figure .frame { display: block; position: relative; overflow: hidden; }
+.stage-figure img { width: 100%; height: auto; }
+.stage-figure.is-drawing .frame::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px var(--hair); pointer-events: none; }
+.stage-figure figcaption a:hover { color: var(--ink-strong); }
+.services-outro { margin-top: 1.75rem; }
+
+/* A remark of Arthur Bartenstein's, set large between two parts of the page. */
+.pull { max-width: var(--page); margin: 0 auto; padding: clamp(4rem, 9vw, 7.5rem) var(--gutter) clamp(0.5rem, 2vw, 1.5rem); }
+.pull p { max-width: 20em; margin: 0; font-size: var(--fs-statement); font-weight: 300; line-height: 1.24; letter-spacing: -0.012em; color: var(--ink-strong); }
+.pull p::before { content: "\201C"; }
+.pull p::after { content: "\201D"; }
+.pull footer { margin-top: 1.25rem; font-size: var(--fs-small); color: var(--slate); }
+.pull footer::before { content: ""; display: inline-block; width: 2.25rem; height: 2px; margin-right: 0.8rem; vertical-align: 0.3em; background: var(--accent); }
+@media (min-width: 56rem) {
+  .pull { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); }
+  .pull > * { grid-column: 5 / span 8; }
+}
+
 
 .services dl { margin: 2rem 0 0; border-top: 1px solid var(--ink-strong); }
 .services dl > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.3rem var(--col-gap); padding: 1.3rem 0; border-bottom: 1px solid var(--hair); }
@@ -451,11 +470,11 @@ address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px 
    its place above the mark's strip of paper while it fades. */
 .js .reveal { opacity: 0; transition: opacity 1.1s ease; }
 .js .reveal.is-in { opacity: 1; }
-.js :is(.collage > .reveal, .drawing-row > .reveal, .photo-row.reveal, .plan.reveal, .person.reveal) { opacity: 1; }
-.js :is(.collage > .reveal .card, .drawing-row > .reveal .card, .photo-row.reveal figure, .plan.reveal, .person.reveal) > * { opacity: 0; transition: opacity 1.1s ease, color 0.2s ease; }
-.js :is(.collage > .reveal.is-in .card, .drawing-row > .reveal.is-in .card, .photo-row.reveal.is-in figure, .plan.reveal.is-in, .person.reveal.is-in) > * { opacity: 1; }
+.js :is(.collage > .reveal, .drawing-row > .reveal, .photo-row.reveal, .plan.reveal, .stage-figure.reveal, .person.reveal) { opacity: 1; }
+.js :is(.collage > .reveal .card, .drawing-row > .reveal .card, .photo-row.reveal figure, .plan.reveal, .stage-figure.reveal, .person.reveal) > * { opacity: 0; transition: opacity 1.1s ease, color 0.2s ease; }
+.js :is(.collage > .reveal.is-in .card, .drawing-row > .reveal.is-in .card, .photo-row.reveal.is-in figure, .plan.reveal.is-in, .stage-figure.reveal.is-in, .person.reveal.is-in) > * { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-slide, .card-image img, .drawing-image img, .travel-mark, .float-nav, .float-links { transition: none; }
-  .js .reveal, .js :is(.collage > .reveal .card, .drawing-row > .reveal .card, .photo-row.reveal figure, .plan.reveal, .person.reveal) > * { opacity: 1; transition: none; }
+  .js .reveal, .js :is(.collage > .reveal .card, .drawing-row > .reveal .card, .photo-row.reveal figure, .plan.reveal, .stage-figure.reveal, .person.reveal) > * { opacity: 1; transition: none; }
 }

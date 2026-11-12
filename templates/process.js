@@ -1,6 +1,6 @@
 'use strict';
 
-const { esc, paragraphs, toCome, reviewNote } = require('../lib/html');
+const { esc, paragraphs, picture, toCome, reviewNote } = require('../lib/html');
 const { sectionLabel } = require('./parts');
 
 // The Client, Site, Design team diagram: three points, with an arrow in each direction along every side.
@@ -23,71 +23,94 @@ const DIALOGUE_SVG = `<svg class="dialogue-drawing" viewBox="0 0 400 350" role="
       <text class="dg-center" x="200" y="212" text-anchor="middle">Dialogue</text>
     </svg>`;
 
-// Process: what is distinctive about the firm, the Dialogue diagram, the steps of a project,
-// and the ways to engage the firm.
+// Process: the title and opening over one of the firm's plans; the parts of the firm's process, each with a
+// drawing or photograph from a project, and two of Arthur Bartenstein's remarks set large between them;
+// and the ways to work with the firm. Everything comes from "process" in content/site.json.
 module.exports = function process(ctx) {
-  const { site } = ctx;
+  const { site, projects, u } = ctx;
   const p = site.process || {};
-  const dialogue = p.dialogue || {};
-  const steps = Array.isArray(p.steps) ? p.steps : [];
+  const sections = Array.isArray(p.sections) ? p.sections : [];
   const services = p.services || {};
   const items = Array.isArray(services.items) ? services.items : [];
-  const paras = Array.isArray(p.intro) ? p.intro : [];
+  const intro = Array.isArray(p.intro) ? p.intro : [];
 
-  // The first paragraph is the lead, set large beside the heading; the rest follow in the text column.
-  const lead = `<div class="page-lead">
-    ${reviewNote(ctx, p.introNote)}
-    <p>${paras.length ? esc(paras[0]) : toCome(ctx, 'what is distinctive about the firm, in its own words')}</p>
-  </div>`;
-  const intro = paras.length > 1 ? `<section class="process-intro">
-  ${paragraphs(paras.slice(1))}
-</section>` : '';
+  // A picture is named by its project and its number; it may be a drawing or a photograph.
+  const find = (ref) => {
+    const project = ref && projects.find((x) => x.slug === ref.project);
+    if (!project) return null;
+    const drawing = project.drawings.find((d) => d.file === ref.file);
+    const item = drawing || project.photos.find((d) => d.file === ref.file);
+    return item ? { project, item, isDrawing: Boolean(drawing) } : null;
+  };
 
-  const dialogueBlock = `<section class="approach">
-  ${sectionLabel('Client, site, design team')}
-  <div class="dialogue">
-    ${DIALOGUE_SVG}
-    <div class="dialogue-text">
-      ${reviewNote(ctx, dialogue.reviewNote)}
-      ${Array.isArray(dialogue.text) && dialogue.text.length ? paragraphs(dialogue.text) : `<p>${toCome(ctx, 'the Client, Site, Design team dialogue in the firm\'s words')}</p>`}
-    </div>
+  // A plan of the firm's behind the opening, as on the home page.
+  const back = find(p.backdrop);
+  let plan = '';
+  let planCredit = '';
+  if (back) {
+    const base = `/work/${back.project.slug}/photos/`;
+    const srcset = back.item.variants.map((v) => `${u(base + v.name)} ${v.width}w`).join(', ');
+    const biggest = back.item.variants[back.item.variants.length - 1];
+    plan = `<div class="statement-plan" data-sheet aria-hidden="true"><img src="${u(base + biggest.name)}" srcset="${srcset}" sizes="100vw" width="${back.item.width}" height="${back.item.height}" alt="" decoding="async"></div>`;
+    planCredit = `<p class="statement-credit"><a href="${u(back.project.url)}">${esc(back.item.caption || 'Plan')}, ${esc(back.project.title)}</a></p>`;
+  }
+  const head = `<section class="statement process-head${plan ? ' has-plan' : ''}">
+  ${plan}
+  <div class="statement-inner">
+    <h1>Process</h1>
+    <p class="process-lead">${p.lead ? esc(p.lead) : toCome(ctx, 'how the firm works, in its own words')}</p>
   </div>
-</section>` ;
+  ${planCredit}
+</section>`;
 
-  const stepsBlock = steps.length ? `<section class="approach">
-  ${sectionLabel('How a project proceeds')}
-  ${reviewNote(ctx, p.stepsNote)}
-  ${p.stepsIntro ? `<p class="steps-intro">${esc(p.stepsIntro)}</p>` : ''}
-  <ol class="process">
-    ${steps.map((step) => `<li>
-      <h3>${esc(step.title)}</h3>
-      <p>${step.text ? esc(step.text) : toCome(ctx, 'what happens at this step')}</p>
-    </li>`).join('\n    ')}
-  </ol>
+  const introBlock = intro.length || p.introNote ? `<section class="process-intro">
+  ${reviewNote(ctx, p.introNote)}
+  ${paragraphs(intro)}
 </section>` : '';
+
+  const figure = (ref) => {
+    const f = find(ref);
+    if (!f) return '';
+    return `<figure class="stage-figure${f.isDrawing ? ' is-drawing' : ''}">
+      <a class="frame" href="${u(f.project.url)}"${f.isDrawing ? ' data-sheet' : ' data-photo'}>${picture(ctx, f.project, f.item, { sizes: '(min-width: 56rem) 62vw, 100vw' })}</a>
+      <figcaption><a href="${u(f.project.url)}">${(ref.caption || f.item.caption) ? `${esc(ref.caption || f.item.caption)}, ` : ''}${esc(f.project.title)}</a></figcaption>
+    </figure>`;
+  };
+  const quote = (q) => (q && q.text ? `<blockquote class="pull">
+  <p>${esc(q.text)}</p>
+  <footer>${esc(q.by || '')}</footer>
+</blockquote>` : '');
+
+  const sectionBlocks = sections.map((sec, i) => `<section class="approach stage">
+  ${sectionLabel(sec.title)}
+  <div class="stage-body">
+    ${i === 0 ? reviewNote(ctx, p.sectionsNote) : ''}
+    ${Array.isArray(sec.text) && sec.text.length ? paragraphs(sec.text) : `<p>${toCome(ctx, 'this part of the process, in the firm\'s words')}</p>`}
+    ${sec.diagram ? DIALOGUE_SVG : ''}
+    ${figure(sec.figure)}
+  </div>
+</section>
+${quote(sec.quote)}`).join('\n');
 
   const servicesBlock = items.length ? `<section class="approach services">
-  ${sectionLabel('Ways to engage the firm')}
+  ${sectionLabel('Working with us')}
   ${reviewNote(ctx, services.reviewNote)}
   ${services.intro ? `<p class="services-intro">${esc(services.intro)}</p>` : ''}
   <dl>
     ${items.map((s) => `<div>
       <dt>${esc(s.name)}</dt>
-      <dd>${s.text ? esc(s.text) : toCome(ctx, 'what this service includes')}</dd>
+      <dd>${s.text ? esc(s.text) : toCome(ctx, 'what this includes')}</dd>
     </div>`).join('\n    ')}
   </dl>
+  ${services.outro ? `<p class="services-outro">${esc(services.outro)}</p>` : ''}
 </section>` : '';
 
   return {
     title: 'Process',
-    description: `How ${site.name} works: a practice of three that knows its place, the dialogue among client, site and design team, the steps of a project, and the ways to engage the firm.`,
-    body: `<div class="page-head has-lead">
-  <h1>Process</h1>
-  ${lead}
-</div>
-${intro}
-${dialogueBlock}
-${stepsBlock}
+    description: `How ${site.name} works: research into the history of a site, design in dialogue with the client, mock-ups before construction, and the firm's presence until the planting is established.`,
+    body: `${head}
+${introBlock}
+${sectionBlocks}
 ${servicesBlock}`,
   };
 };

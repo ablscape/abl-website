@@ -27,7 +27,7 @@ The website of ABL Landscape Architecture, a landscape architecture firm in Lexi
 |---|---|
 | `content/projects/<slug>/project.json` | One project: its facts, its text, its photo list |
 | `content/projects/<slug>/photos/` | That project's photographs, already resized |
-| `content/site.json` | Firm name, address, phone, emails; the home page (statement, photographs, the plan behind the statement, the row of drawings); the Work page introduction; the People page introduction; the Process page (what is distinctive about the firm, the Dialogue text, the steps of a project, the services); contact form choices |
+| `content/site.json` | Firm name, address, phone, emails; the home page (statement, photographs, the plan behind the statement, the row of drawings); the Work page introduction; the People page introduction; the Process page (the opening and the plan behind it, the parts of the firm's process with their pictures and quotations, the ways to work with the firm); contact form choices |
 | `content/people.json` | The people on the People page |
 | `static/assets/img/people/` | Portraits named in `people.json` |
 | `static/assets/css/site.css` | All styling. Colors and typefaces are set in the first block |
@@ -105,7 +105,7 @@ python3 tools/prepare_photos.py content/projects/<slug> a.jpg b.jpg   # prepare 
 - **Change the row of plans on the home page.** Edit `drawings` in `content/site.json`. Each entry names a project folder and one of its drawings. Three reads best.
 - **Change the Work page introduction.** `work.intro` in `content/site.json`. Clear `work.introNote` when the firm approves the text.
 - **Change the People page.** People are in `content/people.json`. The introduction is in `content/site.json` under `studio`. A portrait goes in `static/assets/img/people/` at about 1200 pixels wide, 4:5 proportion, and its file name goes in that person's `photo`.
-- **Change the Process page.** Everything on it is in `content/site.json` under `process`: `intro` (what is distinctive about the firm), `dialogue` (the Client, Site, Design team text), `steps` (the steps of a project, in order) and `services` (the ways to work with the firm). Each part has a review note field; clear it when the firm approves the text.
+- **Change the Process page.** Everything on it is in `content/site.json` under `process`: `lead` (the opening, set over the plan named in `backdrop`), `intro` (the paragraph that follows), `sections` (the parts of the process, in order; each has a `title`, a `text` list of paragraphs, and may have a `figure` naming a project and one of its drawings or photographs (with an optional `caption`), a `quote` with `text` and `by`, or `"diagram": true` for the Client, Site, Design team drawing) and `services` (`intro`, `items`, `outro`). The page speaks in the firm's own voice, as "we". Each part has a review note field (`introNote`, `sectionsNote`, `services.reviewNote`); clear it when the firm approves the text.
 - **Change contact details or the form's project types.** `content/site.json` under `address`, `phone`, `emails` and `contact`.
 - **Hide a project.** Set `status` to `draft`. Do not delete a project folder unless the person asks you to delete it.
 - **See what is unfinished.** Run `node build.js --check` and read the list back in plain language.
@@ -119,7 +119,7 @@ The site should read as the firm writes: composed, exact and unhurried. The mode
 - State what happened and why it mattered, in specifics: names, dates, dimensions, materials. One exact detail does more than three general ones.
 - No slogans, superlatives, exclamation points or rhetorical questions, and no contrast formulas of the "not this, but that" kind.
 - Use the precise word, including the technical one when it is the right one. Explain a term only where a general reader would be lost.
-- Sentence case for headings. Refer to the firm as "ABL" or "the firm".
+- Sentence case for headings. Refer to the firm as "ABL" or "the firm"; the Process page alone speaks as "we".
 - Say "project", not "commission".
 - When the person gives you their own wording, keep their wording. Fix only spelling and obvious slips, and say what you fixed.
 - When you draft text yourself from notes, set a `reviewNote` saying so, and keep `status` at `draft` until the person approves it.
