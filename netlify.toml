@@ -1,0 +1,20 @@
+# How Netlify builds and serves the site.
+# Change this file only with Thomas's agreement: a mistake here can take the site down.
+
+[build]
+  command = "node build.js"
+  publish = "dist"
+
+# The live site is built in production mode: drafts and yellow preview notes are left out.
+[context.production]
+  command = "node build.js --production"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# BEFORE LAUNCH ONLY: keeps search engines away from the unfinished site.
+# Delete this block on the day ablscape.com points here.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"

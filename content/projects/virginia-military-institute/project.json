@@ -1,0 +1,47 @@
+{
+  "title": "Virginia Military Institute",
+  "location": "Lexington, Virginia",
+  "client": "Virginia Military Institute",
+  "year": "",
+  "type": "Campus",
+  "role": "Full landscape architectural services",
+  "collaborators": [
+    "Spectrum Design, civil engineers"
+  ],
+  "status": "draft",
+  "featured": true,
+  "order": 2,
+  "summary": "Terraced parking on South Institute Hill, concealed from Main Street behind limestone walls.",
+  "reviewNote": "Existing text from the current site. The year and the four-part story are still to come.",
+  "description": [
+    "Full landscape architectural services for critically needed parking area occupying VMI's South Institute Hill. Terraced design conceals parked cars from Main Street, continues VMI theme of Lexington-quarried limestone foundation walls, and provides a safe pedestrian route to sports arenas."
+  ],
+  "cover": "01",
+  "photos": [
+    {
+      "file": "01",
+      "alt": "Two tiers of limestone retaining walls planted with shrubs, with VMI buildings rising behind",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "02",
+      "alt": "View across a lawn and a street corner to terraced limestone walls below VMI buildings",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "03",
+      "alt": "Stone-paved ramp running beside a limestone wall",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "04",
+      "alt": "Main Street with parked cars along a limestone wall and planted terraces above",
+      "caption": "",
+      "credit": ""
+    }
+  ],
+  "legacyUrls": ["vmi.html"]
+}

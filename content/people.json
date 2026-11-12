@@ -1,0 +1,80 @@
+[
+  {
+    "name": "Arthur Bartenstein",
+    "credentials": "ASLA",
+    "email": "arthur@ablscape.com",
+    "photo": "",
+    "bio": [
+      "Arthur's career has focused on the adaptation of historic and/or environmentally sensitive landscapes to contemporary needs and goals. His wide-ranging experience includes master planning and landscape architecture for university and corporate campuses, retirement communities, urban streetscapes, churches, private estates, regional parks, historic battlefields and public museum grounds.",
+      "Arthur's work has received numerous honors including four national and three state American Society of Landscape Architecture awards. Prior to founding ABL Landscape Architecture, Arthur practiced with Peter Walker and Partners and the SWA Group (based in California) as well as Hill Studio and Frazier Associates (based in Virginia)."
+    ],
+    "facts": [
+      {
+        "label": "Education",
+        "items": [
+          "Master of Landscape Architecture, Harvard University Graduate School of Design, 1981",
+          "Bachelor of Arts, Hampshire College, Amherst, MA, 1976"
+        ]
+      },
+      {
+        "label": "Registration",
+        "items": [
+          "Registered Landscape Architect, Commonwealth of Virginia",
+          "Registration #0406-000402"
+        ]
+      },
+      {
+        "label": "Professional and civic affiliations",
+        "items": [
+          "American Society of Landscape Architects",
+          "Rockbridge Area Conservation Council",
+          "City of Lexington Tree Committee",
+          "Cultural Landscape Foundation",
+          "Historic Lexington Foundation",
+          "City of Lexington Architectural Review Board",
+          "Friends of Natural Bridge State Park"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Kelly K. Morikawa",
+    "credentials": "ISA",
+    "email": "kelly@ablscape.com",
+    "photo": "",
+    "bio": [
+      "Kelly converted to full-time horticultural consultant following 18 years' experience owning and operating a multi-crew landscape design, installation, and maintenance company in the Lexington / Rockbridge area. She combines passion for both plants and natural resource conservation with down-to-earth, real world experience."
+    ],
+    "facts": [
+      {
+        "label": "Education",
+        "items": [
+          "Virginia Commonwealth University, Art, 1995-1997",
+          "Horticultural and business courses and workshops at Blue Ridge Community College, Virginia Western Community College, Mid-Atlantic Horticulture Short Course, Trees Virginia and Lewis Ginter Botanical Garden"
+        ]
+      },
+      {
+        "label": "Certification",
+        "items": [
+          "Certified Arborist, International Society of Arboriculture, since 2006",
+          "Virginia Certified Horticulturist, Virginia Nursery & Landscape Association, since 2002"
+        ]
+      },
+      {
+        "label": "Professional and civic affiliations",
+        "items": [
+          "International Society of Arboriculture",
+          "Virginia Nursery & Landscape Association"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Bugs Utsey",
+    "credentials": "",
+    "email": "",
+    "photo": "",
+    "bio": [],
+    "facts": []
+  }
+]
