@@ -63,8 +63,7 @@ module.exports = function process(ctx) {
   ${planCredit}
 </section>`;
 
-  const introBlock = intro.length || p.introNote ? `<section class="process-intro">
-  ${reviewNote(ctx, p.introNote)}
+  const introBlock = intro.length ? `<section class="process-intro">
   ${paragraphs(intro)}
 </section>` : '';
 
@@ -84,7 +83,7 @@ module.exports = function process(ctx) {
   const sectionBlocks = sections.map((sec, i) => `<section class="approach stage">
   ${sectionLabel(sec.title)}
   <div class="stage-body">
-    ${i === 0 ? reviewNote(ctx, p.sectionsNote) : ''}
+    ${i === 0 ? reviewNote(ctx, p.sectionsNote || p.introNote) : ''}
     ${Array.isArray(sec.text) && sec.text.length ? paragraphs(sec.text) : `<p>${toCome(ctx, 'this part of the process, in the firm\'s words')}</p>`}
     ${sec.diagram ? DIALOGUE_SVG : ''}
     ${figure(sec.figure)}
@@ -92,17 +91,19 @@ module.exports = function process(ctx) {
 </section>
 ${quote(sec.quote)}`).join('\n');
 
-  const servicesBlock = items.length ? `<section class="approach services">
-  ${sectionLabel('Working with us')}
-  ${reviewNote(ctx, services.reviewNote)}
-  ${services.intro ? `<p class="services-intro">${esc(services.intro)}</p>` : ''}
-  <dl>
-    ${items.map((s) => `<div>
-      <dt>${esc(s.name)}</dt>
-      <dd>${s.text ? esc(s.text) : toCome(ctx, 'what this includes')}</dd>
-    </div>`).join('\n    ')}
-  </dl>
-  ${services.outro ? `<p class="services-outro">${esc(services.outro)}</p>` : ''}
+  const serviceText = Array.isArray(services.intro) ? services.intro : (services.intro ? [services.intro] : []);
+  const servicesBlock = serviceText.length || items.length ? `<section class="approach services">
+  ${sectionLabel('Services')}
+  <div class="stage-body">
+    ${reviewNote(ctx, services.reviewNote)}
+    ${serviceText.map((line) => `<p class="services-intro">${esc(line)}</p>`).join('\n    ')}
+    ${items.length ? `<dl>
+      ${items.map((s) => `<div>
+        <dt>${esc(s.name)}</dt>
+        <dd>${s.text ? esc(s.text) : toCome(ctx, 'what this includes')}</dd>
+      </div>`).join('\n      ')}
+    </dl>` : ''}
+  </div>
 </section>` : '';
 
   return {

@@ -23,16 +23,12 @@
   /* Typeface: one family everywhere. When the firm names the type from its drawings, set it here. */
   --sans: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-  /* Type: eight sizes, largest first. A heading is never smaller than the text it stands over.
+  /* Type: four sizes. A heading is never smaller than the text it stands over.
      Set a size by one of these names; do not write a size into a rule. */
-  --fs-title: clamp(2.1rem, 3.4vw, 3rem);          /* the title of a page or a project */
-  --fs-statement: clamp(1.7rem, 3.1vw, 2.85rem);   /* the statement on the home page; a remark set large */
-  --fs-heading: clamp(1.45rem, 2.1vw, 1.8rem);     /* the heading of a section; a person's name; the next project */
-  --fs-lead: clamp(1.25rem, 1.8vw, 1.5rem);        /* the opening paragraph under a title */
-  --fs-subhead: 1.3rem;                            /* a heading inside a section: a step, a service, a part of a story, a project in a list */
-  --fs-text: 1.125rem;                             /* all running text */
-  --fs-small: 0.95rem;                             /* captions, facts, labels, the links at the head and foot of the page */
-  --fs-tag: 0.8rem;                                /* the kind of project above its title, in capitals */
+  --fs-large: clamp(1.75rem, 3vw, 2.6rem);       /* titles, the statement on the home page, a remark set large */
+  --fs-medium: clamp(1.2rem, 1.55vw, 1.4rem);    /* headings of sections and their parts, opening paragraphs, names in lists */
+  --fs-text: 1.125rem;                           /* all running text */
+  --fs-small: 0.9rem;                            /* captions, facts, labels, the links at the head and foot of the page */
 
   /* Layout */
   --page: 92rem;
@@ -41,15 +37,24 @@
   --edge: max(var(--gutter), calc((100vw - var(--page)) / 2 + var(--gutter))); /* window edge to content edge */
   --mark-w: 6.25rem;       /* width of the traveling "abl" */
   --mark-top: 1.75rem;
+  --veil-h: calc(var(--mark-top) + var(--mark-w) * 0.44 + 2.4rem);  /* the frosted veil behind the returning links */
 
-  /* The white haze around the mark and the returning links wherever they are dark: over the page and over drawings. */
+  /* The white haze around the mark where it is green: over the page and over drawings. */
   --haze: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 5px var(--paper)) drop-shadow(0 0 11px rgba(255, 255, 255, 0.9));
   --haze-deep: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 4px var(--paper)) drop-shadow(0 0 8px var(--paper)) drop-shadow(0 0 13px var(--paper)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.95));
-  --haze-text: 0 0 2px var(--paper), 0 0 4px var(--paper), 0 0 7px var(--paper), 0 0 11px var(--paper), 0 0 16px var(--paper), 0 0 22px rgba(255, 255, 255, 0.9);
 }
 @media (max-width: 40rem) { :root { --mark-w: 4.25rem; --mark-top: 1rem; } }
 
 *, *::before, *::after { box-sizing: border-box; }
+
+/* Moving from page to page: the old page fades into the new one, where the browser supports it. */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.4s; }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+
+/* Headings break into lines of even length; paragraphs do not end on a single stranded word. */
+h1, h2, h3, blockquote p { text-wrap: balance; }
+p, dd, figcaption { text-wrap: pretty; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
@@ -78,7 +83,7 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .text-link:hover { color: var(--accent); }
 
 /* The heading of a section, under a short terracotta rule. */
-.section-label { margin: 0 0 clamp(1.75rem, 3vw, 2.75rem); font-size: var(--fs-heading); font-weight: 300; letter-spacing: -0.01em; line-height: 1.2; color: var(--ink-strong); }
+.section-label { margin: 0 0 clamp(1.75rem, 3vw, 2.75rem); font-size: var(--fs-medium); font-weight: 400; line-height: 1.3; color: var(--ink-strong); }
 .section-label::before { content: ""; display: block; width: 2.25rem; height: 2px; margin-bottom: 1rem; background: var(--accent); }
 
 /* Preview-only markers. None of these appear on the live site. */
@@ -89,14 +94,14 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .notes-toggle:hover { background: var(--ink); color: var(--paper); }
 /* "Hide notes" in the preview bar shows the pages as they will look, without the yellow markers. */
 .notes-off .review-note, .notes-off .draft-tag, .notes-off .title-block div:has(.to-come), .notes-off .person-photo:has(.photo-to-come), .notes-off p:has(> .to-come:only-child) { display: none; }
-.draft-tag { margin-left: 0.6rem; padding: 0.15rem 0.4rem 0.2rem; background: var(--trace); font-size: var(--fs-tag); font-weight: 500; line-height: 1; letter-spacing: 0; vertical-align: middle; color: var(--ink-strong); }
+.draft-tag { margin-left: 0.6rem; padding: 0.15rem 0.4rem 0.2rem; background: var(--trace); font-size: var(--fs-small); font-weight: 500; line-height: 1; letter-spacing: 0; vertical-align: middle; color: var(--ink-strong); }
 
 /* Header: the links at the left, the logo at the right. */
 .site-header {
   display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
   max-width: var(--page); margin: 0 auto; padding: 1.75rem var(--gutter) 1.5rem;
 }
-.site-nav, .float-nav, .float-links { display: flex; flex-wrap: wrap; gap: clamp(1.1rem, 2.4vw, 2.1rem); font-size: var(--fs-small); line-height: 1; }
+.site-nav, .float-nav { display: flex; flex-wrap: wrap; gap: clamp(1.1rem, 2.4vw, 2.1rem); font-size: var(--fs-small); line-height: 1; }
 .site-nav a, .float-nav a { padding: 0.35rem 0 0.4rem; color: var(--ink); border-bottom: 1px solid transparent; }
 .site-nav a:hover, .float-nav a:hover { color: var(--ink-strong); border-bottom-color: var(--accent); }
 .site-nav a[aria-current="page"], .float-nav a[aria-current="page"] { color: var(--ink-strong); border-bottom-color: var(--accent); }
@@ -104,7 +109,7 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 @media (max-width: 36rem) {
   .site-header { flex-direction: column-reverse; align-items: flex-start; padding-block: 1.1rem 0.9rem; }
   .logo img { width: 178px; }
-  .site-nav, .float-nav, .float-links { gap: 1.15rem; font-size: var(--fs-small); }
+  .site-nav, .float-nav { gap: 1.15rem; font-size: var(--fs-small); }
 }
 
 /* The traveling mark: once the header has scrolled away, "abl" stays at the top right of the window.
@@ -127,29 +132,29 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* Rules later in this file that set "position" on a picture (the plan behind the statement) still apply. */
 .carries-mark { position: relative; z-index: 2; clip-path: inset(0); }
 
-/* The links return when the visitor scrolls back up. They are drawn the way the mark is: dark, in the
-   same white haze, over the page and over drawings; white over photographs; each picture carrying its
-   own copy. Over the page a patch of the same haze, with no edge to it, lies behind the row, so that
-   running text fades out beneath the links. The links themselves lie on top, unseen, to take the
-   pointer and the keyboard, and show only their terracotta rule. */
-.float-nav, .float-links {
-  position: fixed; top: calc(var(--mark-top) - 0.55rem); left: calc(var(--edge) - 0.9rem);
+/* The links return when the visitor scrolls back up, on a veil of frosted white across the top of the
+   window. Whatever lies beneath is blurred and lightened, so the links and a green copy of the mark read
+   clearly over text, drawings and photographs alike. The veil has no lower edge: it thins out downward. */
+.float-veil {
+  position: fixed; inset: 0 0 auto 0; z-index: 4; height: var(--veil-h); pointer-events: none;
+  background: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15); backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-mask-image: linear-gradient(#000 58%, transparent); mask-image: linear-gradient(#000 58%, transparent);
+  opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0s linear 0.35s;
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .float-veil { background: rgba(255, 255, 255, 0.95); } }
+.float-nav {
+  position: fixed; top: calc(var(--mark-top) - 0.55rem); left: calc(var(--edge) - 0.9rem); z-index: 5;
   padding: 0.7rem 0.9rem;
   opacity: 0; visibility: hidden; transform: translateY(-0.4rem);
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
 }
-.float-nav { z-index: 5; }
-.float-nav a, .float-nav a:hover, .float-nav a[aria-current="page"] { color: transparent; }
-.float-links {
-  z-index: 1; pointer-events: none; white-space: nowrap;
-  font-weight: 400; font-style: normal; letter-spacing: 0; text-transform: none; text-align: left;
-  color: var(--ink); text-shadow: var(--haze-text);
-}
-.float-links span { padding: 0.35rem 0 0.4rem; border-bottom: 1px solid transparent; }
-.float-links::before { content: ""; position: absolute; z-index: -1; inset: 0.3rem 0.15rem; border-radius: 1.5rem; background: var(--paper); filter: blur(0.45rem); }
-.float-links-on-photo::before, .float-links-on-sheet::before { content: none; }
-.float-links-on-photo { color: #fff; text-shadow: 0 0 3px rgba(0, 0, 0, 0.4), 0 1px 10px rgba(0, 0, 0, 0.45); }
-.nav-on .float-nav, .nav-on .float-links { opacity: 1; visibility: visible; transform: none; transition: opacity 0.3s ease, transform 0.3s ease; }
+.float-nav a { color: var(--ink-strong); }
+.travel-mark-on-veil { z-index: 5; filter: none; }
+.mark-on .travel-mark-on-veil { opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0s linear 0.35s; }
+.nav-on .float-veil { opacity: 1; visibility: visible; transition: opacity 0.35s ease; }
+.nav-on .float-nav { opacity: 1; visibility: visible; transform: none; transition: opacity 0.3s ease, transform 0.3s ease; }
+.nav-on .travel-mark-on-veil { opacity: 1; visibility: visible; transition: opacity 0.35s ease; }
 
 /* Home: photographs the width of the screen, with the caption at the right below them. */
 .hero { margin: 0; }
@@ -181,7 +186,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
     linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 16%, rgba(255, 255, 255, 0) 84%, #fff 100%);
 }
 .statement-inner { position: relative; width: 100%; max-width: var(--page); margin: 0 auto; padding: clamp(4rem, 10vw, 9rem) var(--gutter); }
-.statement-text { max-width: 19.5em; margin: 0; font-size: var(--fs-statement); font-weight: 300; line-height: 1.28; letter-spacing: -0.012em; color: var(--ink-strong); }
+.statement-text { max-width: 19.5em; margin: 0; font-size: var(--fs-large); font-weight: 300; line-height: 1.28; letter-spacing: -0.012em; color: var(--ink-strong); }
 .statement-credit { position: absolute; left: var(--edge); bottom: 1.4rem; margin: 0; font-size: var(--fs-small); line-height: 1.3; text-align: left; color: var(--slate); }
 @media (min-width: 40.0625rem) {
   /* The statement lies over the plan, to the left of the mark's place. */
@@ -236,8 +241,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .card:hover .card-image img, .card:hover .drawing-image img { transform: scale(1.025); }
 .card-image.is-drawing, .drawing-image { position: relative; }
 .card-image.is-drawing::after, .drawing-image::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px var(--hair); pointer-events: none; }
-.card-kind { display: block; margin-top: 1.05rem; font-size: var(--fs-tag); font-weight: 500; letter-spacing: 0.09em; line-height: 1.3; text-transform: uppercase; color: var(--slate); }
-.card-title { display: block; margin-top: 0.3rem; font-size: var(--fs-subhead); font-weight: 400; line-height: 1.25; color: var(--ink-strong); transition: color 0.2s ease; }
+.card-kind { display: block; margin-top: 1.05rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; line-height: 1.3; text-transform: uppercase; color: var(--slate); }
+.card-title { display: block; margin-top: 0.3rem; font-size: var(--fs-medium); font-weight: 400; line-height: 1.25; color: var(--ink-strong); transition: color 0.2s ease; }
 .card:hover .card-title { color: var(--accent); }
 .card-meta { display: block; margin-top: 0.2rem; font-size: var(--fs-small); line-height: 1.4; color: var(--slate); }
 
@@ -249,7 +254,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 @media (min-width: 48rem) { .drawing-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
 /* A short account of the firm at the foot of the home page. */
-.firm-text p { max-width: 34em; font-size: var(--fs-lead); font-weight: 300; line-height: 1.45; color: var(--ink-strong); }
+.firm-text p { max-width: 34em; font-size: var(--fs-medium); font-weight: 300; line-height: 1.45; color: var(--ink-strong); }
 .firm-text .firm-links { display: flex; gap: 2.25rem; margin: 2rem 0 0; font-size: var(--fs-text); font-weight: 400; }
 @media (min-width: 56rem) {
   .firm { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); }
@@ -259,8 +264,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 
 /* Page headings: the title at the left, a lead paragraph at the right. */
 .page-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem var(--col-gap); max-width: var(--page); margin: 0 auto; padding: clamp(2.5rem, 6vw, 5.5rem) var(--gutter) clamp(2rem, 4vw, 3.5rem); }
-.page-head h1 { font-size: var(--fs-title); font-weight: 300; letter-spacing: -0.015em; }
-.page-lead p:last-child { max-width: 31em; margin: 0; font-size: var(--fs-lead); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
+.page-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; }
+.page-lead p:last-child { max-width: 31em; margin: 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
 @media (min-width: 56rem) {
   .page-head.has-lead { grid-template-columns: repeat(12, minmax(0, 1fr)); }
   .page-head.has-lead h1 { grid-column: 1 / span 4; }
@@ -291,12 +296,12 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .project-body > .project-opening + .project-text, .project-body > .project-text + .project-text { margin-top: 2.5rem; }
 
 .project-opening { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem var(--col-gap); }
-.project-kind { margin: 0 0 0.7rem; font-size: var(--fs-tag); font-weight: 500; letter-spacing: 0.09em; line-height: 1.3; text-transform: uppercase; color: var(--slate); }
-.project-head h1 { font-size: var(--fs-title); font-weight: 300; letter-spacing: -0.015em; }
+.project-kind { margin: 0 0 0.7rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; line-height: 1.3; text-transform: uppercase; color: var(--slate); }
+.project-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; }
 .project-summary { max-width: 24em; margin: 0.9rem 0 2rem; font-size: var(--fs-text); line-height: 1.45; color: var(--slate); }
 .project-lead, .project-text { max-width: 40rem; }
 .story-part + .story-part { margin-top: 2.75rem; }
-.story-part h2 { margin-bottom: 0.7rem; font-size: var(--fs-subhead); font-weight: 500; line-height: 1.3; color: var(--ink-strong); }
+.story-part h2 { margin-bottom: 0.7rem; font-size: var(--fs-medium); font-weight: 400; line-height: 1.3; color: var(--ink-strong); }
 .story-part p { font-size: var(--fs-text); line-height: 1.62; }
 .story-part p:last-child { margin-bottom: 0; }
 
@@ -333,8 +338,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
   max-width: var(--page); margin: clamp(4rem, 9vw, 8rem) auto 0; padding: 2rem var(--gutter) 0;
   border-top: 1px solid var(--hair);
 }
-.next-label { display: block; margin-bottom: 0.3rem; color: var(--slate); font-size: var(--fs-tag); font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; }
-.next-title { font-size: var(--fs-heading); font-weight: 300; letter-spacing: -0.01em; color: var(--ink-strong); transition: color 0.2s ease; }
+.next-label { display: block; margin-bottom: 0.3rem; color: var(--slate); font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; }
+.next-title { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.01em; color: var(--ink-strong); transition: color 0.2s ease; }
 .project-next a:hover .next-title { color: var(--accent); }
 .project-next .all-work { font-size: var(--fs-text); }
 
@@ -352,7 +357,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .person-photo { display: grid; place-items: center; width: 100%; max-width: 17rem; aspect-ratio: 4 / 5; background: var(--fill); }
 .person-photo img { width: 100%; height: 100%; object-fit: cover; }
 .photo-to-come { padding: 0.2rem 0.45rem; background: var(--trace-wash); font-size: var(--fs-small); }
-.person-name { font-size: var(--fs-heading); font-weight: 300; letter-spacing: -0.01em; }
+.person-name { font-size: var(--fs-medium); font-weight: 400; }
 .credentials { font-size: var(--fs-small); font-weight: 400; letter-spacing: 0.04em; color: var(--slate); }
 .person-title, .person-email { margin: 0.4rem 0 0; font-size: var(--fs-small); color: var(--slate); }
 .person-email { margin-bottom: 1.4rem; }
@@ -372,7 +377,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
   .approach > .section-label { grid-column: 1 / span 4; }
   .approach > :not(.section-label) { grid-column: 5 / span 8; }
 }
-.services-intro, .services-outro { max-width: 40rem; font-size: var(--fs-text); line-height: 1.62; }
+.services-intro + .services-intro { margin-top: 1rem; }
+.services-intro { max-width: 40rem; font-size: var(--fs-text); line-height: 1.62; }
 
 .dialogue-drawing { display: block; width: 100%; max-width: 27rem; height: auto; margin-top: 2.25rem; }
 .dg-line { fill: none; stroke: var(--ink-strong); stroke-width: 1.1; }
@@ -384,8 +390,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* Process: the title and opening over one of the firm's plans, as the statement is on the home page. */
 .process-head { margin-top: 0; }
 .process-head.has-plan { min-height: min(66vh, 44rem); }
-.process-head h1 { margin-bottom: clamp(1.25rem, 2.5vw, 2rem); font-size: var(--fs-title); font-weight: 300; letter-spacing: -0.015em; }
-.process-lead { max-width: 25em; margin: 0; font-size: var(--fs-lead); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
+.process-head h1 { margin-bottom: clamp(1.25rem, 2.5vw, 2rem); font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; }
+.process-lead { max-width: 25em; margin: 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
 .process-head + .process-intro { padding-top: clamp(2.5rem, 5vw, 4rem); }
 
 /* The parts of the process: the heading at the left; the text, then a drawing or photograph from a project. */
@@ -395,11 +401,10 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .stage-figure img { width: 100%; height: auto; }
 .stage-figure.is-drawing .frame::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px var(--hair); pointer-events: none; }
 .stage-figure figcaption a:hover { color: var(--ink-strong); }
-.services-outro { margin-top: 1.75rem; }
 
 /* A remark of Arthur Bartenstein's, set large between two parts of the page. */
 .pull { max-width: var(--page); margin: 0 auto; padding: clamp(4rem, 9vw, 7.5rem) var(--gutter) clamp(0.5rem, 2vw, 1.5rem); }
-.pull p { max-width: 20em; margin: 0; font-size: var(--fs-statement); font-weight: 300; line-height: 1.24; letter-spacing: -0.012em; color: var(--ink-strong); }
+.pull p { max-width: 20em; margin: 0; font-size: var(--fs-large); font-weight: 300; line-height: 1.24; letter-spacing: -0.012em; color: var(--ink-strong); }
 .pull p::before { content: "\201C"; }
 .pull p::after { content: "\201D"; }
 .pull footer { margin-top: 1.25rem; font-size: var(--fs-small); color: var(--slate); }
@@ -412,7 +417,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 
 .services dl { margin: 2rem 0 0; border-top: 1px solid var(--ink-strong); }
 .services dl > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.3rem var(--col-gap); padding: 1.3rem 0; border-bottom: 1px solid var(--hair); }
-.services dt { font-size: var(--fs-subhead); font-weight: 500; line-height: 1.3; color: var(--ink-strong); }
+.services dt { font-size: var(--fs-medium); font-weight: 500; line-height: 1.3; color: var(--ink-strong); }
 .services dd { max-width: 36rem; margin: 0; font-size: var(--fs-text); line-height: 1.55; }
 @media (min-width: 40rem) { .services dl > div { grid-template-columns: 13rem minmax(0, 1fr); } }
 
@@ -429,7 +434,7 @@ address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px 
 .contact-pointer { max-width: 22rem; margin-top: 2.25rem; font-size: var(--fs-small); color: var(--slate); }
 
 .inquiry { max-width: 46rem; padding: clamp(1.5rem, 3vw, 2.5rem); border: 1px solid var(--hair); }
-.inquiry h2 { margin-bottom: 1.5rem; font-size: var(--fs-heading); font-weight: 300; }
+.inquiry h2 { margin-bottom: 1.5rem; font-size: var(--fs-medium); font-weight: 400; }
 .inquiry p { margin: 0 0 1.15rem; }
 .inquiry label { display: block; margin-bottom: 0.35rem; font-size: var(--fs-small); color: var(--ink-strong); }
 .optional { color: var(--slate); }
@@ -475,6 +480,6 @@ address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px 
 .js :is(.collage > .reveal.is-in .card, .drawing-row > .reveal.is-in .card, .photo-row.reveal.is-in figure, .plan.reveal.is-in, .stage-figure.reveal.is-in, .person.reveal.is-in) > * { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-slide, .card-image img, .drawing-image img, .travel-mark, .float-nav, .float-links { transition: none; }
+  .hero-slide, .card-image img, .drawing-image img, .travel-mark, .float-nav, .float-veil { transition: none; }
   .js .reveal, .js :is(.collage > .reveal .card, .drawing-row > .reveal .card, .photo-row.reveal figure, .plan.reveal, .stage-figure.reveal, .person.reveal) > * { opacity: 1; transition: none; }
 }
