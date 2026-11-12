@@ -56,7 +56,7 @@ module.exports = function projectPage(ctx, project, next) {
     : `<div class="photo-row photo-pair">\n    ${group.map((p) => photoFigure(p, '(min-width: 1100px) 520px, 100vw')).join('\n    ')}\n  </div>`;
 
   const drawingHtml = (d) => `<figure class="plan">
-      ${picture(ctx, project, d, { sizes: '(min-width: 1100px) 1100px, 100vw' })}
+      <div class="frame" data-sheet>${picture(ctx, project, d, { sizes: '(min-width: 1100px) 1100px, 100vw' })}</div>
       ${caption(d)}
     </figure>`;
 
@@ -99,7 +99,7 @@ module.exports = function projectPage(ctx, project, next) {
     bodyClass: 'project-page',
     body: `<article class="project">
   <figure class="project-hero ${cover.isDrawing ? 'is-drawing' : 'is-photo'}">
-    <div class="frame"${cover.isDrawing ? '' : ' data-photo'}>${picture(ctx, project, cover, { sizes: '100vw', lazy: false })}</div>
+    <div class="frame"${cover.isDrawing ? ' data-sheet' : ' data-photo'}>${picture(ctx, project, cover, { sizes: '100vw', lazy: false })}</div>
     ${caption(cover)}
   </figure>
   <div class="project-body">

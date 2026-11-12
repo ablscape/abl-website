@@ -8,7 +8,7 @@ function projectCard(ctx, project, sizes) {
   const draft = ctx.showNotes && project.status === 'draft' ? '<span class="draft-tag">Draft</span>' : '';
   const cover = project.coverPhoto;
   return `<a class="card" href="${ctx.u(project.url)}">
-      <span class="card-image ${cover.isDrawing ? 'is-drawing' : 'is-photo'}"${cover.isDrawing ? '' : ' data-photo'}>${picture(ctx, project, cover, { sizes })}</span>
+      <span class="card-image ${cover.isDrawing ? 'is-drawing' : 'is-photo'}"${cover.isDrawing ? ' data-sheet' : ' data-photo'}>${picture(ctx, project, cover, { sizes })}</span>
       <span class="card-kind">${esc(project.type)}</span>
       <span class="card-title">${esc(project.title)}${draft}</span>
       <span class="card-meta">${esc(meta)}</span>

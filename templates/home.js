@@ -43,7 +43,7 @@ module.exports = function home(ctx) {
       const base = `/work/${project.slug}/photos/`;
       const srcset = drawing.variants.map((v) => `${u(base + v.name)} ${v.width}w`).join(', ');
       const biggest = drawing.variants[drawing.variants.length - 1];
-      plan = `<div class="statement-plan" aria-hidden="true"><img src="${u(base + biggest.name)}" srcset="${srcset}" sizes="100vw" width="${drawing.width}" height="${drawing.height}" alt="" loading="lazy" decoding="async"></div>`;
+      plan = `<div class="statement-plan" data-sheet aria-hidden="true"><img src="${u(base + biggest.name)}" srcset="${srcset}" sizes="100vw" width="${drawing.width}" height="${drawing.height}" alt="" loading="lazy" decoding="async"></div>`;
       planCredit = `<p class="statement-credit"><a href="${u(project.url)}">${esc(drawing.caption || 'Plan')}, ${esc(project.title)}</a></p>`;
     }
   }
@@ -70,7 +70,7 @@ module.exports = function home(ctx) {
   ${sectionLabel('Plans and drawings')}
   <ul class="drawing-row">
     ${sheets.map(({ project, drawing }) => `<li><a class="card" href="${u(project.url)}">
-      <span class="drawing-image">${picture(ctx, project, drawing, { sizes: '(min-width: 900px) 30vw, 100vw' })}</span>
+      <span class="drawing-image" data-sheet>${picture(ctx, project, drawing, { sizes: '(min-width: 900px) 30vw, 100vw' })}</span>
       <span class="card-title">${esc(project.title)}</span>
       <span class="card-meta">${esc(drawing.caption || 'Plan')}</span>
     </a></li>`).join('\n    ')}

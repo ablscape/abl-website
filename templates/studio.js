@@ -13,7 +13,7 @@ function person(ctx, p) {
         </div>`).join('\n        ');
   const bio = Array.isArray(p.bio) && p.bio.length ? paragraphs(p.bio) : `<p>${toCome(ctx, 'biography')}</p>`;
   return `<article class="person${photo ? '' : ' person-no-photo'}">
-    ${photo ? `<div class="person-photo">${photo}</div>` : ''}
+    ${photo ? `<div class="person-photo"${p.photo ? ' data-photo' : ' data-sheet'}>${photo}</div>` : ''}
     <div class="person-text">
       <h2 class="person-name">${esc(p.name)}${p.credentials ? `, <span class="credentials">${esc(p.credentials)}</span>` : ''}</h2>
       ${p.title ? `<p class="person-title">${esc(p.title)}</p>` : ''}

@@ -92,8 +92,10 @@ figcaption { margin-top: 0.6rem; font-size: 0.92rem; line-height: 1.4; color: va
 }
 
 /* The traveling mark: once the header has scrolled away, "abl" stays at the top right of the window.
-   It is green over the page and white over photographs. Each photograph carries its own white copy,
-   fixed at the same place and clipped to the photograph, so the change follows the picture's edge. */
+   It is green over the page and over drawings, and white over photographs. Each picture carries its
+   own copy, fixed at the same place and clipped to the picture, so the change follows the picture's edge.
+   Over the page the mark sits on a strip of paper reaching to the corner of the window, so that text
+   passing beneath is covered and is never printed over. */
 .travel-mark {
   position: fixed; top: var(--mark-top); right: var(--edge); z-index: 1;
   display: block; width: var(--mark-w); color: var(--sage);
@@ -102,7 +104,15 @@ figcaption { margin-top: 0.6rem; font-size: 0.92rem; line-height: 1.4; color: va
 .travel-mark svg { display: block; width: 100%; height: auto; fill: currentColor; }
 .mark-on .travel-mark { opacity: 1; visibility: visible; transition: opacity 0.45s ease; }
 a.travel-mark:hover { color: var(--ink-strong); }
-.travel-mark-on-photo { z-index: auto; color: #fff; pointer-events: none; filter: drop-shadow(0 1px 9px rgba(0, 0, 0, 0.3)); }
+a.travel-mark::before {
+  content: ""; position: absolute; z-index: -1;
+  inset: calc(-1 * var(--mark-top)) calc(-1 * var(--edge)) -0.5rem -0.8rem;
+  background: var(--paper); box-shadow: 0 0 0.7rem 0.55rem var(--paper);
+}
+.travel-mark-on-photo, .travel-mark-on-sheet { pointer-events: none; }
+.travel-mark-on-photo { color: #fff; filter: drop-shadow(0 1px 9px rgba(0, 0, 0, 0.3)); }
+.travel-mark-on-sheet { filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 5px #fff) drop-shadow(0 0 11px rgba(255, 255, 255, 0.9)); }
+/* Rules later in this file that set "position" on a picture (the plan behind the statement) still apply. */
 .carries-mark { position: relative; z-index: 2; clip-path: inset(0); }
 
 /* The links return, on a strip of paper, when the visitor scrolls back up. */
@@ -121,11 +131,11 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .hero-slide.is-active { opacity: 1; }
 .hero-slide img { width: 100%; height: 100%; object-fit: cover; }
 .hero-bar {
-  display: flex; align-items: baseline; justify-content: flex-end; gap: 1.5rem;
+  display: flex; align-items: baseline; justify-content: flex-start; gap: 1.5rem;
   max-width: var(--page); margin: 0 auto; padding: 0.85rem var(--gutter) 0;
   font-size: 0.95rem; line-height: 1.4; color: var(--slate);
 }
-.hero-caption { margin: 0; text-align: right; }
+.hero-caption { margin: 0; }
 .hero-caption a { color: var(--ink-strong); font-weight: 500; }
 .hero-caption a:hover { color: var(--accent); }
 .hero-toggle { flex: none; padding: 0; border: 0; background: none; color: var(--slate); font: inherit; cursor: pointer; }
@@ -145,8 +155,12 @@ a.travel-mark:hover { color: var(--ink-strong); }
 }
 .statement-inner { position: relative; width: 100%; max-width: var(--page); margin: 0 auto; padding: clamp(4rem, 10vw, 9rem) var(--gutter); }
 .statement-text { max-width: 19.5em; margin: 0; font-size: clamp(1.7rem, 3.1vw, 2.85rem); font-weight: 300; line-height: 1.28; letter-spacing: -0.012em; color: var(--ink-strong); }
-.statement-credit { position: absolute; right: var(--edge); bottom: 1.4rem; margin: 0; font-size: 0.92rem; line-height: 1.3; color: var(--slate); }
-.statement-credit a { padding: 0.2rem 0.45rem; background: rgba(255, 255, 255, 0.85); }
+.statement-credit { position: absolute; left: var(--edge); bottom: 1.4rem; margin: 0; font-size: 0.92rem; line-height: 1.3; text-align: left; color: var(--slate); }
+@media (min-width: 40.0625rem) {
+  /* The statement lies over the plan, to the left of the mark's place. */
+  .statement-inner, .statement-credit { z-index: 3; }
+  .statement-text { max-width: min(19.5em, calc(100% - var(--mark-w) - 2.5rem)); }
+}
 @media (max-width: 40rem) {
   /* Phones: the statement first, then the plan beneath it at full strength. */
   .statement.has-plan { display: flex; flex-direction: column; min-height: 0; }
@@ -154,8 +168,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
   .statement-plan { order: 2; position: relative; inset: auto; height: 15.5rem; }
   .statement-plan img { opacity: 1; }
   .statement-plan::after { background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 28%); }
-  .statement-credit { order: 3; position: static; padding: 0.6rem var(--gutter) 0; }
-  .statement-credit a { padding: 0; background: none; }
+  .statement-credit { order: 3; position: static; align-self: flex-start; padding: 0.6rem var(--gutter) 0; }
 }
 
 /* Sections of the home page. */
@@ -239,9 +252,11 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* A project page */
 .frame { display: block; }
 .project-hero.is-photo img { width: 100%; height: min(84vh, 62rem); min-height: 16rem; object-fit: cover; }
-.project-hero.is-photo figcaption { max-width: var(--page); margin: 0.6rem auto 0; padding: 0 var(--gutter); text-align: right; }
+.project-hero.is-photo figcaption { max-width: var(--page); margin: 0.6rem auto 0; padding: 0 var(--gutter); }
 .project-hero.is-drawing { max-width: var(--page); margin: 0 auto; padding: clamp(0.5rem, 2vw, 1.5rem) var(--gutter) 0; }
-.project-hero.is-drawing img { width: 100%; box-shadow: 0 0 0 1px var(--hair); }
+.project-hero.is-drawing img { width: 100%; }
+.project-hero.is-drawing .frame, .plan .frame { position: relative; }
+.project-hero.is-drawing .frame::after, .plan .frame::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px var(--hair); pointer-events: none; }
 .project-body { max-width: var(--page); margin: 0 auto; padding: clamp(3rem, 7vw, 6rem) var(--gutter) 0; }
 .project-body > * + * { margin-top: clamp(3.5rem, 7vw, 6.5rem); }
 
@@ -275,7 +290,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 }
 
 /* A plan or sketch, large, on the white of the page. */
-.plan img { width: 100%; box-shadow: 0 0 0 1px var(--hair); }
+.plan img { width: 100%; }
 .plan figcaption { text-align: left; }
 
 /* Photographs between the parts of the story. */
@@ -404,11 +419,16 @@ address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px 
   .footer-cols { grid-column: 5 / span 8; }
 }
 
-/* Pictures and passages fade in as they come into view. Without scripts everything simply shows. */
+/* Pictures and passages fade in as they come into view. Without scripts everything simply shows.
+   A block that holds a picture stays opaque and fades its parts instead, so that the picture keeps
+   its place above the mark's strip of paper while it fades. */
 .js .reveal { opacity: 0; transition: opacity 1.1s ease; }
 .js .reveal.is-in { opacity: 1; }
+.js :is(.collage > .reveal, .drawing-row > .reveal, .photo-row.reveal, .plan.reveal, .person.reveal) { opacity: 1; }
+.js :is(.collage > .reveal .card, .drawing-row > .reveal .card, .photo-row.reveal figure, .plan.reveal, .person.reveal) > * { opacity: 0; transition: opacity 1.1s ease, color 0.2s ease; }
+.js :is(.collage > .reveal.is-in .card, .drawing-row > .reveal.is-in .card, .photo-row.reveal.is-in figure, .plan.reveal.is-in, .person.reveal.is-in) > * { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-slide, .card-image img, .drawing-image img, .travel-mark, .float-nav { transition: none; }
-  .js .reveal { opacity: 1; transition: none; }
+  .js .reveal, .js :is(.collage > .reveal .card, .drawing-row > .reveal .card, .photo-row.reveal figure, .plan.reveal, .person.reveal) > * { opacity: 1; transition: none; }
 }

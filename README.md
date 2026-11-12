@@ -53,7 +53,7 @@ Colors and typefaces are variables in the first block of `static/assets/css/site
 
 The firm's own plans carry much of the design: one sits behind the home-page statement (`backdrop` in `content/site.json`), three stand in a row lower on that page (`drawings`), and a project may lead with a drawing (`cover`).
 
-Once the header has scrolled away, the "abl" of the logo stays at the top right of the window, green over the page and white over photographs, and the links return when the visitor scrolls up. The mark is a vector redrawn from the 230-pixel logo (`MARK_PATH` in `lib/html.js`); replace the path when the firm supplies its own artwork.
+Once the header has scrolled away, the "abl" of the logo stays at the top right of the window, green over the page and over drawings and white over photographs, and the links return when the visitor scrolls up. Over the page the mark sits on a strip of paper, so text passing beneath it is covered and is never printed over; a picture marked `data-photo` or `data-sheet` in the templates carries its own copy of the mark instead. The mark is a vector redrawn from the 230-pixel logo (`MARK_PATH` in `lib/html.js`); replace the path when the firm supplies its own artwork.
 
 ## Before launch
 

@@ -20,15 +20,16 @@
     notesToggle.addEventListener('click', function () { setNotes(!root.classList.contains('notes-off')); });
   }
 
-  // The traveling mark. Once the header has scrolled out of view, "abl" stays at the top right.
-  // Every photograph gets a white copy of the mark, fixed at the same spot and clipped to the
-  // photograph, so the mark reads green over the page and white over pictures.
+  // The traveling mark. Once the header has scrolled out of view, "abl" stays at the top right, on a
+  // strip of paper that covers any text passing beneath it. Every photograph gets a white copy of the
+  // mark and every drawing a green one, fixed at the same spot and clipped to the picture, so the mark
+  // reads green over the page and over drawings, and white over photographs.
   var mark = document.querySelector('[data-travel-mark]');
   var header = document.querySelector('.site-header');
   if (mark && header) {
-    each(document.querySelectorAll('[data-photo]'), function (frame) {
+    each(document.querySelectorAll('[data-photo], [data-sheet]'), function (frame) {
       var copy = document.createElement('span');
-      copy.className = 'travel-mark travel-mark-on-photo';
+      copy.className = 'travel-mark ' + (frame.hasAttribute('data-photo') ? 'travel-mark-on-photo' : 'travel-mark-on-sheet');
       copy.setAttribute('aria-hidden', 'true');
       copy.innerHTML = mark.innerHTML;
       frame.classList.add('carries-mark');
