@@ -36,11 +36,22 @@ module.exports = function home(ctx) {
   const shown = featured.length ? featured : projects.slice(0, 3);
   const selected = shown.length ? `<section class="selected">
   <h2>Selected work</h2>
-  <div class="selected-grid">
-    ${shown.map((p, i) => projectCard(ctx, p, i === 0 ? '(min-width: 900px) 58vw, 100vw' : '(min-width: 900px) 38vw, 100vw')).join('\n    ')}
-  </div>
+  <ul class="collage">
+    ${shown.map((p) => `<li>${projectCard(ctx, p, '(min-width: 900px) 60vw, 100vw')}</li>`).join('\n    ')}
+  </ul>
   <p class="more"><a href="${u('/work/')}">All work</a></p>
 </section>` : '';
+
+  // A plan of the firm's, faint, behind the statement: "backdrop" in site.json names a project and one of its drawings.
+  let backdrop = '';
+  if (site.backdrop && site.backdrop.project) {
+    const project = projects.find((p) => p.slug === site.backdrop.project);
+    const drawing = project && project.drawings.find((d) => d.file === site.backdrop.file);
+    if (drawing) {
+      const biggest = drawing.variants[drawing.variants.length - 1].name;
+      backdrop = ` has-backdrop" style="--backdrop: url('${u(`/work/${project.slug}/photos/${biggest}`)}')`;
+    }
+  }
 
   return {
     title: '',
@@ -48,7 +59,7 @@ module.exports = function home(ctx) {
     image: slides.length ? `/work/${slides[0].project.slug}/photos/${slides[0].photo.variants[slides[0].photo.variants.length - 1].name}` : '',
     body: `<h1 class="visually-hidden">${esc(site.name)}</h1>
 ${hero}
-<section class="statement">
+<section class="statement${backdrop}">
   <p>${esc(site.statement)}</p>
 </section>
 ${selected}`,

@@ -2,10 +2,9 @@
 
 const { esc, paragraphs, toCome, reviewNote } = require('../lib/html');
 
-// The Client, Site, Design team diagram. Drawn as a sketch on a sheet of yellow trace.
+// The Client, Site, Design team diagram, drawn in thin lines.
 const DIALOGUE_SVG = `<svg class="dialogue-drawing" viewBox="0 0 360 320" role="img" aria-labelledby="dialogue-title">
       <title id="dialogue-title">A triangle joining the client, the site and the design team</title>
-      <rect class="dg-trace" x="22" y="30" width="316" height="262" transform="rotate(-2.5 180 160)"/>
       <path class="dg-line" d="M180 84 L84 244 L276 244 Z"/>
       <circle class="dg-node" cx="180" cy="84" r="5"/>
       <circle class="dg-node" cx="84" cy="244" r="5"/>

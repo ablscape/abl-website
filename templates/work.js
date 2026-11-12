@@ -3,7 +3,7 @@
 const { TYPES } = require('../lib/content');
 const { projectCard } = require('./parts');
 
-// Work: every project as one large photograph, scrolled through, with one row of buttons to narrow the list.
+// Work: every project as a photograph in a staggered collage, with one row of buttons to narrow the list.
 module.exports = function work(ctx) {
   const { projects } = ctx;
   const types = TYPES.filter((type) => projects.some((p) => p.type === type));
@@ -20,9 +20,9 @@ module.exports = function work(ctx) {
   ${buttons.map(([value, label]) => `<button type="button" data-filter="${value}" aria-pressed="false">${label}</button>`).join('\n  ')}
 </div>` : '';
 
-  const grid = projects.length ? `<ul class="project-grid" data-project-grid data-default="${defaultFilter}">
+  const grid = projects.length ? `<ul class="project-grid collage" data-project-grid data-default="${defaultFilter}">
   ${projects.map((p) => `<li data-type="${p.type}" data-featured="${p.featured}">
-    ${projectCard(ctx, p, '(min-width: 1200px) 1100px, 100vw')}
+    ${projectCard(ctx, p, '(min-width: 900px) 60vw, 100vw')}
   </li>`).join('\n  ')}
 </ul>` : '<p class="empty">Project pages are on their way.</p>';
 

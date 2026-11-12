@@ -14,7 +14,7 @@ function telHref(phone) {
   return 'tel:+1' + digits;
 }
 
-// The frame around every page: head, header with the four links, footer.
+// The frame around every page: head, header with the links at the left and the logo at the right, footer.
 module.exports = function layout(ctx, page) {
   const { site, u } = ctx;
   const title = page.title ? `${page.title} | ${site.name}` : site.name;
@@ -43,10 +43,10 @@ ${page.image ? `<meta property="og:image" content="${esc(base + page.image)}">\n
 <body${page.bodyClass ? ` class="${esc(page.bodyClass)}"` : ''}>
 <a class="skip-link" href="#main">Skip to content</a>
 ${ctx.showNotes ? '<p class="preview-bar">Preview build. Yellow notes mark text and photographs still to come. They never appear on the live site.</p>\n' : ''}<header class="site-header">
-  <a class="logo" href="${u('/')}"><img src="${u('/assets/img/logo.jpg')}" width="230" height="39" alt="${esc(site.name)}"></a>
   <nav class="site-nav" aria-label="Main">
       ${nav}
   </nav>
+  <a class="logo" href="${u('/')}"><img src="${u('/assets/img/logo.jpg')}" width="230" height="39" alt="${esc(site.name)}"></a>
 </header>
 <main id="main">
 ${page.body}

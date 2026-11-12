@@ -49,7 +49,7 @@ The build stops with a plain-language list if content is malformed, a photograph
 
 ## Design settings
 
-Colors and typefaces are variables in the first block of `static/assets/css/site.css`. The palette is white paper, boxwood-green ink, the sage of the logo, and one accent taken from yellow tracing paper. Typefaces are Libre Caslon (text and display) and Barlow (labels), self-hosted under the SIL Open Font License.
+Colors and typefaces are variables in the first block of `static/assets/css/site.css`. The palette is white paper, soft gray type, and the green of the logo for links. Yellow tracing paper appears only in preview notes. The typeface is Barlow throughout, self-hosted under the SIL Open Font License; the firm may name the typeface from its drawings to replace it.
 
 ## Before launch
 

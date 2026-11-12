@@ -88,7 +88,7 @@ python3 tools/prepare_photos.py content/projects/<slug> a.jpg b.jpg   # prepare 
    - `order` sorts projects, lowest first.
    - Each part of `story` is a list of paragraphs. A part may be left out. If the person gives one block of text and no four-part story, put it in `"description": ["..."]` and leave `story` out.
    - `reviewNote` is a note to the firm about text that still needs checking. It shows in previews only.
-   - `drawings` lists the firm's own plans and sketches for the project, prepared with the same tool into the same `photos/` folder and written the same way as photos (`file`, `alt`, `caption`). They appear on a sheet of yellow trace below the story. Only drawings the firm made.
+   - `drawings` lists the firm's own plans and sketches for the project, prepared with the same tool into the same `photos/` folder and written the same way as photos (`file`, `alt`, `caption`). They appear large on white between the opening and the story. Only drawings the firm made.
    - `legacyUrls` lists the page's address on the old site, such as `"vmi.html"`, so old links keep working.
 5. **Write alt text for every photograph.** Say what is visible, in one plain sentence fragment under 200 characters: "Two tiers of limestone retaining walls planted with shrubs". No "photo of". No names of people. If you cannot tell what a photograph shows, ask.
 6. **Build and check.** Run `node build.js`. Read its output. Open the built page in `dist/work/<slug>/index.html` and confirm the text and photographs are right.
@@ -99,6 +99,7 @@ python3 tools/prepare_photos.py content/projects/<slug> a.jpg b.jpg   # prepare 
 - **Change text on a project.** Edit that project's `project.json`.
 - **Add or replace photographs.** Run the prepare tool, add the entries to `photos`, write alt text. To remove a photograph, delete its entry and its files.
 - **Add a plan or sketch.** Export it as a JPEG, run the prepare tool on it, and add the entry to `drawings` with alt text and a caption saying what drawing it is.
+- **Put a plan behind the home-page statement.** Set `backdrop` in `content/site.json` to a drawing that already exists: `"backdrop": { "project": "courthouse-square", "file": "05" }`. It shows faintly behind the statement. Leave `backdrop` out to show plain white. The build refuses a project or drawing that does not exist.
 - **Change the home page photographs.** Edit `hero` in `content/site.json`. Each entry names a project folder and a photo number. Four or five photographs at most. Choose ones that show the design clearly.
 - **Change the People page.** People are in `content/people.json`. The introduction is in `content/site.json` under `studio`. A portrait goes in `static/assets/img/people/` at about 1200 pixels wide, 4:5 proportion, and its file name goes in that person's `photo`.
 - **Change the Process page.** Everything on it is in `content/site.json` under `process`: `intro` (what is distinctive about the firm), `dialogue` (the Client, Site, Design team text), `steps` (the steps of a project, in order) and `services` (the ways to work with the firm). Each part has a review note field; clear it when the firm approves the text.
