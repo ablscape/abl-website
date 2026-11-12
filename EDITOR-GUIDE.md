@@ -18,6 +18,7 @@ Nothing reaches the live site until you say publish.
 - "Swap the first photograph on the VMI page for the one attached."
 - "Put Courthouse Square first on the home page."
 - "Add Bugs's biography to the Studio page: ..."
+- "On the Process page, change the planting plan description to: ..."
 - "Change the phone number to ..."
 - "Hide the Thornhill project for now."
 - "What is still unfinished on the site?"

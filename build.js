@@ -20,6 +20,7 @@ const home = require('./templates/home');
 const work = require('./templates/work');
 const projectPage = require('./templates/project');
 const studio = require('./templates/studio');
+const processPage = require('./templates/process');
 const contact = require('./templates/contact');
 const { sent, notFound } = require('./templates/simple');
 
@@ -67,12 +68,15 @@ function openItems() {
     if (!isText(person.photo)) items.push(`${person.name}: photograph is missing`);
     if (!Array.isArray(person.bio) || !person.bio.length) items.push(`${person.name}: biography is missing`);
   });
-  const s = site.studio;
-  if (!s.dialogue || !Array.isArray(s.dialogue.text) || !s.dialogue.text.length) items.push('Studio: the Dialogue text is missing');
-  if (s.dialogue && isText(s.dialogue.reviewNote)) items.push(`Studio: Dialogue text has a review note ("${s.dialogue.reviewNote}")`);
-  (s.process || []).forEach((step) => { if (!isText(step.text)) items.push(`Studio: process step "${step.title}" has no description`); });
-  const services = (site.contact.residential && site.contact.residential.services) || [];
-  services.forEach((service) => { if (!isText(service.text)) items.push(`Contact: residential service "${service.name}" has no description`); });
+  const pr = site.process || {};
+  if (isText(pr.introNote)) items.push(`Process: the introduction has a review note ("${pr.introNote}")`);
+  if (!pr.dialogue || !Array.isArray(pr.dialogue.text) || !pr.dialogue.text.length) items.push('Process: the Dialogue text is missing');
+  if (pr.dialogue && isText(pr.dialogue.reviewNote)) items.push(`Process: Dialogue text has a review note ("${pr.dialogue.reviewNote}")`);
+  if (isText(pr.stepsNote)) items.push(`Process: the steps have a review note ("${pr.stepsNote}")`);
+  (pr.steps || []).forEach((step) => { if (!isText(step.text)) items.push(`Process: step "${step.title}" has no description`); });
+  const services = pr.services || {};
+  if (isText(services.reviewNote)) items.push(`Process: the services have a review note ("${services.reviewNote}")`);
+  (services.items || []).forEach((service) => { if (!isText(service.text)) items.push(`Process: service "${service.name}" has no description`); });
   return [...new Set(items)];
 }
 
@@ -126,6 +130,7 @@ write('/', '/', home);
 write('/work/', '/work/', work);
 visible.forEach((p, i) => write(p.url, '/work/', (ctx) => projectPage(ctx, p, visible[(i + 1) % visible.length])));
 write('/studio/', '/studio/', studio);
+write('/process/', '/process/', processPage);
 write('/contact/', '/contact/', contact);
 write('/contact/sent/', '/contact/', sent);
 write('/404.html', '', notFound);

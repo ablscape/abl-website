@@ -3,34 +3,94 @@
   "url": "https://www.ablscape.com",
   "description": "ABL Landscape Architecture is an award-winning, client-focused landscape architecture firm based in Lexington, Virginia offering expertise in institutional, civic, residential and commercial landscape architecture projects.",
   "statement": "ABL Landscape Architecture is principally devoted to the adaptation of historic, environmentally sensitive landscapes to contemporary needs and goals.",
-  "address": ["104 White Street", "Lexington, Virginia 24450"],
+  "address": [
+    "104 White Street",
+    "Lexington, Virginia 24450"
+  ],
   "phone": "540.464.3736",
   "emails": [
-    { "label": "Arthur Bartenstein", "address": "arthur@ablscape.com" },
-    { "label": "Kelly Morikawa", "address": "kelly@ablscape.com" }
+    {
+      "label": "Arthur Bartenstein",
+      "address": "arthur@ablscape.com"
+    },
+    {
+      "label": "Kelly Morikawa",
+      "address": "kelly@ablscape.com"
+    }
   ],
   "hero": [
-    { "project": "washington-and-lee-university", "photo": "01" },
-    { "project": "virginia-military-institute", "photo": "01" },
-    { "project": "washington-and-lee-university", "photo": "03" }
+    {
+      "project": "washington-and-lee-university",
+      "photo": "01"
+    },
+    {
+      "project": "virginia-military-institute",
+      "photo": "01"
+    },
+    {
+      "project": "washington-and-lee-university",
+      "photo": "03"
+    }
   ],
   "studio": {
     "intro": [
       "The firm seeks to distill the essence of a site, and to respond to its innate character and context with creative, enduring design. ABL assists clients through all phases from initial concept to landscape establishment and maturation. We embrace open dialogue and exploration with clients, allied professionals, contractors, and end-users.",
       "Mindful of the client's need to visualize the final product and also of the client's cost constraints in landscape construction and maintenance, ABL seeks every reasonable means to narrow the uncertainty between design incubation and the desired outcome. Such techniques include photo simulation, 3D scale models, material samples, full scale mock-ups, detailed review of pricing, dialogue with both grounds staff and end-users, and frequent site visits."
     ],
-    "note": "ABL is a SWaM certified small business.",
+    "note": "ABL is a SWaM certified small business."
+  },
+  "process": {
+    "intro": [
+      "ABL is a small firm. The people you meet at the first conversation draw the plans, walk the site with the contractor and stay with the job until it is built. No one at the top hands the work down.",
+      "We know this place. Decades of work in Lexington and Rockbridge County mean we know the contractors, the soils, the plants that do well here and the way the city and the county go about approving a project. Arthur serves on the city's tree committee and its Architectural Review Board.",
+      "Our approach is a preservationist's. Before we draw, we learn the story of a place, so that what we add belongs to it and to its time. We mock up designs at full size before they are built, we bring in the engineers and architects a job needs, and we do not present a plan as a final answer.",
+      "The work runs from gardens to the Virginia Horse Center and the campuses of Washington and Lee and VMI. Before ABL, Arthur worked on large projects for some of the country's largest firms, in Florida, California, Northern Virginia, Japan and China."
+    ],
+    "introNote": "Drafted by Claude from Arthur's list of what is distinctive about the firm at the November 11, 2026 meeting. The firm to confirm every fact and the wording.",
     "dialogue": {
       "text": [
-        "Each project is a dialogue among the client, the site and the design team. The client's goals are tested against the conditions of the site, and the design develops from that exchange."
+        "Arthur draws every project as a triangle: the client, the site and the design team, with arrows between them. The client says what they want. The site tests those ideas and dictates part of the answer; a plan that does not work on the ground goes back to the client. The arrows are the dialogue, and the design comes out of it."
       ],
-      "reviewNote": "Placeholder wording for the Dialogue framework. The firm to replace it with its own."
+      "reviewNote": "Drafted from Arthur's explanation of his diagram at the November 11 meeting. The firm to confirm the wording."
     },
-    "process": [
-      { "title": "Initial meeting", "text": "" },
-      { "title": "Site and land research", "text": "" },
-      { "title": "Brainstorming and mock-ups", "text": "" }
-    ]
+    "stepsIntro": "No two jobs run the same way, but every one starts with these three steps, and we say where things stand as it goes.",
+    "steps": [
+      {
+        "title": "Initial meeting",
+        "text": "We meet you on the property and listen: what you want from the place, how you use it, what is not working, and what you want to spend."
+      },
+      {
+        "title": "Site and land research",
+        "text": "We study the ground before we draw: soils, water and light, what grows there, what the property and the area have been, and what the city or county will allow."
+      },
+      {
+        "title": "Brainstorming and mock-ups",
+        "text": "We try ideas with you in sketches and models, then mock up the design at full size on the site before anything is built, so you see what you are getting."
+      }
+    ],
+    "stepsNote": "The firm named these three steps at the November 11 meeting and will set down the steps that follow. Claude drafted the descriptions.",
+    "services": {
+      "intro": "Every job, whatever its size, gets research, a mock-up and our attention until it is built. For a house or a farm, these are the usual ways to work with us.",
+      "reviewNote": "Service descriptions drafted by Claude from the November 11 meeting. The firm to confirm the scope of each and the wording.",
+      "items": [
+        {
+          "name": "Consultation",
+          "text": "A visit to your property and a conversation about what is possible, with directions you can act on."
+        },
+        {
+          "name": "Planting plan",
+          "text": "A plan of what to plant and where, drawn for your soil, light and upkeep by people who know which plants do well here."
+        },
+        {
+          "name": "Master plan",
+          "text": "A full design for the property: research, the plan, drawings a contractor can build from, and our involvement until it is finished."
+        },
+        {
+          "name": "Small jobs",
+          "text": "Sometimes people just want help building a stair. Ask us."
+        }
+      ]
+    }
   },
   "contact": {
     "projectTypes": [
@@ -40,14 +100,6 @@
       "Historic site or preservation",
       "Residential",
       "Something else"
-    ],
-    "residential": {
-      "intro": "",
-      "services": [
-        { "name": "Consultation", "text": "" },
-        { "name": "Planting plan", "text": "" },
-        { "name": "Master plan", "text": "" }
-      ]
-    }
+    ]
   }
 }

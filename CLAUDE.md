@@ -27,7 +27,7 @@ The website of ABL Landscape Architecture, a landscape architecture firm in Lexi
 |---|---|
 | `content/projects/<slug>/project.json` | One project: its facts, its text, its photo list |
 | `content/projects/<slug>/photos/` | That project's photographs, already resized |
-| `content/site.json` | Firm name, address, phone, emails, home-page statement and photographs, Studio text, process steps, contact form choices, residential services |
+| `content/site.json` | Firm name, address, phone, emails, home-page statement and photographs, Studio text, the Process page (what is distinctive about the firm, the Dialogue text, the steps of a project, the services), contact form choices |
 | `content/people.json` | The people on the Studio page |
 | `static/assets/img/people/` | Portraits named in `people.json` |
 | `static/assets/css/site.css` | All styling. Colors and typefaces are set in the first block |
@@ -97,8 +97,9 @@ python3 tools/prepare_photos.py content/projects/<slug> a.jpg b.jpg   # prepare 
 - **Change text on a project.** Edit that project's `project.json`.
 - **Add or replace photographs.** Run the prepare tool, add the entries to `photos`, write alt text. To remove a photograph, delete its entry and its files.
 - **Change the home page photographs.** Edit `hero` in `content/site.json`. Each entry names a project folder and a photo number. Four or five photographs at most. Choose ones that show the design clearly.
-- **Change the Studio page.** People are in `content/people.json`. The introduction, the Dialogue text and the process steps are in `content/site.json` under `studio`. A portrait goes in `static/assets/img/people/` at about 1200 pixels wide, 4:5 proportion, and its file name goes in that person's `photo`.
-- **Change contact details or the form's project types.** `content/site.json`.
+- **Change the Studio page.** People are in `content/people.json`. The introduction is in `content/site.json` under `studio`. A portrait goes in `static/assets/img/people/` at about 1200 pixels wide, 4:5 proportion, and its file name goes in that person's `photo`.
+- **Change the Process page.** Everything on it is in `content/site.json` under `process`: `intro` (what is distinctive about the firm), `dialogue` (the Client, Site, Design team text), `steps` (the steps of a project, in order) and `services` (the ways to work with the firm). Each part has a review note field; clear it when the firm approves the text.
+- **Change contact details or the form's project types.** `content/site.json` under `address`, `phone`, `emails` and `contact`.
 - **Hide a project.** Set `status` to `draft`. Do not delete a project folder unless the person asks you to delete it.
 - **See what is unfinished.** Run `node build.js --check` and read the list back in plain language.
 

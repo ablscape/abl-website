@@ -5,6 +5,7 @@ const { esc } = require('../lib/html');
 const NAV = [
   ['Work', '/work/'],
   ['Studio', '/studio/'],
+  ['Process', '/process/'],
   ['Contact', '/contact/'],
 ];
 
@@ -13,7 +14,7 @@ function telHref(phone) {
   return 'tel:+1' + digits;
 }
 
-// The frame around every page: head, header with the three links, footer.
+// The frame around every page: head, header with the four links, footer.
 module.exports = function layout(ctx, page) {
   const { site, u } = ctx;
   const title = page.title ? `${page.title} | ${site.name}` : site.name;

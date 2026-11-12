@@ -1,27 +1,13 @@
 'use strict';
 
-const { esc, toCome } = require('../lib/html');
+const { esc } = require('../lib/html');
 const { telHref } = require('./layout');
 
-// Contact: where the studio is, and one form that also screens new inquiries.
+// Contact: where the studio is, and one form that also screens new inquiries. Services are on the Process page.
 module.exports = function contact(ctx) {
   const { site, u } = ctx;
   const c = site.contact;
   const types = Array.isArray(c.projectTypes) ? c.projectTypes : [];
-  const residential = c.residential || {};
-  const services = Array.isArray(residential.services) ? residential.services : [];
-
-  const servicesBlock = services.length ? `<section class="services">
-    <h2>Residential work</h2>
-    ${residential.intro ? `<p>${esc(residential.intro)}</p>` : ''}
-    <dl>
-      ${services.map((s) => `<div>
-        <dt>${esc(s.name)}</dt>
-        <dd>${s.text ? esc(s.text) : toCome(ctx, 'what this service includes')}</dd>
-      </div>`).join('\n      ')}
-    </dl>
-  </section>` : '';
-
   return {
     title: 'Contact',
     description: `Contact ${site.name} at ${site.address.join(', ')}, or send a project inquiry.`,
@@ -35,7 +21,7 @@ module.exports = function contact(ctx) {
       <p><a href="${telHref(site.phone)}">${esc(site.phone)}</a></p>
       ${site.emails.map((e) => `<p>${esc(e.label)}<br><a href="mailto:${esc(e.address)}">${esc(e.address)}</a></p>`).join('\n      ')}
     </address>
-    ${servicesBlock}
+    <p class="contact-pointer">Not sure what to ask for? <a href="${u('/process/')}">See how a project goes.</a></p>
   </div>
   <form class="inquiry" name="inquiry" method="POST" action="${u('/contact/sent/')}" data-netlify="true" netlify-honeypot="website">
     <h2>Tell us about your project</h2>

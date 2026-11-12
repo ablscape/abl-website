@@ -77,13 +77,14 @@ a:hover { background: var(--mark); text-decoration: none; }
 }
 
 /* Home */
-.hero-frame { position: relative; width: 100%; aspect-ratio: 2 / 1; min-height: 15rem; max-height: 76vh; overflow: hidden; background: var(--limestone); }
+.hero { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
+.hero-frame { position: relative; width: 100%; aspect-ratio: 2 / 1; min-height: 15rem; max-height: 72vh; overflow: hidden; background: var(--limestone); }
 .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.6s ease; }
 .hero-slide.is-active { opacity: 1; }
 .hero-slide img { width: 100%; height: 100%; object-fit: cover; }
 .hero-bar {
   display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
-  max-width: var(--page); margin: 0 auto; padding: 0.7rem var(--gutter) 0;
+  margin: 0 auto; padding: 0.7rem 0 0;
   font: 400 0.9375rem/1.4 var(--sans); color: var(--slate);
 }
 .hero-caption { margin: 0; }
@@ -131,10 +132,10 @@ a:hover { background: var(--mark); text-decoration: none; }
 @media (min-width: 62.5rem) { .project-grid { grid-template-columns: repeat(3, 1fr); } }
 
 /* A project page */
-.project-hero { margin: 0; }
-.project-hero img { width: 100%; max-height: 80vh; object-fit: cover; }
+.project-hero { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
+.project-hero img { width: 100%; max-height: 76vh; object-fit: cover; }
 .project-hero figcaption, .project-photos figcaption { margin-top: 0.5rem; font: 400 0.9rem/1.4 var(--sans); color: var(--slate); }
-.project-hero figcaption { padding: 0 var(--gutter); }
+.project-hero figcaption { padding: 0; }
 .project-body {
   display: grid; grid-template-columns: 1fr; gap: 2.5rem var(--gutter);
   max-width: var(--page); margin: 0 auto; padding: clamp(2rem, 5vw, 4rem) var(--gutter) 0;
@@ -179,8 +180,8 @@ a:hover { background: var(--mark); text-decoration: none; }
 .project-next .all-work { font: 500 1rem/1.4 var(--sans); text-decoration: underline; }
 
 /* Studio */
-.studio-intro, .people, .approach { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter) clamp(2.5rem, 6vw, 4.5rem); }
-.studio-intro p { max-width: 40rem; font-size: 1.15rem; }
+.studio-intro, .people, .approach, .process-intro { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter) clamp(2.5rem, 6vw, 4.5rem); }
+.studio-intro p, .process-intro p { max-width: 40rem; font-size: 1.15rem; }
 .studio-intro .studio-note { color: var(--slate); font: 400 0.95rem/1.5 var(--sans); }
 .people > h2, .approach > h2 { margin-bottom: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--limestone); font-size: clamp(1.7rem, 3vw, 2.3rem); }
 .person { display: grid; grid-template-columns: 1fr; gap: 1.25rem 2.5rem; padding-bottom: 3rem; }
@@ -214,18 +215,19 @@ a:hover { background: var(--mark); text-decoration: none; }
 .process li::before { content: counter(step); color: var(--sage-text); font: 500 0.95rem/1 var(--sans); }
 .process h3 { margin: 0.25rem 0 0.5rem; font-size: 1.4rem; }
 .process p { margin: 0; font-size: 1rem; }
+.steps-intro, .services-intro { max-width: 40rem; font-size: 1.15rem; }
+.approach .process { margin-top: 2rem; }
 
 /* Contact */
 .contact-grid { display: grid; grid-template-columns: 1fr; gap: 3rem var(--gutter); max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter) clamp(3rem, 8vw, 6rem); }
 @media (min-width: 56rem) { .contact-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } }
 address { font-size: 1.15rem; font-style: normal; }
 address p { margin-bottom: 1.1rem; }
-.services { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--limestone); }
-.services h2 { margin-bottom: 1rem; font-size: 1.6rem; }
-.services dl { margin: 0; }
-.services div { margin-bottom: 1rem; }
-.services dt { font: 600 1rem/1.4 var(--sans); }
-.services dd { margin: 0.15rem 0 0; }
+.services dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.5rem 2.5rem; max-width: 60rem; margin: 2rem 0 0; }
+.services div { padding-top: 0.8rem; border-top: 1.5px solid var(--ink); }
+.services dt { font: 600 1.05rem/1.4 var(--sans); }
+.services dd { margin: 0.35rem 0 0; }
+.contact-pointer { margin-top: 2rem; font-size: 1.05rem; }
 
 .inquiry { padding: clamp(1.25rem, 3vw, 2.25rem); border: 1.5px solid var(--ink); }
 .inquiry h2 { margin-bottom: 1.25rem; font-size: 1.6rem; }
