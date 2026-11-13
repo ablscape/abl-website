@@ -40,7 +40,39 @@ module.exports = function layout(ctx, page) {
 <meta property="og:description" content="${esc(description)}">
 ${page.image ? `<meta property="og:image" content="${esc(base + page.image)}">\n` : ''}<link rel="icon" href="${u('/favicon.ico')}" sizes="any">
 <link rel="stylesheet" href="${u('/assets/css/site.css')}">
-<script>document.documentElement.className = 'js';</script>
+<script>
+document.documentElement.className = 'js';
+// A page reached by a link opens at its top, wherever the last page was left, and whatever the browser or the
+// window showing the site does with the old position. Going back or forward keeps the browser's own place, and
+// so does a link to a named place on a page.
+(function () {
+  var byLink = false;
+  try { byLink = window.sessionStorage.getItem('abl-by-link') === '1'; window.sessionStorage.removeItem('abl-by-link'); } catch (e) { /* storage is optional */ }
+  document.addEventListener('click', function (event) {
+    var a = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+    if (!a || a.target === '_blank' || a.origin !== window.location.origin) return;
+    if (a.pathname === window.location.pathname && a.hash) return;
+    try { window.sessionStorage.setItem('abl-by-link', '1'); } catch (e) { /* storage is optional */ }
+  }, true);
+  var entry = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null;
+  if (!byLink && entry && entry.type === 'back_forward') return;
+  var touched = false;
+  ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (type) {
+    window.addEventListener(type, function () { touched = true; }, { capture: true, passive: true });
+  });
+  var toTop = function () {
+    if (touched) return;
+    var name = '';
+    try { name = decodeURIComponent((window.location.hash || '').slice(1)); } catch (e) { /* not a name */ }
+    if (name && document.getElementById(name)) return;
+    if (window.pageYOffset > 0) window.scrollTo(0, 0);
+  };
+  toTop();
+  document.addEventListener('DOMContentLoaded', toTop);
+  window.addEventListener('load', function () { toTop(); window.setTimeout(toTop, 350); window.setTimeout(toTop, 1200); });
+  window.addEventListener('pageshow', function (event) { if (!event.persisted) toTop(); });
+})();
+</script>
 </head>
 <body${page.bodyClass ? ` class="${esc(page.bodyClass)}"` : ''}>
 <a class="skip-link" href="#main">Skip to content</a>

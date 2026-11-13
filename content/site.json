@@ -43,15 +43,24 @@
     ],
     "note": "ABL is a SWaM certified small business.",
     "backdrop": {
-      "project": "green-spring",
-      "file": "05",
-      "caption": "Sketch"
+      "project": "washington-and-lee-university",
+      "file": "04",
+      "caption": "Sketch",
+      "asDrawn": true,
+      "from": "37%",
+      "focus": "30% 45%",
+      "focusPhone": "22% 50%"
     }
   },
   "process": {
     "backdrop": {
       "project": "oak-grove-cemetery",
-      "file": "04"
+      "file": "04",
+      "lift": 1.2,
+      "asDrawn": true,
+      "from": "38%",
+      "focus": "45% 50%",
+      "focusPhone": "50% 50%"
     },
     "lead": "ABL carries a project from research into the history of its site, through design in dialogue with the client, to construction and the establishment of the landscape.",
     "intro": [],
@@ -86,9 +95,10 @@
           "Clients are asked to approve, and to fund, places they cannot yet see. ABL therefore seeks every reasonable means to narrow the uncertainty between a design and its result: proposals are studied in sketches, photo simulations and scale models, materials are reviewed as samples, pricing is examined in detail, and before construction the design is mocked up at full scale on the site."
         ],
         "figure": {
-          "project": "virginia-horse-center",
-          "file": "06",
-          "caption": "Rendering"
+          "project": "virginia-tech-war-memorial",
+          "file": "01",
+          "caption": "Perspective by Peter Giraudeau",
+          "drawn": true
         }
       },
       {
@@ -97,8 +107,7 @@
           "ABL remains with a project through construction and the establishment of the landscape. It has worked with many of the region's contractors for decades and visits the site frequently while work is under way. Planting is specified by staff who know which plants do well in this ground, among them a certified arborist with eighteen years' experience in landscape installation and maintenance."
         ],
         "figure": {
-          "project": "kendal-at-lexington",
-          "file": "01"
+          "toCome": "the team at work on a construction site"
         }
       }
     ],
@@ -126,7 +135,9 @@
   },
   "backdrop": {
     "project": "lime-kiln-theater",
-    "file": "01"
+    "file": "01",
+    "lift": 1.2,
+    "asDrawn": true
   },
   "drawings": [
     {

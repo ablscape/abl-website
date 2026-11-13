@@ -13,12 +13,15 @@ function person(ctx, p) {
           <dd>${f.items.map(esc).join('<br>')}</dd>
         </div>`).join('\n        ');
   const bio = Array.isArray(p.bio) && p.bio.length ? paragraphs(p.bio) : `<p>${toCome(ctx, 'biography')}</p>`;
+  // The portrait, name and address at the left; the biography and the facts at the right.
   return `<article class="person${photo ? '' : ' person-no-photo'}">
-    ${photo ? `<div class="person-photo"${p.photo ? ' data-photo' : ' data-sheet'}>${photo}</div>` : ''}
-    <div class="person-text">
+    <div class="person-side">
+      ${photo ? `<div class="person-photo"${p.photo ? ' data-photo' : ' data-sheet'}>${photo}</div>` : ''}
       <h2 class="person-name">${esc(p.name)}${p.credentials ? `, <span class="credentials">${esc(p.credentials)}</span>` : ''}</h2>
       ${p.title ? `<p class="person-title">${esc(p.title)}</p>` : ''}
       ${p.email ? `<p class="person-email"><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></p>` : ''}
+    </div>
+    <div class="person-text">
       ${bio}
       ${facts ? `<dl class="person-facts">
         ${facts}

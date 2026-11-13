@@ -139,8 +139,7 @@
     var items = grid.querySelectorAll('[data-type]');
     var apply = function (filter) {
       each(items, function (item) {
-        var match = filter === 'all' ||
-          (filter === 'featured' ? item.getAttribute('data-featured') === 'true' : item.getAttribute('data-type') === filter);
+        var match = filter === 'all' || item.getAttribute('data-type') === filter;
         item.hidden = !match;
         if (match) item.classList.add('is-in');
       });
@@ -170,8 +169,7 @@
       button.setAttribute('aria-pressed', String(button.getAttribute('data-filter') === first));
     });
     each(items, function (item) {
-      item.hidden = !(first === 'all' ||
-        (first === 'featured' ? item.getAttribute('data-featured') === 'true' : item.getAttribute('data-type') === first));
+      item.hidden = !(first === 'all' || item.getAttribute('data-type') === first);
     });
   }
 

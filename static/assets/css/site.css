@@ -44,17 +44,13 @@
   --haze-deep: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 5px var(--paper)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 15px rgba(255, 255, 255, 0.55));
 
   /* A plan set behind a heading is turned a few degrees from yellow toward green. White and gray stay as they are,
-     and the same drawing keeps its own colors on its project page. Set this to "none" to show the plans as drawn. */
+     and the same drawing keeps its own colors on its project page. Set this to "hue-rotate(0deg)" to show the
+     plans as drawn; one backdrop keeps its own colors with "asDrawn" in content/site.json. */
   --plan-key: hue-rotate(18deg);
 }
 @media (max-width: 40rem) { :root { --mark-w: 4.25rem; --mark-top: 1rem; } }
 
 *, *::before, *::after { box-sizing: border-box; }
-
-/* Moving from page to page: the old page fades into the new one, where the browser supports it. */
-@view-transition { navigation: auto; }
-::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.4s; }
-@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
 
 /* Headings break into lines of even length; paragraphs do not end on a single stranded word. */
 h1, h2, h3, blockquote p { text-wrap: balance; }
@@ -178,33 +174,48 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .hero-toggle:hover { color: var(--accent); }
 @media (max-width: 40rem) { .hero-frame { height: 62vh; } }
 
-/* The statement, set large over one of the firm's own plans. "backdrop" in content/site.json names the plan. */
+/* The firm's drawings on the page. One lies behind the statement on the home page and one behind the heading of
+   each other page; "backdrop" in content/site.json names it. A drawing is shown as ink on the page's own white.
+   It has no frame and no band: where it was drawn on gray paper the paper is brought to white ("lift"), and it
+   dissolves into the page above, below and toward the text. The header and the text stay on plain white, and
+   nothing moves. On a wide screen the text lies at the left, beside the drawing or over its faded side. On a
+   phone or a tablet the text comes first and the drawing emerges beneath it. */
 .statement { position: relative; display: grid; align-items: center; margin-top: clamp(1.5rem, 4vw, 3.5rem); overflow: hidden; }
-.statement.has-plan { min-height: min(80vh, 54rem); }
+@media (min-width: 64rem) { .statement.has-plan { min-height: min(80vh, 54rem); } }
 .statement-plan { position: absolute; inset: 0; }
-.statement-plan img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; opacity: 0.8; filter: var(--plan-key); }
+.statement-plan img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 50% 50%); opacity: 0.9; filter: brightness(var(--lift, 1)) var(--plan-key); }
+.statement-plan.as-drawn img { filter: brightness(var(--lift, 1)); }
 .statement-plan::after {
   content: ""; position: absolute; inset: 0;
   background:
     linear-gradient(90deg, #fff 0%, rgba(255, 255, 255, 0.94) 26%, rgba(255, 255, 255, 0.5) 52%, rgba(255, 255, 255, 0) 78%),
-    linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 16%, rgba(255, 255, 255, 0) 84%, #fff 100%);
+    linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 18%, rgba(255, 255, 255, 0) 74%, #fff 100%);
 }
 .statement-inner { position: relative; width: 100%; max-width: var(--page); margin: 0 auto; padding: clamp(4rem, 10vw, 9rem) var(--gutter); }
 .statement-text { max-width: 19.5em; margin: 0; font-size: var(--fs-large); font-weight: 300; line-height: 1.28; letter-spacing: -0.012em; color: var(--ink-strong); }
 .statement-credit { position: absolute; left: var(--edge); bottom: 1.4rem; margin: 0; font-size: var(--fs-small); line-height: 1.3; text-align: left; color: var(--slate); }
 @media (min-width: 40.0625rem) {
-  /* The statement lies over the plan, to the left of the mark's place. */
-  .statement-inner, .statement-credit { z-index: 3; }
   .statement-text { max-width: min(19.5em, calc(100% - var(--mark-w) - 2.5rem)); }
 }
-@media (max-width: 40rem) {
-  /* Phones: the statement first, then the plan beneath it at full strength. */
+@media (min-width: 64rem) {
+  /* The text lies over the plan, to the left of the mark's place. */
+  .statement-inner, .statement-credit { z-index: 3; }
+  /* A drawing whose subject would fall under the text starts farther right ("from") and fades in from there. */
+  .statement-plan.is-side { left: var(--from); }
+  .statement-plan.is-side::after {
+    background:
+      linear-gradient(90deg, #fff 0%, rgba(255, 255, 255, 0.6) 14%, rgba(255, 255, 255, 0) 34%),
+      linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 18%, rgba(255, 255, 255, 0) 74%, #fff 100%);
+  }
+}
+@media (max-width: 63.99rem) {
+  /* Phones and tablets: the text first, then the drawing at full strength, rising out of the page and sinking back into it. */
   .statement.has-plan { display: flex; flex-direction: column; min-height: 0; }
-  .statement-inner { order: 1; padding-block: 3rem 1.75rem; }
-  .statement-plan { order: 2; position: relative; inset: auto; height: 15.5rem; }
-  .statement-plan img { opacity: 1; }
-  .statement-plan::after { background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 28%); }
-  .statement-credit { order: 3; position: static; align-self: flex-start; padding: 0.6rem var(--gutter) 0; }
+  .statement-inner { order: 1; padding-block: clamp(3rem, 7vw, 4.5rem) 1.25rem; }
+  .statement-plan { order: 2; position: relative; inset: auto; height: min(76vw, 24rem); }
+  .statement-plan img { opacity: 1; object-position: var(--focus-phone, var(--focus, 50% 50%)); }
+  .statement-plan::after { background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 26%, rgba(255, 255, 255, 0) 74%, #fff 100%); }
+  .statement-credit { order: 3; position: static; align-self: flex-start; padding: 0.25rem var(--gutter) 0; }
 }
 
 /* Sections of the home page. */
@@ -361,57 +372,88 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .person-photo { display: grid; place-items: center; width: 100%; max-width: 17rem; aspect-ratio: 4 / 5; background: var(--fill); }
 .person-photo img { width: 100%; height: 100%; object-fit: cover; }
 .photo-to-come { padding: 0.2rem 0.45rem; background: var(--paper); font-size: var(--fs-small); }
+.person-photo + .person-name { margin-top: 1.25rem; }
 .person-name { font-size: var(--fs-medium); font-weight: 400; }
 .credentials { font-size: var(--fs-small); font-weight: 400; letter-spacing: 0.04em; color: var(--slate); }
 .person-title, .person-email { margin: 0.4rem 0 0; font-size: var(--fs-small); color: var(--slate); }
-.person-email { margin-bottom: 1.4rem; }
 .person-text p { max-width: 40rem; }
+.person-text > :first-child { margin-top: 0; }
 .person-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr)); gap: 1.25rem var(--col-gap); max-width: 46rem; margin: 2rem 0 0; padding-top: 1.25rem; border-top: 1px solid var(--hair); font-size: var(--fs-small); line-height: 1.55; }
 .person-facts dt { margin-bottom: 0.25rem; font-weight: 500; color: var(--ink-strong); }
 .person-facts dd { margin: 0; color: var(--slate); }
 @media (min-width: 56rem) {
   .person { grid-template-columns: repeat(12, minmax(0, 1fr)); }
-  .person-photo { grid-column: 1 / span 3; }
+  .person-side { grid-column: 1 / span 4; }
   .person-text { grid-column: 5 / span 8; }
 }
 
-.approach { max-width: var(--page); margin: 0 auto; padding: clamp(3.5rem, 7vw, 6rem) var(--gutter) 0; }
-@media (min-width: 56rem) {
-  .approach { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); }
-  .approach > .section-label { grid-column: 1 / span 4; }
-  .approach > :not(.section-label) { grid-column: 5 / span 8; }
-}
 .services-intro + .services-intro { margin-top: 1rem; }
-.services-intro { max-width: 40rem; font-size: var(--fs-text); line-height: 1.62; }
 
-.dialogue-drawing { display: block; width: 100%; max-width: 27rem; height: auto; margin-top: 2.25rem; }
+.dialogue-drawing { display: block; width: 100%; max-width: 25rem; height: auto; margin: 0 auto; }
 .dg-line { fill: none; stroke: var(--ink-strong); stroke-width: 1.1; }
 .dg-head { fill: none; stroke: var(--ink-strong); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
 .dg-node { fill: var(--ink-strong); }
 .dg-label { fill: var(--ink-strong); font: 500 17px var(--sans); }
 .dg-center { fill: var(--accent); font: 300 21px var(--sans); letter-spacing: 0.02em; }
 
-/* Work, People and Contact open over one of the firm's plans too, named in "backdrop" under each page in site.json. */
-.page-statement { margin-top: 0; }
-.page-statement.has-plan { min-height: min(50vh, 32rem); }
+/* Work, People, Process and Contact open over one of the firm's drawings, named in "backdrop" under each page in site.json. */
+.page-statement { margin-top: 0; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+@media (min-width: 64rem) { .page-statement.has-plan { min-height: min(58vh, 36rem); } }
 .page-statement .page-head, .page-statement .page-head.has-lead { display: block; max-width: none; margin: 0; padding: 0; }
-.page-statement .page-lead { max-width: 36rem; margin-top: clamp(1.25rem, 2.5vw, 2rem); }
-.page-statement + * { margin-top: clamp(2rem, 4vw, 3.5rem); }
+.page-statement .page-lead { max-width: 34rem; margin-top: clamp(1.25rem, 2.5vw, 2rem); }
+/* Beside a drawing that starts partway across, the opening keeps to its own side. */
+@media (min-width: 64rem) { .page-statement:has(.is-side) .page-lead { max-width: min(31rem, calc(37% - 2.5rem)); } }
+.page-statement + .stage { padding-top: clamp(1.25rem, 3vw, 2.5rem); }
 
-/* Process: the title and opening over one of the firm's plans, as the statement is on the home page. */
-.process-head { margin-top: 0; }
-.process-head.has-plan { min-height: min(66vh, 44rem); }
-.process-head h1 { margin-bottom: clamp(1.25rem, 2.5vw, 2rem); font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; }
-.process-lead { max-width: 25em; margin: 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
-.process-head + .process-intro { padding-top: clamp(2.5rem, 5vw, 4rem); }
+/* Process: a note for the firm, in previews only, under the heading. */
+.process-note { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
+.process-note .review-note { margin-bottom: 0; }
 
-/* The parts of the process: the heading at the left; the text, then a drawing or photograph from a project. */
-.stage-body > p { max-width: 40rem; font-size: var(--fs-text); line-height: 1.62; }
-.stage-figure { margin: 2.5rem 0 0; }
+/* The parts of the process. On a wide screen each sets its text at the left and its picture beside it, the
+   picture running to the edge of the window, so the width of the page is used; the Dialogue drawing stands
+   beside its text. Two parts with no picture share a row. On a phone the picture follows the text across the
+   full width, and the Dialogue drawing comes between its heading and its text. A drawing is shown without a
+   frame, on the white of the page. */
+.stage { max-width: var(--page); margin: 0 auto; padding: clamp(3.5rem, 7vw, 6.5rem) var(--gutter) 0; }
+.stage > .section-label { margin-bottom: 1.25rem; }
+.stage-text > p { max-width: 36rem; font-size: var(--fs-text); line-height: 1.62; }
+.stage-text > :last-child { margin-bottom: 0; }
+.stage-picture { margin: 2.25rem calc(-1 * var(--gutter)) 0; }
+.stage-picture.is-diagram { margin-inline: 0; }
 .stage-figure .frame { display: block; position: relative; overflow: hidden; }
 .stage-figure img { width: 100%; height: auto; }
-.stage-figure.is-drawing .frame::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px var(--hair); pointer-events: none; }
+.stage-figure figcaption { padding: 0 var(--gutter); }
 .stage-figure figcaption a:hover { color: var(--ink-strong); }
+.frame-to-come { display: grid; place-items: center; aspect-ratio: 3 / 2; background: var(--fill); }
+.frame-to-come .photo-to-come { max-width: 80%; text-align: center; }
+.notes-off .stage-picture.is-to-come { display: none; }
+.stage-pair > .stage + .stage { margin-top: 0; }
+@media (max-width: 55.99rem) {
+  .stage.has-diagram { display: flex; flex-direction: column; }
+  .stage.has-diagram > .section-label { order: 1; }
+  .stage.has-diagram > .stage-picture { order: 2; margin: 0.25rem 0 1.75rem; }
+  .stage.has-diagram > .stage-text { order: 3; }
+  .stage.has-diagram .dialogue-drawing { max-width: 18rem; margin: 0; }
+}
+@media (min-width: 56rem) {
+  .stage.has-picture { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: auto 1fr; column-gap: var(--col-gap); }
+  .stage.has-picture > .section-label { grid-column: 1 / span 5; grid-row: 1; }
+  .stage.has-picture > .stage-text { grid-column: 1 / span 5; grid-row: 2; }
+  .stage.has-picture > .stage-picture { grid-column: 7 / span 6; grid-row: 1 / span 2; margin: 0 calc(-1 * var(--edge)) 0 0; }
+  .stage.has-picture > .stage-picture.is-diagram { align-self: center; margin-right: 0; }
+  .stage-picture.is-diagram .dialogue-drawing { max-width: 26rem; margin: 0; }
+  .stage-figure figcaption { padding: 0; }
+  .notes-off .stage.has-picture:has(> .is-to-come) { display: block; }
+  .notes-off .stage.has-picture:has(> .is-to-come) > .stage-text { max-width: 36rem; }
+  .stage.is-text-only { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); }
+  .stage.is-text-only > .section-label { grid-column: 1 / span 4; }
+  .stage.is-text-only > .stage-text { grid-column: 5 / span 8; }
+  .stage-pair > .stage.is-text-only { display: block; }
+  .stage-pair { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
+  .stage-pair > .stage { max-width: none; margin: 0; padding-left: 0; padding-right: 0; }
+  .stage-pair > .stage:first-child { grid-column: 1 / span 5; }
+  .stage-pair > .stage:last-child { grid-column: 7 / span 5; }
+}
 
 /* A remark of Arthur Bartenstein's, set large between two parts of the page. */
 .pull { max-width: var(--page); margin: 0 auto; padding: clamp(4rem, 9vw, 7.5rem) var(--gutter) clamp(0.5rem, 2vw, 1.5rem); }
@@ -422,7 +464,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .pull footer::before { content: ""; display: inline-block; width: 2.25rem; height: 2px; margin-right: 0.8rem; vertical-align: 0.3em; background: var(--accent); }
 @media (min-width: 56rem) {
   .pull { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); }
-  .pull > * { grid-column: 5 / span 8; }
+  .pull > * { grid-column: 1 / span 10; }
 }
 
 

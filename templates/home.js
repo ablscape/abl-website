@@ -1,7 +1,7 @@
 'use strict';
 
 const { esc, picture } = require('../lib/html');
-const { projectCard, sectionLabel } = require('./parts');
+const { projectCard, sectionLabel, planBackdrop } = require('./parts');
 
 // Home: photographs the width of the screen; the firm's statement set over one of its own plans;
 // the featured projects; a row of the firm's drawings; and a short account of the firm.
@@ -34,19 +34,9 @@ module.exports = function home(ctx) {
   }
 
   // A plan of the firm's behind the statement: "backdrop" in site.json names a project and one of its drawings.
-  let plan = '';
-  let planCredit = '';
-  if (site.backdrop && site.backdrop.project) {
-    const project = projects.find((p) => p.slug === site.backdrop.project);
-    const drawing = project && project.drawings.find((d) => d.file === site.backdrop.file);
-    if (drawing) {
-      const base = `/work/${project.slug}/photos/`;
-      const srcset = drawing.variants.map((v) => `${u(base + v.name)} ${v.width}w`).join(', ');
-      const biggest = drawing.variants[drawing.variants.length - 1];
-      plan = `<div class="statement-plan" data-sheet aria-hidden="true"><img src="${u(base + biggest.name)}" srcset="${srcset}" sizes="100vw" width="${drawing.width}" height="${drawing.height}" alt="" loading="lazy" decoding="async"></div>`;
-      planCredit = `<p class="statement-credit"><a href="${u(project.url)}">${esc(drawing.caption || 'Plan')}, ${esc(project.title)}</a></p>`;
-    }
-  }
+  const back = planBackdrop(ctx, site.backdrop, { lazy: true });
+  const plan = back.plan;
+  const planCredit = back.credit;
 
   const featured = projects.filter((p) => p.featured);
   const shown = featured.length ? featured : projects.slice(0, 3);
