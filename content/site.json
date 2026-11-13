@@ -43,11 +43,9 @@
     ],
     "note": "ABL is a SWaM certified small business.",
     "backdrop": {
-      "project": "virginia-tech-war-memorial",
-      "file": "02",
-      "caption": "Perspective by Peter Giraudeau",
-      "focus": "50% 80%",
-      "asDrawn": true
+      "project": "green-spring",
+      "file": "05",
+      "caption": "Sketch"
     }
   },
   "process": {
@@ -99,7 +97,8 @@
           "ABL remains with a project through construction and the establishment of the landscape. It has worked with many of the region's contractors for decades and visits the site frequently while work is under way. Planting is specified by staff who know which plants do well in this ground, among them a certified arborist with eighteen years' experience in landscape installation and maintenance."
         ],
         "figure": {
-          "toCome": "the team at work on a construction site"
+          "project": "kendal-at-lexington",
+          "file": "01"
         }
       }
     ],

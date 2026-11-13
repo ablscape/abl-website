@@ -40,20 +40,7 @@ module.exports = function layout(ctx, page) {
 <meta property="og:description" content="${esc(description)}">
 ${page.image ? `<meta property="og:image" content="${esc(base + page.image)}">\n` : ''}<link rel="icon" href="${u('/favicon.ico')}" sizes="any">
 <link rel="stylesheet" href="${u('/assets/css/site.css')}">
-<script>
-document.documentElement.className = 'js';
-// A page reached by a link opens at its top. Going back or forward, or following a link to a place on a page, keeps the browser's own position.
-(function () {
-  var entry = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null;
-  if (location.hash || (entry && entry.type !== 'navigate')) return;
-  var touched = false;
-  var toTop = function () { if (!touched) window.scrollTo(0, 0); };
-  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (t) { addEventListener(t, function () { touched = true; }, { once: true, passive: true }); });
-  addEventListener('pagereveal', toTop);
-  addEventListener('DOMContentLoaded', toTop);
-  addEventListener('load', toTop);
-})();
-</script>
+<script>document.documentElement.className = 'js';</script>
 </head>
 <body${page.bodyClass ? ` class="${esc(page.bodyClass)}"` : ''}>
 <a class="skip-link" href="#main">Skip to content</a>

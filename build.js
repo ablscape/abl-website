@@ -7,7 +7,6 @@
 //   node build.js              build with drafts and gray preview notes (for review)
 //   node build.js --production build exactly what the live site will show
 //   node build.js --portable   build into preview/ with links that work when opened from a folder
-//   node build.js --no-notes   drafts included, preview notes left out: the pages as the design will look
 //   node build.js --check      print what is still unfinished, without building
 //
 // netlify.toml runs the --production build for the live site, so drafts and notes never reach it.
@@ -43,7 +42,7 @@ if (data.errors.length) {
   process.exit(1);
 }
 
-const showNotes = !production && !args.has('--no-notes');
+const showNotes = !production;
 const visible = production ? data.projects.filter((p) => p.status === 'published') : data.projects;
 
 // ---------------------------------------------------------------- unfinished items
@@ -74,10 +73,7 @@ function openItems() {
   if (isText(pr.introNote)) items.push(`Process: the introduction has a review note ("${pr.introNote}")`);
   if (!isText(pr.lead)) items.push('Process: the opening is missing');
   if (isText(pr.sectionsNote)) items.push(`Process: the parts of the process have a review note ("${pr.sectionsNote}")`);
-  (pr.sections || []).forEach((sec) => {
-    if (!Array.isArray(sec.text) || !sec.text.length) items.push(`Process: the part "${sec.title}" has no text`);
-    if (sec.figure && isText(sec.figure.toCome)) items.push(`Process: the part "${sec.title}" waits for a photograph (${sec.figure.toCome})`);
-  });
+  (pr.sections || []).forEach((sec) => { if (!Array.isArray(sec.text) || !sec.text.length) items.push(`Process: the part "${sec.title}" has no text`); });
   const services = pr.services || {};
   if (isText(services.reviewNote)) items.push(`Process: the services have a review note ("${services.reviewNote}")`);
   (services.items || []).forEach((service) => { if (!isText(service.text)) items.push(`Process: service "${service.name}" has no description`); });
@@ -188,7 +184,7 @@ if (broken.length) {
 }
 
 const drafts = data.projects.filter((p) => p.status === 'draft').length;
-console.log(`Built ${pages.length} pages into ${path.relative(ROOT, OUT)}/ (${production ? 'live-site view' : (showNotes ? 'preview view' : 'preview view, without notes')}).`);
+console.log(`Built ${pages.length} pages into ${path.relative(ROOT, OUT)}/ (${production ? 'live-site view' : 'preview view'}).`);
 console.log(`${visible.length} project${visible.length === 1 ? '' : 's'} shown${production && drafts ? `, ${drafts} draft${drafts === 1 ? '' : 's'} hidden` : ''}.`);
 if (!production) {
   const open = openItems().length;

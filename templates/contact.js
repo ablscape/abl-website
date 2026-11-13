@@ -11,7 +11,6 @@ module.exports = function contact(ctx) {
   const types = Array.isArray(c.projectTypes) ? c.projectTypes : [];
   return {
     title: 'Contact',
-    bodyClass: c.backdrop ? 'has-ground' : '',
     description: `Contact ${site.name} at ${site.address.join(', ')}, or send a project inquiry.`,
     body: `${pageHead(ctx, site.contact && site.contact.backdrop, `<div class="page-head">
   <h1>Contact</h1>

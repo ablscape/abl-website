@@ -86,36 +86,6 @@
     update();
   }
 
-  // The firm's drawings under the headings lie deeper than the page. As the page scrolls they move at a fraction
-  // of its speed, so the page seems to slide over them: a drawing at the top of a page at a third of the speed,
-  // the plan behind the home statement a little less. They stay still for visitors who ask for less motion.
-  var deep = document.querySelectorAll('[data-depth]');
-  if (deep.length && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-    var deepQueued = false;
-    var moveDeep = function () {
-      deepQueued = false;
-      var vh = window.innerHeight;
-      each(deep, function (el) {
-        var img = el.querySelector('img');
-        var r = el.getBoundingClientRect();
-        if (!img || r.bottom < -100 || r.top > vh + 100) return;
-        var shift;
-        if (el.getAttribute('data-depth') === 'ground') {
-          shift = Math.max(0, window.pageYOffset) / 3;
-        } else {
-          var room = Math.max(0, (img.offsetHeight - el.offsetHeight) / 2 - 1);
-          shift = Math.max(-room, Math.min(room, (vh / 2 - (r.top + r.height / 2)) * 0.14));
-        }
-        img.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0)';
-      });
-    };
-    window.addEventListener('scroll', function () {
-      if (!deepQueued) { deepQueued = true; window.requestAnimationFrame(moveDeep); }
-    }, { passive: true });
-    window.addEventListener('resize', moveDeep);
-    moveDeep();
-  }
-
   // Home: fade from one photograph to the next. Visitors can pause it.
   var hero = document.querySelector('[data-hero]');
   if (hero) {
@@ -169,7 +139,8 @@
     var items = grid.querySelectorAll('[data-type]');
     var apply = function (filter) {
       each(items, function (item) {
-        var match = filter === 'all' || item.getAttribute('data-type') === filter;
+        var match = filter === 'all' ||
+          (filter === 'featured' ? item.getAttribute('data-featured') === 'true' : item.getAttribute('data-type') === filter);
         item.hidden = !match;
         if (match) item.classList.add('is-in');
       });
@@ -199,7 +170,8 @@
       button.setAttribute('aria-pressed', String(button.getAttribute('data-filter') === first));
     });
     each(items, function (item) {
-      item.hidden = !(first === 'all' || item.getAttribute('data-type') === first);
+      item.hidden = !(first === 'all' ||
+        (first === 'featured' ? item.getAttribute('data-featured') === 'true' : item.getAttribute('data-type') === first));
     });
   }
 
