@@ -1,0 +1,59 @@
+{
+  "title": "Virginia Horse Center",
+  "location": "Rockbridge County, Virginia",
+  "client": "",
+  "year": "",
+  "type": "Civic",
+  "role": "Master planning",
+  "collaborators": [],
+  "status": "draft",
+  "featured": true,
+  "order": 2,
+  "summary": "A master plan for the Virginia Horse Center, the equestrian complex in Rockbridge County.",
+  "reviewNote": "Existing text from the current site. The client, the year and the four-part story are still to come. The firm to say who made the two renderings.",
+  "description": [
+    "Master planning for equestrian center in Rockbridge County, Virginia."
+  ],
+  "cover": "01",
+  "photos": [
+    {
+      "file": "01",
+      "alt": "Statue of a spotted horse on a stone base in a plaza, with benches, red-leaved trees and show barns behind",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "02",
+      "alt": "Outdoor arena set with jumps, a covered ring beyond it and mountains on the horizon",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "03",
+      "alt": "Rider on a dark horse in a sand arena below a grass bank with a stone arena sign and white fences",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "04",
+      "alt": "The horse center's long roofs seen across a field, with mountains on the horizon",
+      "caption": "",
+      "credit": ""
+    }
+  ],
+  "drawings": [
+    {
+      "file": "05",
+      "alt": "Aerial rendering of barns, arenas and parking set among fields and lines of trees",
+      "caption": ""
+    },
+    {
+      "file": "06",
+      "alt": "Rendering of a path through trees to a small two-story pavilion beside a fenced ring",
+      "caption": ""
+    }
+  ],
+  "legacyUrls": [
+    "vhc.html"
+  ]
+}

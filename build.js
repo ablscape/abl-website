@@ -4,9 +4,10 @@
 // Builds the whole site from content/ into dist/. Uses only what ships with Node:
 // there is nothing to install.
 //
-//   node build.js              build with drafts and yellow preview notes (for review)
+//   node build.js              build with drafts and gray preview notes (for review)
 //   node build.js --production build exactly what the live site will show
 //   node build.js --portable   build into preview/ with links that work when opened from a folder
+//   node build.js --no-notes   drafts included, preview notes left out: the pages as the design will look
 //   node build.js --check      print what is still unfinished, without building
 //
 // netlify.toml runs the --production build for the live site, so drafts and notes never reach it.
@@ -20,6 +21,7 @@ const home = require('./templates/home');
 const work = require('./templates/work');
 const projectPage = require('./templates/project');
 const studio = require('./templates/studio');
+const processPage = require('./templates/process');
 const contact = require('./templates/contact');
 const { sent, notFound } = require('./templates/simple');
 
@@ -41,7 +43,7 @@ if (data.errors.length) {
   process.exit(1);
 }
 
-const showNotes = !production;
+const showNotes = !production && !args.has('--no-notes');
 const visible = production ? data.projects.filter((p) => p.status === 'published') : data.projects;
 
 // ---------------------------------------------------------------- unfinished items
@@ -67,12 +69,18 @@ function openItems() {
     if (!isText(person.photo)) items.push(`${person.name}: photograph is missing`);
     if (!Array.isArray(person.bio) || !person.bio.length) items.push(`${person.name}: biography is missing`);
   });
-  const s = site.studio;
-  if (!s.dialogue || !Array.isArray(s.dialogue.text) || !s.dialogue.text.length) items.push('Studio: the Dialogue text is missing');
-  if (s.dialogue && isText(s.dialogue.reviewNote)) items.push(`Studio: Dialogue text has a review note ("${s.dialogue.reviewNote}")`);
-  (s.process || []).forEach((step) => { if (!isText(step.text)) items.push(`Studio: process step "${step.title}" has no description`); });
-  const services = (site.contact.residential && site.contact.residential.services) || [];
-  services.forEach((service) => { if (!isText(service.text)) items.push(`Contact: residential service "${service.name}" has no description`); });
+  if (site.work && isText(site.work.introNote)) items.push(`Work: the introduction has a review note ("${site.work.introNote}")`);
+  const pr = site.process || {};
+  if (isText(pr.introNote)) items.push(`Process: the introduction has a review note ("${pr.introNote}")`);
+  if (!isText(pr.lead)) items.push('Process: the opening is missing');
+  if (isText(pr.sectionsNote)) items.push(`Process: the parts of the process have a review note ("${pr.sectionsNote}")`);
+  (pr.sections || []).forEach((sec) => {
+    if (!Array.isArray(sec.text) || !sec.text.length) items.push(`Process: the part "${sec.title}" has no text`);
+    if (sec.figure && isText(sec.figure.toCome)) items.push(`Process: the part "${sec.title}" waits for a photograph (${sec.figure.toCome})`);
+  });
+  const services = pr.services || {};
+  if (isText(services.reviewNote)) items.push(`Process: the services have a review note ("${services.reviewNote}")`);
+  (services.items || []).forEach((service) => { if (!isText(service.text)) items.push(`Process: service "${service.name}" has no description`); });
   return [...new Set(items)];
 }
 
@@ -107,7 +115,7 @@ copyDir(path.join(ROOT, 'static'), OUT);
 visible.forEach((p) => {
   const to = path.join(OUT, 'work', p.slug, 'photos');
   fs.mkdirSync(to, { recursive: true });
-  p.photos.forEach((photo) => photo.variants.forEach((v) => {
+  p.photos.concat(p.drawings).forEach((image) => image.variants.forEach((v) => {
     fs.copyFileSync(path.join(ROOT, 'content/projects', p.slug, 'photos', v.name), path.join(to, v.name));
   }));
 });
@@ -125,7 +133,8 @@ function write(pagePath, section, render) {
 write('/', '/', home);
 write('/work/', '/work/', work);
 visible.forEach((p, i) => write(p.url, '/work/', (ctx) => projectPage(ctx, p, visible[(i + 1) % visible.length])));
-write('/studio/', '/studio/', studio);
+write('/people/', '/people/', studio);
+write('/process/', '/process/', processPage);
 write('/contact/', '/contact/', contact);
 write('/contact/sent/', '/contact/', sent);
 write('/404.html', '', notFound);
@@ -179,7 +188,7 @@ if (broken.length) {
 }
 
 const drafts = data.projects.filter((p) => p.status === 'draft').length;
-console.log(`Built ${pages.length} pages into ${path.relative(ROOT, OUT)}/ (${production ? 'live-site view' : 'preview view'}).`);
+console.log(`Built ${pages.length} pages into ${path.relative(ROOT, OUT)}/ (${production ? 'live-site view' : (showNotes ? 'preview view' : 'preview view, without notes')}).`);
 console.log(`${visible.length} project${visible.length === 1 ? '' : 's'} shown${production && drafts ? `, ${drafts} draft${drafts === 1 ? '' : 's'} hidden` : ''}.`);
 if (!production) {
   const open = openItems().length;

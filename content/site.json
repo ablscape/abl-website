@@ -3,16 +3,38 @@
   "url": "https://www.ablscape.com",
   "description": "ABL Landscape Architecture is an award-winning, client-focused landscape architecture firm based in Lexington, Virginia offering expertise in institutional, civic, residential and commercial landscape architecture projects.",
   "statement": "ABL Landscape Architecture is principally devoted to the adaptation of historic, environmentally sensitive landscapes to contemporary needs and goals.",
-  "address": ["104 White Street", "Lexington, Virginia 24450"],
+  "address": [
+    "104 White Street",
+    "Lexington, Virginia 24450"
+  ],
   "phone": "540.464.3736",
   "emails": [
-    { "label": "Arthur Bartenstein", "address": "arthur@ablscape.com" },
-    { "label": "Kelly Morikawa", "address": "kelly@ablscape.com" }
+    {
+      "label": "Arthur Bartenstein",
+      "address": "arthur@ablscape.com"
+    },
+    {
+      "label": "Kelly Morikawa",
+      "address": "kelly@ablscape.com"
+    }
   ],
   "hero": [
-    { "project": "washington-and-lee-university", "photo": "01" },
-    { "project": "virginia-military-institute", "photo": "01" },
-    { "project": "washington-and-lee-university", "photo": "03" }
+    {
+      "project": "main-street-triangle",
+      "photo": "02"
+    },
+    {
+      "project": "washington-and-lee-university",
+      "photo": "01"
+    },
+    {
+      "project": "virginia-horse-center",
+      "photo": "02"
+    },
+    {
+      "project": "montpelier-visitor-arrival",
+      "photo": "01"
+    }
   ],
   "studio": {
     "intro": [
@@ -20,17 +42,87 @@
       "Mindful of the client's need to visualize the final product and also of the client's cost constraints in landscape construction and maintenance, ABL seeks every reasonable means to narrow the uncertainty between design incubation and the desired outcome. Such techniques include photo simulation, 3D scale models, material samples, full scale mock-ups, detailed review of pricing, dialogue with both grounds staff and end-users, and frequent site visits."
     ],
     "note": "ABL is a SWaM certified small business.",
-    "dialogue": {
-      "text": [
-        "Each project is a dialogue among the client, the site and the design team. The client's goals are tested against the conditions of the site, and the design develops from that exchange."
-      ],
-      "reviewNote": "Placeholder wording for the Dialogue framework. The firm to replace it with its own."
+    "backdrop": {
+      "project": "washington-and-lee-university",
+      "file": "04",
+      "caption": "Sketch",
+      "asDrawn": true,
+      "from": "37%",
+      "focus": "30% 45%",
+      "focusPhone": "22% 50%"
+    }
+  },
+  "process": {
+    "backdrop": {
+      "project": "oak-grove-cemetery",
+      "file": "04",
+      "lift": 1.2,
+      "asDrawn": true,
+      "from": "38%",
+      "focus": "45% 50%",
+      "focusPhone": "50% 50%"
     },
-    "process": [
-      { "title": "Initial meeting", "text": "" },
-      { "title": "Site and land research", "text": "" },
-      { "title": "Brainstorming and mock-ups", "text": "" }
-    ]
+    "lead": "ABL carries a project from research into the history of its site, through design in dialogue with the client, to construction and the establishment of the landscape.",
+    "intro": [],
+    "introNote": "Written November 12, 2026 from the November 11 meeting, the firm's own text on the People page and the Courthouse Square page. The quotation is Arthur's, from the meeting. Each picture is from the project named under it. The firm to confirm every fact and the wording.",
+    "sections": [
+      {
+        "title": "Research",
+        "text": [
+          "Design begins with research. ABL studies how a site came to its present form, what it was intended to be, and how it has since been altered, and takes that record as the basis of its design. At Courthouse Square in Lexington the research reached back to the act of 1777, which fixed the county court on the first Tuesday of each month, and to Court Day, when families from the outlying farms came to town to trade and to hear the news. The premise of the design, that the square is first a place of assembly, came from that history.",
+          "In Lexington and Rockbridge County the firm works from long familiarity with the place. Its principal, Arthur Bartenstein, is president of the Rockbridge Historical Society and serves on the City of Lexington's Architectural Review Board and Tree Committee."
+        ],
+        "figure": {
+          "project": "green-spring",
+          "file": "04",
+          "caption": "Aerial sketch",
+          "from": "42%",
+          "focus": "45% 45%",
+          "focusPhone": "50% 45%"
+        },
+        "quote": {
+          "text": "Registered in terms of place, but also registered in terms of time.",
+          "by": "Arthur Bartenstein"
+        }
+      },
+      {
+        "title": "Dialogue",
+        "text": [
+          "ABL treats design as a dialogue among the client, the site and the design team. The client's intentions are tested against the site, which determines part of the answer, and the design develops as that exchange continues. On campus and civic projects the dialogue extends to architects, engineers and the staff who will maintain the grounds, and proposals are brought to them while they can still change."
+        ],
+        "diagram": true
+      },
+      {
+        "title": "Models and mock-ups",
+        "text": [
+          "Clients are asked to approve, and to fund, places they cannot yet see. ABL therefore seeks every reasonable means to narrow the uncertainty between a design and its result: proposals are studied in sketches, photo simulations and scale models, materials are reviewed as samples, pricing is examined in detail, and before construction the design is mocked up at full scale on the site."
+        ],
+        "figure": {
+          "project": "virginia-tech-war-memorial",
+          "file": "01",
+          "caption": "Perspective by Peter Giraudeau",
+          "asDrawn": true,
+          "from": "42%",
+          "focus": "50% 50%"
+        }
+      },
+      {
+        "title": "Construction and establishment",
+        "text": [
+          "ABL remains with a project through construction and the establishment of the landscape. It has worked with many of the region's contractors for decades and visits the site frequently while work is under way. Planting is specified by staff who know which plants do well in this ground, among them a certified arborist with eighteen years' experience in landscape installation and maintenance."
+        ],
+        "figure": {
+          "toCome": "the team at work on a construction site"
+        }
+      }
+    ],
+    "services": {
+      "intro": [
+        "ABL provides master planning, landscape architecture, cultural landscape reports, feasibility studies and planting design for campuses, civic spaces and historic properties.",
+        "For private properties the firm is engaged for a consultation, a planting plan, a master plan, or the design of a single element such as a stair."
+      ],
+      "items": []
+    }
   },
   "contact": {
     "projectTypes": [
@@ -41,13 +133,37 @@
       "Residential",
       "Something else"
     ],
-    "residential": {
-      "intro": "",
-      "services": [
-        { "name": "Consultation", "text": "" },
-        { "name": "Planting plan", "text": "" },
-        { "name": "Master plan", "text": "" }
-      ]
+    "backdrop": {
+      "project": "virginia-tech-war-memorial",
+      "file": "04"
+    }
+  },
+  "backdrop": {
+    "project": "lime-kiln-theater",
+    "file": "01",
+    "lift": 1.2,
+    "asDrawn": true
+  },
+  "drawings": [
+    {
+      "project": "green-spring",
+      "file": "03"
+    },
+    {
+      "project": "montpelier-visitor-arrival",
+      "file": "05"
+    },
+    {
+      "project": "virginia-tech-war-memorial",
+      "file": "04"
+    }
+  ],
+  "work": {
+    "intro": "Campus, civic and preservation projects in Lexington, Rockbridge County and elsewhere in Virginia: built work, shown with the plans and studies that precede it.",
+    "introNote": "Drafted by Claude on November 11, 2026. The firm to confirm the wording.",
+    "backdrop": {
+      "project": "montpelier-visitor-arrival",
+      "file": "05"
     }
   }
 }

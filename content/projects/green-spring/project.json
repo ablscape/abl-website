@@ -1,0 +1,54 @@
+{
+  "title": "Green Spring Cultural Landscape Report",
+  "location": "Fairfax County, Virginia",
+  "client": "",
+  "year": "",
+  "type": "Preservation",
+  "role": "Preservation landscape architect",
+  "collaborators": [
+    "Versar, Inc."
+  ],
+  "status": "draft",
+  "featured": false,
+  "order": 7,
+  "summary": "A cultural landscape report and schematic master plan for a 28-acre Fairfax County park and heritage site that holds a garden by Beatrix Farrand.",
+  "reviewNote": "Existing text from the current site. The client, the year and the four-part story are still to come. The firm to say who drew the plan and the two sketches.",
+  "description": [
+    "ABL served as Preservation Landscape Architect on a team headed by northern Virginia based global project management firm Versar, Inc. to prepare a Cultural Landscape Report and Schematic Landscape Master Plan for a 28-acre Fairfax County Park and Heritage Site featuring a Beatrix Farrand garden. The Garden Club of Virginia is presently undertaking restoration of the Farrand Garden. The Green Springs project was initiated by Arthur Bartenstein while Senior Landscape Architect with Frazier Associates."
+  ],
+  "cover": "03",
+  "photos": [
+    {
+      "file": "01",
+      "alt": "Brick Georgian house with dormers and a white side porch, seen across a lawn under large trees",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "02",
+      "alt": "Dense border of shrubs and flowering perennials, with a visitor partly hidden among them",
+      "caption": "",
+      "credit": ""
+    }
+  ],
+  "drawings": [
+    {
+      "file": "03",
+      "alt": "Hand-colored plan of the grounds: house, entry drive, front and central lawns, the Farrand crescent and proposed gardens among trees",
+      "caption": "Schematic landscape master plan"
+    },
+    {
+      "file": "04",
+      "alt": "Hand-colored aerial sketch of the house among large trees, with a drive looping to its door",
+      "caption": ""
+    },
+    {
+      "file": "05",
+      "alt": "Hand-colored sketch of a view across open lawn between large trees toward the distant house",
+      "caption": ""
+    }
+  ],
+  "legacyUrls": [
+    "greenspring.html"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "title": "Lime Kiln Theater",
+  "location": "Lexington, Virginia",
+  "client": "Lime Kiln Theater",
+  "year": "",
+  "type": "Civic",
+  "role": "Master plan study",
+  "collaborators": [],
+  "status": "draft",
+  "featured": false,
+  "order": 12,
+  "summary": "A master plan study for Lime Kiln Theater, the regional performing arts organization in Lexington, with a plan to enlarge its outdoor Bowl Theater.",
+  "reviewNote": "Existing text from two pages of the current site. The year and the four-part story are still to come.",
+  "description": [
+    "Master plan study for regional, non-profit performing arts organization.",
+    "Plan for upgrade and expansion of Lime Kiln's outdoor Bowl Theater, Lexington, Virginia."
+  ],
+  "cover": "01",
+  "photos": [],
+  "drawings": [
+    {
+      "file": "01",
+      "alt": "Plan in pencil and green wash over contour lines: a drive winding through woods to parking, an amphitheater and small buildings",
+      "caption": "Master plan study",
+      "lift": 1.2
+    }
+  ],
+  "legacyUrls": [
+    "limekiln.html",
+    "limekilnbowl.html"
+  ]
+}
