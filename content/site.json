@@ -75,7 +75,10 @@
         "figure": {
           "project": "green-spring",
           "file": "04",
-          "caption": "Aerial sketch"
+          "caption": "Aerial sketch",
+          "from": "42%",
+          "focus": "45% 45%",
+          "focusPhone": "50% 45%"
         },
         "quote": {
           "text": "Registered in terms of place, but also registered in terms of time.",
@@ -98,7 +101,9 @@
           "project": "virginia-tech-war-memorial",
           "file": "01",
           "caption": "Perspective by Peter Giraudeau",
-          "drawn": true
+          "asDrawn": true,
+          "from": "42%",
+          "focus": "50% 50%"
         }
       },
       {

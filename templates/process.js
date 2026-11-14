@@ -1,16 +1,23 @@
 'use strict';
 
-const { esc, paragraphs, picture, toCome, reviewNote } = require('../lib/html');
-const { sectionLabel, pageHead } = require('./parts');
+const { esc, paragraphs, toCome, reviewNote } = require('../lib/html');
+const { sectionLabel, pageHead, planBackdrop } = require('./parts');
 
-// The Client, Site, Design team diagram: three points, with an arrow in each direction along every side.
+// The Client, Site, Design team diagram: three points, with an arrow in each direction along every side. It
+// clears the drawn ground around itself, as text does, with a white that has no edge.
 const DIALOGUE_SVG = `<svg class="dialogue-drawing" viewBox="0 0 400 320" role="img" aria-labelledby="dialogue-title">
       <title id="dialogue-title">A triangle joining the client, the site and the design team, with arrows in both directions along each side</title>
       <defs>
         <marker id="dg-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
           <path class="dg-head" d="M1 1.5 L9 5 L1 8.5"/>
         </marker>
+        <radialGradient id="dg-clear">
+          <stop offset="0" stop-color="#fff"/>
+          <stop offset="0.62" stop-color="#fff" stop-opacity="0.97"/>
+          <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        </radialGradient>
       </defs>
+      <ellipse cx="200" cy="164" rx="285" ry="225" fill="url(#dg-clear)"/>
       <path class="dg-line" d="M186 72 L98 238" marker-start="url(#dg-arrow)" marker-end="url(#dg-arrow)"/>
       <path class="dg-line" d="M214 72 L302 238" marker-start="url(#dg-arrow)" marker-end="url(#dg-arrow)"/>
       <path class="dg-line" d="M118 260 L282 260" marker-start="url(#dg-arrow)" marker-end="url(#dg-arrow)"/>
@@ -24,24 +31,15 @@ const DIALOGUE_SVG = `<svg class="dialogue-drawing" viewBox="0 0 400 320" role="
     </svg>`;
 
 // Process: the title and opening over one of the firm's drawings, as on the other pages; then the parts of the
-// firm's process, each with its picture beside its text; a remark of Arthur Bartenstein's set large; and the
-// ways to work with the firm. Everything comes from "process" in content/site.json.
+// firm's process, each lying on a drawing of its own where it names one; a remark of Arthur Bartenstein's set
+// large; and the ways to work with the firm. Everything comes from "process" in content/site.json.
 module.exports = function process(ctx) {
-  const { site, projects, u } = ctx;
+  const { site } = ctx;
   const p = site.process || {};
   const sections = Array.isArray(p.sections) ? p.sections : [];
   const services = p.services || {};
   const items = Array.isArray(services.items) ? services.items : [];
   const intro = Array.isArray(p.intro) ? p.intro : [];
-
-  // A picture is named by its project and its number; it may be a drawing or a photograph.
-  const find = (ref) => {
-    const project = ref && projects.find((x) => x.slug === ref.project);
-    if (!project) return null;
-    const drawing = project.drawings.find((d) => d.file === ref.file);
-    const item = drawing || project.photos.find((d) => d.file === ref.file);
-    return item ? { project, item, isDrawing: Boolean(drawing) } : null;
-  };
 
   const head = pageHead(ctx, p.backdrop, `<div class="page-head has-lead">
   <h1>Process</h1>
@@ -59,29 +57,17 @@ module.exports = function process(ctx) {
   ${paragraphs(intro)}
 </section>` : '';
 
-  // The picture beside a part: a drawing or photograph from a project ("drawn": true marks a drawing that a
-  // project lists among its photographs), the Dialogue drawing, or, in previews only, a frame that holds the
-  // place of a photograph still to come ("figure": { "toCome": "what it will show" }).
-  const picturePart = (sec) => {
+  // What stands beside a part that has no drawing of its own: the Dialogue drawing, or, in previews with notes,
+  // a frame that holds the place of a photograph still to come ("figure": { "toCome": "what it will show" }).
+  const besidePart = (sec) => {
     if (sec.diagram) return `<div class="stage-picture is-diagram">
     ${DIALOGUE_SVG}
   </div>`;
     const ref = sec.figure;
-    if (ref && typeof ref.toCome === 'string') {
-      return ctx.showNotes ? `<div class="stage-picture is-to-come">
+    if (ref && typeof ref.toCome === 'string' && ctx.showNotes) return `<div class="stage-picture is-to-come">
     <div class="frame-to-come"><span class="photo-to-come">Photograph to come: ${esc(ref.toCome)}</span></div>
-  </div>` : '';
-    }
-    const f = find(ref);
-    if (!f) return '';
-    const drawn = f.isDrawing || ref.drawn === true;
-    const caption = ref.caption || f.item.caption;
-    return `<div class="stage-picture">
-    <figure class="stage-figure${drawn ? ' is-drawing' : ''}">
-      <a class="frame" href="${u(f.project.url)}"${drawn ? ' data-sheet' : ' data-photo'}>${picture(ctx, f.project, f.item, { sizes: '(min-width: 56rem) 54vw, 100vw' })}</a>
-      <figcaption><a href="${u(f.project.url)}">${caption ? `${esc(caption)}, ` : ''}${esc(f.project.title)}</a></figcaption>
-    </figure>
   </div>`;
+    return '';
   };
 
   const quote = (q) => (q && q.text ? `<blockquote class="pull">
@@ -97,9 +83,28 @@ module.exports = function process(ctx) {
   ${pic}
 </section>`;
 
+  // A part that names one of the firm's drawings lies on it, as the heading of a page does: the drawing is the
+  // ground of the part, with no frame, and fades into the page. "figure" takes the same settings as "backdrop".
+  const plate = (title, text, ref) => {
+    const back = planBackdrop(ctx, ref, { lazy: true });
+    if (!back.plan) return '';
+    return `<section class="statement stage-plate has-plan">
+  ${back.plan}
+  <div class="statement-inner">
+    ${sectionLabel(title)}
+    <div class="stage-text">
+      ${text}
+    </div>
+  </div>
+  ${back.credit}
+</section>`;
+  };
+
   const blocks = sections.map((sec) => {
-    const pic = picturePart(sec);
     const text = Array.isArray(sec.text) && sec.text.length ? paragraphs(sec.text) : `<p>${toCome(ctx, 'this part of the process, in the firm\'s words')}</p>`;
+    const onDrawing = sec.figure && typeof sec.figure.toCome !== 'string' ? plate(sec.title, text, sec.figure) : '';
+    if (onDrawing) return { textOnly: false, after: quote(sec.quote), html: onDrawing };
+    const pic = besidePart(sec);
     return { textOnly: !pic, after: quote(sec.quote), html: stage(sec.title, text, pic, sec.diagram ? 'has-diagram' : '') };
   });
 

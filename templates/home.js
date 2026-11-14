@@ -1,6 +1,6 @@
 'use strict';
 
-const { esc, picture } = require('../lib/html');
+const { esc, picture, liftStyle } = require('../lib/html');
 const { projectCard, sectionLabel, planBackdrop } = require('./parts');
 
 // Home: photographs the width of the screen; the firm's statement set over one of its own plans;
@@ -60,7 +60,7 @@ module.exports = function home(ctx) {
   ${sectionLabel('Plans and drawings')}
   <ul class="drawing-row">
     ${sheets.map(({ project, drawing }) => `<li><a class="card" href="${u(project.url)}">
-      <span class="drawing-image" data-sheet>${picture(ctx, project, drawing, { sizes: '(min-width: 900px) 30vw, 100vw' })}</span>
+      <span class="drawing-image" data-sheet${liftStyle(drawing)}>${picture(ctx, project, drawing, { sizes: '(min-width: 900px) 30vw, 100vw' })}</span>
       <span class="card-title">${esc(project.title)}</span>
       <span class="card-meta">${esc(drawing.caption || 'Plan')}</span>
     </a></li>`).join('\n    ')}

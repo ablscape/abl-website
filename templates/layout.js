@@ -75,6 +75,7 @@ document.documentElement.className = 'js';
 </script>
 </head>
 <body${page.bodyClass ? ` class="${esc(page.bodyClass)}"` : ''}>
+<div class="page-ground" data-ground aria-hidden="true"></div>
 <a class="skip-link" href="#main">Skip to content</a>
 ${ctx.showNotes ? '<p class="preview-bar">Preview build. Gray notes mark text and photographs still to come. They never appear on the live site. <button class="notes-toggle" type="button" data-notes-toggle hidden>Hide notes</button></p>\n' : ''}<header class="site-header">
   <nav class="site-nav" aria-label="Main">

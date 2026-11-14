@@ -1,10 +1,11 @@
 'use strict';
 
-const { esc, paragraphs, picture, toCome, reviewNote } = require('../lib/html');
+const { esc, paragraphs, picture, toCome, reviewNote, liftStyle } = require('../lib/html');
 const { STORY_PARTS } = require('../lib/content');
 
 // One project page: the lead image; the title, the facts and the first part of the story side by side;
-// then the firm's drawings on plain white, and the rest of the story interleaved with the photographs.
+// then the firm's drawings, as ink on the white of the page with no frame, the ground giving way around them;
+// and the rest of the story interleaved with the photographs.
 module.exports = function projectPage(ctx, project, next) {
   const { u } = ctx;
 
@@ -56,7 +57,7 @@ module.exports = function projectPage(ctx, project, next) {
     : `<div class="photo-row photo-pair">\n    ${group.map((p) => photoFigure(p, '(min-width: 1100px) 520px, 100vw')).join('\n    ')}\n  </div>`;
 
   const drawingHtml = (d) => `<figure class="plan">
-      <div class="frame" data-sheet>${picture(ctx, project, d, { sizes: '(min-width: 1100px) 1100px, 100vw' })}</div>
+      <div class="frame" data-sheet${liftStyle(d)}>${picture(ctx, project, d, { sizes: '(min-width: 1100px) 1100px, 100vw' })}</div>
       ${caption(d)}
     </figure>`;
 
@@ -99,7 +100,7 @@ module.exports = function projectPage(ctx, project, next) {
     bodyClass: 'project-page',
     body: `<article class="project">
   <figure class="project-hero ${cover.isDrawing ? 'is-drawing' : 'is-photo'}">
-    <div class="frame"${cover.isDrawing ? ' data-sheet' : ' data-photo'}>${picture(ctx, project, cover, { sizes: '100vw', lazy: false })}</div>
+    <div class="frame"${cover.isDrawing ? ` data-sheet${liftStyle(cover)}` : ' data-photo'}>${picture(ctx, project, cover, { sizes: '100vw', lazy: false })}</div>
     ${caption(cover)}
   </figure>
   <div class="project-body">

@@ -86,6 +86,78 @@
     update();
   }
 
+  // The ground: the firm's linework behind every page. A veil of white lies over it. Here the veil is laid
+  // thinner where the ground should be stronger: in the space above the heading of each section, around a
+  // remark set large, and most of all in the bare band at the foot of the page. Text needs no help from the
+  // veil, since every line of it clears the ground around itself. Behind the header the veil is solid, so the
+  // logo and the links stay on plain white, and it is solid around a drawing shown in the column of a page,
+  // so the drawing lies on clear white. The veil is laid again whenever the page changes height.
+  var ground = document.querySelector('[data-ground]');
+  if (ground && header) {
+    var REST = 0.64;    // the veil over the ground through the body of a page
+    var JOINT = 0.30;   // where one part of a page gives way to the next
+    var FOOT = 0;       // in the band at the foot of the page
+    var veilNow = '';
+    var veilQueued = false;
+    var ease = function (t) { return t * t * (3 - 2 * t); };
+    // 1 inside the span from a to b, falling to 0 over "soft" pixels on either side
+    var within = function (y, a, b, soft) {
+      if (y < a - soft || y > b + soft) return 0;
+      if (y < a) return ease((y - (a - soft)) / soft);
+      if (y > b) return ease(((b + soft) - y) / soft);
+      return 1;
+    };
+    var layVeil = function () {
+      veilQueued = false;
+      var origin = ground.getBoundingClientRect().top;
+      var height = ground.offsetHeight;
+      if (!height) return;
+      var topOf = function (el) { return el.getBoundingClientRect().top - origin; };
+      var clearTo = topOf(header) + header.offsetHeight + 8;
+      var joints = [];
+      each(document.querySelectorAll('.section-label, .pull, .project-next, .people'), function (el) {
+        if (el.closest('.statement.has-plan') || el.offsetParent === null) return;
+        var y = topOf(el);
+        joints.push([y - 130, y + 16]);
+      });
+      var clears = [];
+      each(document.querySelectorAll('.plan, .project-hero.is-drawing'), function (el) {
+        if (el.offsetParent === null) return;
+        var y = topOf(el);
+        clears.push([y - 28, y + el.offsetHeight + 28]);
+      });
+      var footer = document.querySelector('.site-footer');
+      var bandFrom = height;
+      if (footer) {
+        var last = footer.lastElementChild;
+        bandFrom = last ? topOf(last) + last.offsetHeight + 24 : height;
+      }
+      var stops = [];
+      var step = 24;
+      for (var y = 0; y < height + step; y += step) {
+        var at = Math.min(y, height);
+        var j = 0;
+        for (var k = 0; k < joints.length; k += 1) j = Math.max(j, within(at, joints[k][0], joints[k][1], 150));
+        var alpha = REST + (JOINT - REST) * j;
+        if (at > bandFrom) alpha = alpha + (FOOT - alpha) * ease(Math.min(1, (at - bandFrom) / 110));
+        var c = 0;
+        for (var n = 0; n < clears.length; n += 1) c = Math.max(c, within(at, clears[n][0], clears[n][1], 130));
+        alpha = alpha + (1 - alpha) * c;
+        if (at < clearTo + 140) alpha = alpha + (1 - alpha) * (at <= clearTo ? 1 : 1 - ease((at - clearTo) / 140));
+        stops.push('rgba(255,255,255,' + alpha.toFixed(3) + ') ' + at + 'px');
+      }
+      var veil = 'linear-gradient(to bottom, ' + stops.join(', ') + ')';
+      if (veil !== veilNow) { veilNow = veil; ground.style.setProperty('--veil', veil); }
+    };
+    var queueVeil = function () {
+      if (!veilQueued) { veilQueued = true; window.requestAnimationFrame(layVeil); }
+    };
+    layVeil();
+    window.addEventListener('load', queueVeil);
+    window.addEventListener('resize', queueVeil);
+    if ('ResizeObserver' in window) new ResizeObserver(queueVeil).observe(document.body);
+  }
+
   // Home: fade from one photograph to the next. Visitors can pause it.
   var hero = document.querySelector('[data-hero]');
   if (hero) {

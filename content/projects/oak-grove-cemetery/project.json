@@ -41,7 +41,8 @@
     {
       "file": "04",
       "alt": "Hand-colored plan: an open lawn ringed by trees, curved columbarium terrace walls, a chapel, a rain garden and scatter gardens",
-      "caption": "Schematic plan"
+      "caption": "Schematic plan",
+      "lift": 1.2
     }
   ],
   "legacyUrls": [

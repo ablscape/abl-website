@@ -41,6 +41,12 @@
   /* The white haze around the mark and the returning links wherever they are dark: over the page and over drawings. */
   --haze: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 5px var(--paper)) drop-shadow(0 0 11px rgba(255, 255, 255, 0.9));
   --haze-text: 0 0 2px var(--paper), 0 0 4px var(--paper), 0 0 8px var(--paper), 0 0 14px rgba(255, 255, 255, 0.8);
+  /* The halo that clears the drawn ground around every line of text. Many small white shadows, set a few pixels
+     to each side, do this cheaply; one large soft shadow would look the same and slow the page on a phone. */
+  --halo:
+    0 0 2px #fff, 0 0 4px #fff,
+    5px 3px 5px #fff, -5px 3px 5px #fff, 5px -3px 5px #fff, -5px -3px 5px #fff,
+    0 7px 5px #fff, 0 -7px 5px #fff, 10px 0 5px #fff, -10px 0 5px #fff;
   --haze-deep: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 5px var(--paper)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 15px rgba(255, 255, 255, 0.55));
 
   /* A plan set behind a heading is turned a few degrees from yellow toward green. White and gray stay as they are,
@@ -57,6 +63,7 @@ h1, h2, h3, blockquote p { text-wrap: balance; }
 p, dd, figcaption { text-wrap: pretty; }
 html { -webkit-text-size-adjust: 100%; }
 body {
+  position: relative;
   margin: 0;
   background: var(--paper);
   color: var(--ink);
@@ -174,15 +181,43 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .hero-toggle:hover { color: var(--accent); }
 @media (max-width: 40rem) { .hero-frame { height: 62vh; } }
 
+/* The ground. The linework of one of the firm's own plans runs behind every page, in the green of the logo: the
+   sheet the site is drawn on. It is faint through the body of a page, stronger where one part of the page gives
+   way to the next and at the foot of the page, and absent behind the header, so the logo and the links stay on
+   plain white. Photographs and text lie on it; nothing about it moves. tools/make_ground.py makes the two sheets
+   from a drawing, at twice the drawing's size so that the lines stay sharp on a large screen. A veil of white
+   lies over the linework; the script lays the veil thinner where the ground should be stronger, and without
+   scripts the ground is simply even. */
+.page-ground {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: var(--veil, linear-gradient(to bottom, #fff 0, #fff 7rem, rgba(255, 255, 255, 0.64) 17rem)), url("../img/ground-tall.webp");
+  background-repeat: no-repeat, repeat; background-position: 0 0, 50% 0; background-size: 100% 100%, 100vw auto;
+}
+@media (min-width: 48rem) {
+  .page-ground { background-image: var(--veil, linear-gradient(to bottom, #fff 0, #fff 7rem, rgba(255, 255, 255, 0.64) 17rem)), url("../img/ground-wide.webp"); background-size: 100% 100%, max(100vw, 60rem) auto; }
+}
+@media print { .page-ground { display: none; } }
+
+/* Words on the ground. Every line of text clears the ground around itself, as a label does on a plan: a soft
+   white halo with no edge and no box. The drawing therefore shows in the open parts of a page and gives way
+   wherever there is something to read. */
+main, .site-footer { text-shadow: var(--halo); }
+main svg, main input, main textarea, main select, main button { text-shadow: none; }
+
 /* The firm's drawings on the page. One lies behind the statement on the home page and one behind the heading of
    each other page; "backdrop" in content/site.json names it. A drawing is shown as ink on the page's own white.
    It has no frame and no band: where it was drawn on gray paper the paper is brought to white ("lift"), and it
    dissolves into the page above, below and toward the text. The header and the text stay on plain white, and
    nothing moves. On a wide screen the text lies at the left, beside the drawing or over its faded side. On a
    phone or a tablet the text comes first and the drawing emerges beneath it. */
-.statement { position: relative; display: grid; align-items: center; margin-top: clamp(1.5rem, 4vw, 3.5rem); overflow: hidden; }
+.statement { position: relative; display: grid; align-items: center; margin-top: clamp(1.5rem, 4vw, 3.5rem); }
+/* A drawing lies on clear white: the ground gives way around it, above and below, without an edge. */
+.statement.has-plan { background: var(--paper); }
+.statement.has-plan::before, .statement.has-plan::after { content: ""; position: absolute; z-index: -1; left: 0; right: 0; height: 8rem; pointer-events: none; }
+.statement.has-plan::before { bottom: 100%; background: linear-gradient(to top, #fff, rgba(255, 255, 255, 0)); }
+.statement.has-plan::after { top: 100%; background: linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0)); }
 @media (min-width: 64rem) { .statement.has-plan { min-height: min(80vh, 54rem); } }
-.statement-plan { position: absolute; inset: 0; }
+.statement-plan { position: absolute; inset: 0; overflow: hidden; }
 .statement-plan img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 50% 50%); opacity: 0.9; filter: brightness(var(--lift, 1)) var(--plan-key); }
 .statement-plan.as-drawn img { filter: brightness(var(--lift, 1)); }
 .statement-plan::after {
@@ -250,6 +285,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .card { display: block; }
 .card:hover { color: inherit; }
 .card-image, .drawing-image { display: block; overflow: hidden; background: var(--fill); }
+/* A drawing made on gray paper is brightened until its paper is the white of the page ("lift" in its entry). */
+[data-sheet] > img { filter: brightness(var(--lift, 1)); }
 .card-image { aspect-ratio: 3 / 2; }
 .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s cubic-bezier(0.2, 0.6, 0.2, 1); }
 .drawing-image img { width: 100%; transition: transform 1.4s cubic-bezier(0.2, 0.6, 0.2, 1); }
@@ -303,7 +340,6 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .project-hero.is-drawing { max-width: var(--page); margin: 0 auto; padding: clamp(0.5rem, 2vw, 1.5rem) var(--gutter) 0; }
 .project-hero.is-drawing img { width: 100%; }
 .project-hero.is-drawing .frame, .plan .frame { position: relative; }
-.project-hero.is-drawing .frame::after, .plan .frame::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px var(--hair); pointer-events: none; }
 .project-body { max-width: var(--page); margin: 0 auto; padding: clamp(3rem, 7vw, 6rem) var(--gutter) 0; }
 .project-body > * + * { margin-top: clamp(3.5rem, 7vw, 6.5rem); }
 
@@ -336,9 +372,14 @@ a.travel-mark:hover { color: var(--ink-strong); }
   .project-head { position: sticky; top: 6.5rem; align-self: start; }
 }
 
-/* A plan or sketch, large, on the white of the page. */
+/* A plan or sketch, large, as ink on the white of the page: no frame, and the ground gives way around it.
+   On a phone it runs from edge to edge. */
 .plan img { width: 100%; }
 .plan figcaption { text-align: left; }
+@media (max-width: 47.99rem) {
+  .plan { margin-inline: calc(-1 * var(--gutter)); }
+  .plan figcaption { padding-inline: var(--gutter); }
+}
 
 /* Photographs between the parts of the story. */
 .photo-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(1.5rem, 3vw, 3rem) var(--col-gap); }
@@ -389,7 +430,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 
 .services-intro + .services-intro { margin-top: 1rem; }
 
-.dialogue-drawing { display: block; width: 100%; max-width: 25rem; height: auto; margin: 0 auto; }
+.dialogue-drawing { display: block; width: 100%; max-width: 25rem; height: auto; margin: 0 auto; overflow: visible; }
 .dg-line { fill: none; stroke: var(--ink-strong); stroke-width: 1.1; }
 .dg-head { fill: none; stroke: var(--ink-strong); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
 .dg-node { fill: var(--ink-strong); }
@@ -409,11 +450,17 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .process-note { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
 .process-note .review-note { margin-bottom: 0; }
 
-/* The parts of the process. On a wide screen each sets its text at the left and its picture beside it, the
-   picture running to the edge of the window, so the width of the page is used; the Dialogue drawing stands
-   beside its text. Two parts with no picture share a row. On a phone the picture follows the text across the
-   full width, and the Dialogue drawing comes between its heading and its text. A drawing is shown without a
-   frame, on the white of the page. */
+/* The parts of the process. A part that names a drawing lies on it, as the heading of a page does: the text at
+   the left on a wide screen with the drawing beside it, or first on a phone with the drawing beneath; the
+   drawing has no frame and fades into the page. The Dialogue drawing stands beside its text. The other parts
+   lie on the ground, and two of them in a row share a row. */
+.stage-plate { margin-top: clamp(3rem, 7vw, 6rem); }
+.stage-plate .section-label { margin-bottom: 1.25rem; }
+@media (min-width: 64rem) {
+  .stage-plate.has-plan { min-height: min(64vh, 35rem); }
+  .stage-plate .statement-inner { padding-block: clamp(3.5rem, 6vw, 5.5rem); }
+  .stage-plate .stage-text { max-width: min(33rem, 38%); }
+}
 .stage { max-width: var(--page); margin: 0 auto; padding: clamp(3.5rem, 7vw, 6.5rem) var(--gutter) 0; }
 .stage > .section-label { margin-bottom: 1.25rem; }
 .stage-text > p { max-width: 36rem; font-size: var(--fs-text); line-height: 1.62; }
@@ -486,7 +533,7 @@ address p { margin-bottom: 1.2rem; }
 address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px solid var(--accent); }
 .contact-pointer { max-width: 22rem; margin-top: 2.25rem; font-size: var(--fs-small); color: var(--slate); }
 
-.inquiry { max-width: 46rem; padding: clamp(1.5rem, 3vw, 2.5rem); border: 1px solid var(--hair); }
+.inquiry { max-width: 46rem; padding: clamp(1.5rem, 3vw, 2.5rem); border: 1px solid var(--hair); background: var(--paper); }
 .inquiry h2 { margin-bottom: 1.5rem; font-size: var(--fs-medium); font-weight: 400; }
 .inquiry p { margin: 0 0 1.15rem; }
 .inquiry label { display: block; margin-bottom: 0.35rem; font-size: var(--fs-small); color: var(--ink-strong); }
@@ -506,7 +553,8 @@ address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px 
 /* Footer */
 .site-footer {
   display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem var(--col-gap);
-  max-width: var(--page); margin: clamp(5rem, 10vw, 9rem) auto 0; padding: 2.75rem var(--gutter) 3.5rem;
+  /* Below the last line the page runs on for a band of bare ground, where the linework is at its strongest. */
+  max-width: var(--page); margin: clamp(5rem, 10vw, 9rem) auto 0; padding: 2.75rem var(--gutter) clamp(8rem, 18vw, 12rem);
   border-top: 1px solid var(--hair);
   color: var(--slate); font-size: var(--fs-small); line-height: 1.6;
 }
