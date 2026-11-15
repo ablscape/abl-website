@@ -202,7 +202,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* Home opens with photographs of built work across the top of the page, which follow one another; the firm's
    statement comes next, beside one of its plans. The photographs span the whole width of the window, which the
    firm asked for in round 22 ("this main thing should span the full horizontal"), and on a computer they stand in
-   a low band, 14 to 5 and never more than 58 percent of the window's height: at two to one across the whole
+   a low band, whose proportions are set at the end of this block: at two to one across the whole
    window the firm found them far too large (rounds 18 and 19), beside the statement at half the page's width it
    did not like them as the opening of the site (round 20), and inside the page's margins they did not reach far
    enough (round 22, first version). The photographs are two to one, so the band trims each at its head and foot;
@@ -224,10 +224,12 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .hero-toggle:hover { color: var(--accent); }
 /* On a phone the frame is three to two, which shows three quarters of each photograph's width. */
 @media (max-width: 40rem) { .hero-frame { aspect-ratio: 3 / 2; } }
-/* On a computer the band is much lower than the photographs: 15 to 4, and never taller than 46 percent of the
-   window. The firm asked that the photograph be cropped to span the window, not enlarged to fill it: "i just
-   don't like how far down it goes". */
-@media (min-width: 64rem) { .hero-frame { aspect-ratio: 15 / 4; max-height: max(46vh, 20rem); } }
+/* On a computer the band is lower than the photographs: 17 to 5, and never taller than 52 percent of the
+   window. The firm asked that the photograph be cropped to span the window, not enlarged to fill it: of a band
+   of 14 to 5 and at most 58 percent it said "i just don't like how far down it goes", and of the band that
+   followed, 15 to 4 and at most 46 percent, "you made the vertical height i think a little too small". This one
+   stands midway between the two; keep it between them. */
+@media (min-width: 64rem) { .hero-frame { aspect-ratio: 17 / 5; max-height: max(52vh, 21rem); } }
 
 /* The firm's drawings on the page. One lies behind the statement on the home page and one behind the heading of
    each other page; "backdrop" in content/site.json names it. A drawing is ink on the page: its paper takes the

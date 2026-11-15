@@ -21,7 +21,8 @@
   "hero": [
     {
       "project": "main-street-triangle",
-      "photo": "02"
+      "photo": "02",
+      "focus": "50% 57%"
     },
     {
       "project": "washington-and-lee-university",
