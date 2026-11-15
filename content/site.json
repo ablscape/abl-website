@@ -22,7 +22,7 @@
     {
       "project": "main-street-triangle",
       "photo": "02",
-      "focus": "50% 57%"
+      "focus": "50% 64%"
     },
     {
       "project": "washington-and-lee-university",
@@ -150,7 +150,7 @@
     "file": "01",
     "lift": 1.2,
     "asDrawn": true,
-    "focus": "50% 70%"
+    "focus": "22% 70%"
   },
   "drawings": [
     {
@@ -172,7 +172,7 @@
     "backdrop": {
       "project": "montpelier-visitor-arrival",
       "file": "05",
-      "shift": "2.75rem"
+      "shift": "2.125rem"
     }
   }
 }
