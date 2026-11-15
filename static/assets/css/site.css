@@ -195,11 +195,13 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .nav-on .float-nav, .nav-on .float-links { opacity: 1; visibility: visible; transform: none; transition: opacity 0.3s ease, transform 0.3s ease; }
 
 /* Home opens with photographs of built work across the top of the page, which follow one another; the firm's
-   statement comes next, beside one of its plans. On a computer the photographs keep the page's margins and stand
-   in a low band, 14 to 5: across the whole window at two to one the firm found them far too large (rounds 18 and
-   19), and beside the statement, at half the page's width, it did not like them as the opening of the site
-   (round 20). The photographs are two to one, so the band trims each a little at its head and foot; "focus" on a
-   slide in site.json says where its subject sits. On a tablet or a phone the photographs run from edge to edge. */
+   statement comes next, beside one of its plans. The photographs span the whole width of the window, which the
+   firm asked for in round 22 ("this main thing should span the full horizontal"), and on a computer they stand in
+   a low band, 14 to 5 and never more than 58 percent of the window's height: at two to one across the whole
+   window the firm found them far too large (rounds 18 and 19), beside the statement at half the page's width it
+   did not like them as the opening of the site (round 20), and inside the page's margins they did not reach far
+   enough (round 22, first version). The photographs are two to one, so the band trims each at its head and foot;
+   "focus" on a slide in site.json says where its subject sits. The line beneath them keeps the page's margins. */
 .hero { margin: 0; }
 .hero-frame { position: relative; width: 100%; aspect-ratio: 2 / 1; overflow: hidden; background: var(--fill); }
 .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.6s ease; }
@@ -217,12 +219,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .hero-toggle:hover { color: var(--accent); }
 /* On a phone the frame is three to two, which shows three quarters of each photograph's width. */
 @media (max-width: 40rem) { .hero-frame { aspect-ratio: 3 / 2; } }
-@media (min-width: 64rem) {
-  .hero { max-width: var(--page); margin: 0 auto; padding: clamp(0.25rem, 1vw, 1rem) var(--gutter) 0; }
-  /* The band is never taller than three fifths of the window. */
-  .hero-frame { aspect-ratio: 14 / 5; max-height: max(58vh, 22rem); }
-  .hero-bar { max-width: none; padding-inline: 0; }
-}
+/* On a computer the band is lower than the photographs, and never taller than three fifths of the window. */
+@media (min-width: 64rem) { .hero-frame { aspect-ratio: 14 / 5; max-height: max(58vh, 22rem); } }
 
 /* The firm's drawings on the page. One lies behind the statement on the home page and one behind the heading of
    each other page; "backdrop" in content/site.json names it. A drawing is ink on the page: its paper takes the

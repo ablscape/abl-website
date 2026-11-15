@@ -3,9 +3,9 @@
 const { esc, picture, liftStyle } = require('../lib/html');
 const { projectCard, sectionLabel, planBackdrop } = require('./parts');
 
-// Home: photographs of built work across the top of the page, in a low band inside the page's margins; the firm's
-// statement beside one of its own plans; a short account of the firm; the featured projects; and a row of the
-// firm's drawings.
+// Home: photographs of built work across the whole width of the window, in a low band; the firm's statement
+// beside one of its own plans; a short account of the firm; the featured projects; and a row of the firm's
+// drawings.
 module.exports = function home(ctx) {
   const { site, projects, u } = ctx;
 
@@ -24,7 +24,7 @@ module.exports = function home(ctx) {
   if (slides.length) {
     const first = slides[0];
     const frames = slides.map((s, i) => `<div class="hero-slide${i === 0 ? ' is-active' : ''}"${place(s.focus) ? ` style="--focus: ${s.focus}"` : ''} data-title="${esc(s.project.title)}" data-place="${esc(s.project.location)}" data-href="${u(s.project.url)}">
-      ${picture(ctx, s.project, s.photo, { sizes: '(min-width: 1500px) 1370px, 100vw', lazy: i > 0 })}
+      ${picture(ctx, s.project, s.photo, { sizes: '100vw', lazy: i > 0 })}
     </div>`).join('\n    ');
     pictures = `<section class="hero" data-hero aria-label="Photographs of selected projects">
   <div class="hero-frame" data-photo>
