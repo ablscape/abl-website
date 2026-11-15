@@ -26,8 +26,8 @@ const DIALOGUE_SVG = `<svg class="dialogue-drawing" viewBox="0 0 400 320" role="
 // Process: the title and opening over one of the firm's drawings, as on the other pages; then the parts of the
 // firm's process in order, every one set the same way, with its number and name at the left and its text at the
 // right under a hairline; and the firm's capabilities, set the same way without a number. A part may carry a
-// remark, the Client, Site, Design team drawing, or a picture; each stands in the text's own column, under the
-// text. Everything comes from "process" in content/site.json.
+// remark, which stands under its name at the left, and the Client, Site, Design team drawing or a picture, which
+// stands in the text's own column, under the text. Everything comes from "process" in content/site.json.
 module.exports = function process(ctx) {
   const { site, projects, u } = ctx;
   const p = site.process || {};
@@ -83,8 +83,12 @@ module.exports = function process(ctx) {
     </figure>`;
   };
 
-  const part = (number, title, text, extra) => `<section class="part">
-  <h2 class="part-title">${number ? `<span class="part-number">${number}</span>` : ''}${esc(title)}</h2>
+  // "aside" is a remark, which stands under the part's name, beside the text it belongs to.
+  const part = (number, title, text, extra, aside) => `<section class="part">
+  <div class="part-head">
+    <h2 class="part-title">${number ? `<span class="part-number">${number}</span>` : ''}${esc(title)}</h2>${aside ? `
+    ${aside}` : ''}
+  </div>
   <div class="part-body">
     ${text}${extra ? `
     ${extra}` : ''}
@@ -93,8 +97,7 @@ module.exports = function process(ctx) {
 
   const blocks = sections.map((sec, i) => {
     const text = Array.isArray(sec.text) && sec.text.length ? paragraphs(sec.text) : `<p>${toCome(ctx, 'this part of the process, in the firm\'s words')}</p>`;
-    const extra = [quote(sec.quote), pictureOf(sec)].filter(Boolean).join('\n    ');
-    return part(String(i + 1).padStart(2, '0'), sec.title, text, extra);
+    return part(String(i + 1).padStart(2, '0'), sec.title, text, pictureOf(sec), quote(sec.quote));
   });
 
   const serviceText = Array.isArray(services.intro) ? services.intro : (services.intro ? [services.intro] : []);
