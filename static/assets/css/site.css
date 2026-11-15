@@ -488,14 +488,16 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .project-next a:hover .next-title { color: var(--accent); }
 .project-next .all-work { font-size: var(--fs-text); }
 
-/* People and Process: text in the right-hand columns, under the lead. */
-.studio-intro, .process-intro { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
-.studio-intro p, .process-intro p { max-width: 40rem; font-size: var(--fs-text); line-height: 1.62; }
-.studio-intro .studio-lead { max-width: 29em; margin-bottom: 1.4rem; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
-.studio-intro .studio-note { margin-top: 1.5rem; color: var(--slate); font-size: var(--fs-small); }
+/* Capabilities and Process: text in the right-hand columns, under the heading. On Capabilities it is the firm's
+   own introduction, its first paragraph a size larger, with the line on its certification beneath; it stood on
+   the People page until round 23, when the firm asked for it on Capabilities. */
+.page-intro, .process-intro { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
+.page-intro p, .process-intro p { max-width: 40rem; font-size: var(--fs-text); line-height: 1.62; }
+.page-intro .intro-lead { max-width: 31em; margin-bottom: 1.4rem; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
+.page-intro .intro-note { margin-top: 1.5rem; margin-bottom: 0; color: var(--slate); font-size: var(--fs-small); }
 @media (min-width: 56rem) {
-  .studio-intro, .process-intro { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); }
-  .studio-intro > *, .process-intro > * { grid-column: 5 / span 8; }
+  .page-intro, .process-intro { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); }
+  .page-intro > *, .process-intro > * { grid-column: 5 / span 8; }
 }
 
 .people { max-width: var(--page); margin: clamp(3rem, 6vw, 5rem) auto 0; padding: 0 var(--gutter); }
@@ -528,6 +530,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 
 /* Work, People, Process and Contact open over one of the firm's drawings, named in "backdrop" under each page in site.json. */
 .page-statement { margin-top: 0; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+/* A heading with no drawing beside it needs no room for one to sink into the page: what follows stands closer. */
+.page-statement:not(.has-plan) { margin-bottom: 0; }
 @media (min-width: 64rem) {
   .page-statement.has-plan { min-height: min(36vh, 21rem); }
   /* The title stands at the same height on every page, whether or not an opening follows it: it is set at the

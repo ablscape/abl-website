@@ -30,27 +30,17 @@ function person(ctx, p) {
   </article>`;
 }
 
-// People: the firm's own account of itself, and the people in it. How it works is on the Process page.
+// People: the people of the firm. The firm's own account of itself stood under the heading until the firm asked
+// for it on the Capabilities page; how the firm works is on the Process page.
 module.exports = function studio(ctx) {
   const { site, people } = ctx;
-  const s = site.studio;
-  const paras = Array.isArray(s.intro) ? s.intro : [];
-
-  // The heading of the page carries the title alone, so that it stays low. The firm's account follows in the
-  // text column: its first paragraph set a size larger, as the opening, and the rest beneath it.
-  const rest = paras.length || s.note ? `<section class="studio-intro">
-  ${paras.length ? `<p class="studio-lead">${esc(paras[0])}</p>` : ''}
-  ${paragraphs(paras.slice(1))}
-  ${s.note ? `<p class="studio-note">${esc(s.note)}</p>` : ''}
-</section>` : '';
 
   return {
     title: 'People',
-    description: `The people of ${site.name} and how the studio works with clients.`,
+    description: `The people of ${site.name}.`,
     body: `${pageHead(ctx, site.studio && site.studio.backdrop, `<div class="page-head">
   <h1>People</h1>
 </div>`)}
-${rest}
 <section class="people">
   ${people.map((p) => person(ctx, p)).join('\n  ')}
 </section>`,

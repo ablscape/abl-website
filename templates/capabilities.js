@@ -1,12 +1,14 @@
 'use strict';
 
-const { esc, toCome, reviewNote } = require('../lib/html');
+const { esc, paragraphs, toCome, reviewNote } = require('../lib/html');
 const { pageHead } = require('./parts');
 
 // Capabilities: the title and the firm's one-sentence account of what it does, over one of the firm's drawings
-// when "backdrop" names one, as on the other pages; then each capability in the form the Process page gives its
-// parts, a hairline with the name at the left and, at the right, a sentence explaining what the capability is;
-// then what the firm does for private properties. Everything comes from "capabilities" in content/site.json.
+// when "backdrop" names one, as on the other pages; the firm's own introduction in the text column, its first
+// paragraph a size larger, with the line on its certification (they stood on the People page until the firm
+// asked for them here); then each capability in the form the Process page gives its parts, a hairline with the
+// name at the left and, at the right, a sentence explaining what the capability is; then what the firm does for
+// private properties. Everything comes from "capabilities" in content/site.json.
 // The page listed the projects that show each capability, and closed with the firm's qualifications, until the
 // firm asked for explanations in place of the examples and for the qualifications to stay on the People page.
 module.exports = function capabilities(ctx) {
@@ -25,6 +27,13 @@ module.exports = function capabilities(ctx) {
   const noteBlock = note ? `<div class="process-note">
   ${note}
 </div>` : '';
+
+  const paras = Array.isArray(c.intro) ? c.intro : [];
+  const intro = paras.length || c.certification ? `<section class="page-intro">
+  ${paras.length ? `<p class="intro-lead">${esc(paras[0])}</p>` : ''}
+  ${paragraphs(paras.slice(1))}
+  ${c.certification ? `<p class="intro-note">${esc(c.certification)}</p>` : ''}
+</section>` : '';
 
   const part = (title, body) => `<section class="part">
   <div class="part-head">
@@ -49,6 +58,7 @@ module.exports = function capabilities(ctx) {
     description: c.lead || `What ${site.name} does.`,
     body: `${head}
 ${noteBlock}
+${intro}
 <div class="parts">
 ${blocks.join('\n')}
 </div>`,

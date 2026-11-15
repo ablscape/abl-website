@@ -47,9 +47,10 @@ module.exports = function home(ctx) {
   ${back.credit}
 </section>`;
 
-  // A short account of the firm stands between the photographs and the plan: the first paragraph of the People
-  // page's introduction.
-  const intro = Array.isArray(site.studio.intro) && site.studio.intro.length ? site.studio.intro[0] : '';
+  // A short account of the firm stands between the photographs and the plan: the first paragraph of the firm's
+  // introduction, which stands whole on the Capabilities page.
+  const caps = site.capabilities || {};
+  const intro = Array.isArray(caps.intro) && caps.intro.length ? caps.intro[0] : '';
   const firm = intro ? `<section class="firm">
   ${sectionLabel('The firm')}
   <p class="firm-text">${esc(intro)}</p>
