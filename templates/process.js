@@ -137,7 +137,6 @@ ${a.after}`);
 
   return {
     title: 'Process',
-    shows: [p.backdrop].concat((p.sections || []).map((sec) => sec.figure)),
     description: `How ${site.name} works: research into the history of a site, design in dialogue with the client, mock-ups before construction, and the firm's presence until the planting is established.`,
     body: `${head}
 ${noteBlock}

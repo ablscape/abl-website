@@ -47,7 +47,6 @@ module.exports = function studio(ctx) {
 
   return {
     title: 'People',
-    shows: [site.studio && site.studio.backdrop],
     description: `The people of ${site.name} and how the studio works with clients.`,
     body: `${pageHead(ctx, site.studio && site.studio.backdrop, `<div class="page-head${lead ? ' has-lead' : ''}">
   <h1>People</h1>

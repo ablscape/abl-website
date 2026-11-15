@@ -72,14 +72,6 @@
           "Design begins with research. ABL studies how a site came to its present form, what it was intended to be, and how it has since been altered, and takes that record as the basis of its design. At Courthouse Square in Lexington the research reached back to the act of 1777, which fixed the county court on the first Tuesday of each month, and to Court Day, when families from the outlying farms came to town to trade and to hear the news. The premise of the design, that the square is first a place of assembly, came from that history.",
           "In Lexington and Rockbridge County the firm works from long familiarity with the place. Its principal, Arthur Bartenstein, is president of the Rockbridge Historical Society and serves on the City of Lexington's Architectural Review Board and Tree Committee."
         ],
-        "figure": {
-          "project": "green-spring",
-          "file": "04",
-          "caption": "Aerial sketch",
-          "from": "42%",
-          "focus": "45% 45%",
-          "focusPhone": "50% 45%"
-        },
         "quote": {
           "text": "Registered in terms of place, but also registered in terms of time.",
           "by": "Arthur Bartenstein"
@@ -96,15 +88,7 @@
         "title": "Models and mock-ups",
         "text": [
           "Clients are asked to approve, and to fund, places they cannot yet see. ABL therefore seeks every reasonable means to narrow the uncertainty between a design and its result: proposals are studied in sketches, photo simulations and scale models, materials are reviewed as samples, pricing is examined in detail, and before construction the design is mocked up at full scale on the site."
-        ],
-        "figure": {
-          "project": "virginia-tech-war-memorial",
-          "file": "01",
-          "caption": "Perspective by Peter Giraudeau",
-          "asDrawn": true,
-          "from": "42%",
-          "focus": "50% 50%"
-        }
+        ]
       },
       {
         "title": "Construction and establishment",
@@ -144,21 +128,6 @@
     "lift": 1.2,
     "asDrawn": true
   },
-  "foot": [
-    {
-      "project": "green-spring",
-      "file": "05",
-      "caption": "Sketch",
-      "focus": "50% 100%",
-      "focusPhone": "50% 100%"
-    },
-    {
-      "project": "montpelier-visitor-arrival",
-      "file": "05",
-      "focus": "50% 60%",
-      "focusPhone": "40% 60%"
-    }
-  ],
   "drawings": [
     {
       "project": "green-spring",

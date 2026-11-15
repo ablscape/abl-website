@@ -8,17 +8,21 @@
 @font-face { font-family: "Barlow"; src: url("../fonts/barlow-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
 
 :root {
-  /* Colors: white paper, near-black type, the logo's green, and one warm accent. */
-  --paper: #ffffff;
-  --ink: #2c312e;          /* body text */
+  /* Colors: a toned sheet, near-black type, the logo's green, a deep green for the foot of the page, and one
+     warm accent. The sheet is a pale gray-green, like drafting paper, never cream or yellow. To make the whole
+     site lighter or darker, change --paper and give --paper-rgb the same color as three numbers. */
+  --paper: #f0f3f0;
+  --paper-rgb: 240 243 240;
+  --ink: #272c29;          /* body text */
   --ink-strong: #1a1f1c;   /* headings and names */
-  --slate: #6b716e;        /* captions, labels, secondary text */
-  --hair: #dfe2df;         /* hairlines */
-  --fill: #edf1ef;         /* empty frames: a cool gray, never a warm one */
+  --slate: #626865;        /* captions, labels, secondary text */
+  --hair: #d3d9d4;         /* hairlines */
+  --fill: #e1e6e2;         /* empty frames: a cool gray, never a warm one */
   --sage: #648070;         /* the green of the logo: the traveling mark */
+  --deep: #324339;         /* the logo's green taken deep: the block at the foot of every page */
   --accent: #b1563a;       /* terracotta, the one warm color: short rules, numerals, links on hover */
   --note: #b9c3bf;         /* preview notes only, never on the live site: gray, so that the notes lend the pages no color */
-  --note-wash: #eff3f1;
+  --note-wash: #e0e6e2;
 
   /* Typeface: one family everywhere. When the firm names the type from its drawings, set it here. */
   --sans: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -38,10 +42,11 @@
   --mark-w: 6.25rem;       /* width of the traveling "abl" */
   --mark-top: 1.75rem;
 
-  /* The white haze around the mark and the returning links wherever they are dark: over the page and over drawings. */
-  --haze: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 5px var(--paper)) drop-shadow(0 0 11px rgba(255, 255, 255, 0.9));
-  --haze-text: 0 0 2px var(--paper), 0 0 4px var(--paper), 0 0 8px var(--paper), 0 0 14px rgba(255, 255, 255, 0.8);
-  --haze-deep: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 5px var(--paper)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 15px rgba(255, 255, 255, 0.55));
+  /* The haze around the mark and the returning links wherever they are dark, over the page and over drawings:
+     the sheet's own color, with no edge. */
+  --haze: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 5px var(--paper)) drop-shadow(0 0 11px rgb(var(--paper-rgb) / 0.9));
+  --haze-text: 0 0 2px var(--paper), 0 0 4px var(--paper), 0 0 8px var(--paper), 0 0 14px rgb(var(--paper-rgb) / 0.8);
+  --haze-deep: drop-shadow(0 0 2px var(--paper)) drop-shadow(0 0 5px var(--paper)) drop-shadow(0 0 10px rgb(var(--paper-rgb) / 0.9)) drop-shadow(0 0 15px rgb(var(--paper-rgb) / 0.55));
 
   /* A plan set behind a heading is turned a few degrees from yellow toward green. White and gray stay as they are,
      and the same drawing keeps its own colors on its project page. Set this to "hue-rotate(0deg)" to show the
@@ -65,6 +70,8 @@ body {
   font-weight: 400;
   line-height: 1.6;
 }
+/* Photographs reach past the page's margins to the edges of the window; nothing may make the window scroll sideways. */
+main { overflow-x: clip; }
 img { display: block; max-width: 100%; height: auto; }
 h1, h2, h3 { font-weight: 400; line-height: 1.15; margin: 0; color: var(--ink-strong); }
 p { margin: 0 0 1em; }
@@ -172,24 +179,25 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .hero-caption a:hover { color: var(--accent); }
 .hero-toggle { flex: none; padding: 0; border: 0; background: none; color: var(--slate); font: inherit; cursor: pointer; }
 .hero-toggle:hover { color: var(--accent); }
-@media (max-width: 40rem) { .hero-frame { height: 62vh; } }
+/* On a phone the frame is three to two, which shows three quarters of each photograph's width. */
+@media (max-width: 40rem) { .hero-frame { height: auto; min-height: 0; aspect-ratio: 3 / 2; } }
 
 /* The firm's drawings on the page. One lies behind the statement on the home page and one behind the heading of
-   each other page; "backdrop" in content/site.json names it. A drawing is shown as ink on the page's own white.
-   It has no frame and no band: where it was drawn on gray paper the paper is brought to white ("lift"), and it
-   dissolves into the page above, below and toward the text. The header and the text stay on plain white, and
-   nothing moves. On a wide screen the text lies at the left, beside the drawing or over its faded side. On a
-   phone or a tablet the text comes first and the drawing emerges beneath it. */
+   each other page; "backdrop" in content/site.json names it. A drawing is ink on the sheet: its paper takes the
+   color of the page (see "Drawings on the sheet" below), it has no frame and no band, and it dissolves into the
+   page above, below and toward the text. The header and the text stay on the plain sheet, and nothing moves. On
+   a wide screen the text lies at the left, beside the drawing or over its faded side. On a phone or a tablet the
+   text comes first and the drawing emerges beneath it. */
 .statement { position: relative; display: grid; align-items: center; margin-top: clamp(1.5rem, 4vw, 3.5rem); }
 @media (min-width: 64rem) { .statement.has-plan { min-height: min(80vh, 54rem); } }
 .statement-plan { position: absolute; inset: 0; overflow: hidden; }
-.statement-plan img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 50% 50%); opacity: 0.9; filter: brightness(var(--lift, 1)) var(--plan-key); }
+.statement-plan img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 50% 50%); filter: brightness(var(--lift, 1)) var(--plan-key); }
 .statement-plan.as-drawn img { filter: brightness(var(--lift, 1)); }
 .statement-plan::after {
   content: ""; position: absolute; inset: 0;
   background:
-    linear-gradient(90deg, #fff 0%, rgba(255, 255, 255, 0.94) 26%, rgba(255, 255, 255, 0.5) 52%, rgba(255, 255, 255, 0) 78%),
-    linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 18%, rgba(255, 255, 255, 0) 74%, #fff 100%);
+    linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0.94) 26%, rgb(var(--paper-rgb) / 0.5) 52%, rgb(var(--paper-rgb) / 0) 78%),
+    linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 18%, rgb(var(--paper-rgb) / 0) 74%, var(--paper) 100%);
 }
 .statement-inner { position: relative; width: 100%; max-width: var(--page); margin: 0 auto; padding: clamp(4rem, 10vw, 9rem) var(--gutter); }
 .statement-text { max-width: 19.5em; margin: 0; font-size: var(--fs-large); font-weight: 300; line-height: 1.28; letter-spacing: -0.012em; color: var(--ink-strong); }
@@ -204,17 +212,17 @@ a.travel-mark:hover { color: var(--ink-strong); }
   .statement-plan.is-side { left: var(--from); }
   .statement-plan.is-side::after {
     background:
-      linear-gradient(90deg, #fff 0%, rgba(255, 255, 255, 0.6) 14%, rgba(255, 255, 255, 0) 34%),
-      linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 18%, rgba(255, 255, 255, 0) 74%, #fff 100%);
+      linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0.6) 14%, rgb(var(--paper-rgb) / 0) 34%),
+      linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 18%, rgb(var(--paper-rgb) / 0) 74%, var(--paper) 100%);
   }
 }
 @media (max-width: 63.99rem) {
-  /* Phones and tablets: the text first, then the drawing at full strength, rising out of the page and sinking back into it. */
+  /* Phones and tablets: the text first, then the drawing, rising out of the page and sinking back into it. */
   .statement.has-plan { display: flex; flex-direction: column; min-height: 0; }
   .statement-inner { order: 1; padding-block: clamp(3rem, 7vw, 4.5rem) 1.25rem; }
   .statement-plan { order: 2; position: relative; inset: auto; height: min(76vw, 24rem); }
-  .statement-plan img { opacity: 1; object-position: var(--focus-phone, var(--focus, 50% 50%)); }
-  .statement-plan::after { background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 26%, rgba(255, 255, 255, 0) 74%, #fff 100%); }
+  .statement-plan img { object-position: var(--focus-phone, var(--focus, 50% 50%)); }
+  .statement-plan::after { background: linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 24%, rgb(var(--paper-rgb) / 0) 76%, var(--paper) 100%); }
   .statement-credit { order: 3; position: static; align-self: flex-start; padding: 0.25rem var(--gutter) 0; }
 }
 
@@ -222,42 +230,35 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .selected, .drawings, .firm { max-width: var(--page); margin: 0 auto; padding: clamp(4rem, 9vw, 8rem) var(--gutter) 0; }
 .more { margin: clamp(3rem, 6vw, 5rem) 0 0; font-size: var(--fs-text); }
 
-/* The collage: photographs and drawings in a staggered rhythm of six positions, repeated. */
-.collage { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(3rem, 7vw, 5rem) var(--col-gap); margin: 0; padding: 0; list-style: none; }
-.collage > li[hidden] { display: none; }
-@media (min-width: 56rem) {
-  .collage { grid-template-columns: repeat(12, minmax(0, 1fr)); row-gap: clamp(4.5rem, 8vw, 8rem); }
-  .collage > li { grid-column: 1 / span 8; }
-  /* Browsers without ":nth-child(... of ...)" count hidden items too; the layout still holds. */
-  .collage > li:nth-child(6n + 1) { grid-column: 1 / span 8; }
-  .collage > li:nth-child(6n + 2) { grid-column: 1 / span 5; }
-  .collage > li:nth-child(6n + 3) { grid-column: 7 / span 6; margin-top: clamp(4rem, 10vw, 9rem); }
-  .collage > li:nth-child(6n + 4) { grid-column: 5 / span 8; }
-  .collage > li:nth-child(6n + 5) { grid-column: 1 / span 7; }
-  .collage > li:nth-child(6n + 6) { grid-column: 9 / span 4; margin-top: clamp(4rem, 10vw, 9rem); }
-  .collage > li:nth-child(6n + 1 of :not([hidden])) { grid-column: 1 / span 8; margin-top: 0; }
-  .collage > li:nth-child(6n + 2 of :not([hidden])) { grid-column: 1 / span 5; margin-top: 0; }
-  .collage > li:nth-child(6n + 3 of :not([hidden])) { grid-column: 7 / span 6; margin-top: clamp(4rem, 10vw, 9rem); }
-  .collage > li:nth-child(6n + 4 of :not([hidden])) { grid-column: 5 / span 8; margin-top: 0; }
-  .collage > li:nth-child(6n + 5 of :not([hidden])) { grid-column: 1 / span 7; margin-top: 0; }
-  .collage > li:nth-child(6n + 6 of :not([hidden])) { grid-column: 9 / span 4; margin-top: clamp(4rem, 10vw, 9rem); }
-  .collage > li:nth-child(3n + 1) .card-image { aspect-ratio: 2 / 1; }
-  .collage > li:nth-child(3n + 1 of :not([hidden])) .card-image { aspect-ratio: 2 / 1; }
-  .collage > li:nth-child(6n + 6 of :not([hidden])) .card-image { aspect-ratio: 4 / 3; }
+/* Selected work: photographs two to a line, from one edge of the window to the other, with a narrow gap between
+   them; on a phone, one to a line. The words under each picture keep the page's margin. */
+.selected { max-width: none; padding-inline: 0; }
+.selected > .section-label, .selected > .more { padding-inline: var(--edge); }
+.feature-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.75rem, 5vw, 4.5rem) clamp(0.4rem, 0.8vw, 0.75rem); margin: 0; padding: 0; list-style: none; }
+.feature-grid .card-kind, .feature-grid .card-title, .feature-grid .card-meta { padding-inline: var(--gutter); }
+@media (min-width: 48rem) {
+  .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feature-grid > li:nth-child(odd) :is(.card-kind, .card-title, .card-meta) { padding-left: var(--edge); }
+  .feature-grid > li:nth-child(even) :is(.card-kind, .card-title, .card-meta) { padding-left: clamp(0.9rem, 1.4vw, 1.4rem); padding-right: var(--edge); }
+  /* An odd one out at the end takes the whole line. */
+  .feature-grid > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .feature-grid > li:last-child:nth-child(odd) .card-image { width: 100%; aspect-ratio: 2 / 1; max-height: 88vh; }
 }
 
-/* A project in the collage */
+/* A project as it is listed: its picture, the kind of project, its name and its place. */
 .card { display: block; }
 .card:hover { color: inherit; }
 .card-image, .drawing-image { display: block; overflow: hidden; background: var(--fill); }
-/* A drawing made on gray paper is brightened until its paper is the white of the page ("lift" in its entry). */
-:where([data-sheet]) > img { filter: brightness(var(--lift, 1)); }
+/* Drawings on the sheet. Wherever one of the firm's drawings is shown, its paper takes the color of the page, so
+   that it reads as ink on the sheet the site is drawn on, with no rectangle around it. A drawing made on gray
+   paper is first brightened until its paper is white ("lift" in its entry). */
+[data-sheet] { background: var(--paper); }
+:where([data-sheet]) > img { filter: brightness(var(--lift, 1)); mix-blend-mode: multiply; }
+.statement-plan img { mix-blend-mode: multiply; }
 .card-image { aspect-ratio: 3 / 2; }
 .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s cubic-bezier(0.2, 0.6, 0.2, 1); }
 .drawing-image img { width: 100%; transition: transform 1.4s cubic-bezier(0.2, 0.6, 0.2, 1); }
 .card:hover .card-image img, .card:hover .drawing-image img { transform: scale(1.025); }
-.card-image.is-drawing, .drawing-image { position: relative; }
-.card-image.is-drawing::after, .drawing-image::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px var(--hair); pointer-events: none; }
 .card-kind { display: block; margin-top: 1.05rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; line-height: 1.3; text-transform: uppercase; color: var(--slate); }
 .card-title { display: block; margin-top: 0.3rem; font-size: var(--fs-medium); font-weight: 400; line-height: 1.25; color: var(--ink-strong); transition: color 0.2s ease; }
 .card:hover .card-title { color: var(--accent); }
@@ -297,12 +298,14 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .filters button:hover { color: var(--ink-strong); border-bottom-color: var(--accent); }
 .filters button[aria-pressed="true"] { color: var(--ink-strong); border-bottom-color: var(--accent); }
 .project-grid { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
-/* The Work page lists every project one to a line: the picture across the width of the page and, beneath it, the
-   kind of project, its name set large, and its place. */
-.project-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(3.5rem, 8vw, 7rem); margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; list-style: none; }
+/* The Work page lists every project one to a line: the picture from one edge of the window to the other and,
+   beneath it within the page's margin, the kind of project, its name set large, and its place. */
+.project-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(3.5rem, 7vw, 6.5rem); max-width: none; margin: 0; padding: 0; list-style: none; }
 .project-list > li[hidden] { display: none; }
 .project-list .card-image { aspect-ratio: 3 / 2; }
-@media (min-width: 48rem) { .project-list .card-image { aspect-ratio: 2 / 1; } }
+/* The width is stated outright: with only a proportion and a greatest height, a tall window would narrow the picture. */
+@media (min-width: 48rem) { .project-list .card-image { width: 100%; aspect-ratio: 2 / 1; max-height: 88vh; } }
+.project-list :is(.card-kind, .card-title, .card-meta) { padding-inline: var(--edge); }
 .project-list .card-kind { margin-top: clamp(1.1rem, 2vw, 1.6rem); }
 .project-list .card-title { margin-top: 0.4rem; font-size: var(--fs-large); font-weight: 300; line-height: 1.15; letter-spacing: -0.012em; }
 .project-list .card-meta { margin-top: 0.4rem; font-size: var(--fs-medium); line-height: 1.3; }
@@ -310,6 +313,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* A project page */
 .frame { display: block; }
 .project-hero.is-photo img { width: 100%; height: min(84vh, 62rem); min-height: 16rem; object-fit: cover; }
+/* A phone shows the whole of the lead photograph, at its own proportions, and not a tall slice of it. */
+@media (max-width: 47.99rem) { .project-hero.is-photo img { height: auto; min-height: 0; } }
 .project-hero.is-photo figcaption { max-width: var(--page); margin: 0.6rem auto 0; padding: 0 var(--gutter); }
 .project-hero.is-drawing { max-width: var(--page); margin: 0 auto; padding: clamp(0.5rem, 2vw, 1.5rem) var(--gutter) 0; }
 .project-hero.is-drawing img { width: 100%; }
@@ -346,7 +351,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
   .project-head { position: sticky; top: 6.5rem; align-self: start; }
 }
 
-/* A plan or sketch, large, as ink on the white of the page, with no frame. On a phone it runs from edge to edge. */
+/* A plan or sketch, large, as ink on the sheet, with no frame. On a phone it runs from edge to edge. */
 .plan img { width: 100%; }
 .plan figcaption { text-align: left; }
 @media (max-width: 47.99rem) {
@@ -361,16 +366,23 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .plan-pair .pair-photo img { display: block; height: 100%; object-fit: cover; }
 .plan-pair figcaption { grid-column: 1 / -1; }
 @media (min-width: 56rem) {
-  .plan-pair { grid-template-columns: 7fr 5fr; }
+  /* The photograph runs to the right-hand edge of the window, as the other photographs do. */
+  .plan-pair { grid-template-columns: 7fr 5fr; margin-right: calc(-1 * var(--edge)); }
   .plan-pair .pair-photo img { position: absolute; inset: 0; }
 }
 
-/* Photographs between the parts of the story. */
-.photo-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(1.5rem, 3vw, 3rem) var(--col-gap); }
+/* Photographs between the parts of the story run from one edge of the window to the other: one alone, or two
+   side by side with a narrow gap. A caption keeps the page's margin. */
+.photo-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(1.5rem, 3vw, 3rem) clamp(0.4rem, 0.8vw, 0.75rem); margin-inline: calc(-1 * var(--edge)); }
 .photo-row img { width: 100%; }
+.photo-row figure { margin: 0; }
+.photo-row figcaption { padding-inline: var(--edge); }
 .photo-one figure { grid-column: 1 / -1; }
+/* On a very wide window a photograph alone keeps within the height of the window. */
+.photo-one img { max-height: 92vh; object-fit: cover; }
 @media (min-width: 56rem) {
   .photo-pair { grid-template-columns: 7fr 5fr; align-items: end; }
+  .photo-pair figure + figure figcaption { padding-left: clamp(0.9rem, 1.4vw, 1.4rem); }
 }
 
 .project-next {
@@ -524,7 +536,7 @@ address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px 
 .optional { color: var(--slate); }
 .inquiry input, .inquiry select, .inquiry textarea {
   width: 100%; padding: 0.65rem 0.75rem;
-  border: 1px solid #c5c9c6; border-radius: 0; background: var(--paper); color: var(--ink);
+  border: 1px solid #bcc3be; border-radius: 0; background: #fff; color: var(--ink);
   font: 400 1.05rem/1.4 var(--sans);
 }
 .inquiry input:focus, .inquiry select:focus, .inquiry textarea:focus { border-color: var(--ink-strong); outline: none; }
@@ -534,51 +546,37 @@ address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px 
 .inquiry p:last-child { margin-bottom: 0; }
 .trap { position: absolute; left: -999rem; }
 
-/* Footer. Every page ends on one of the firm's drawings ("foot" in content/site.json). The name, the address
-   and the links stand on the white of the page; beneath them the drawing rises out of that white, with no top
-   edge, and runs off the foot of the page. Without a drawing the footer simply ends. */
-.site-footer { margin-top: clamp(5rem, 10vw, 9rem); color: var(--slate); font-size: var(--fs-small); line-height: 1.6; }
+/* Footer: a plain block of deep green at the foot of every page, with the name, the address and the links in
+   white. No picture. */
+.site-footer { margin-top: clamp(5rem, 10vw, 9rem); background: var(--deep); color: rgb(255 255 255 / 0.74); font-size: var(--fs-small); line-height: 1.6; }
 .footer-inner {
-  position: relative; z-index: 1;
   display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem var(--col-gap);
-  max-width: var(--page); margin: 0 auto; padding: 2.75rem var(--gutter) 3.5rem;
-  border-top: 1px solid var(--hair);
+  max-width: var(--page); margin: 0 auto; padding: clamp(3rem, 5vw, 4.5rem) var(--gutter);
 }
 .site-footer p { margin: 0; }
-.footer-mark { display: block; width: 4.75rem; color: var(--sage); }
-.footer-mark:hover { color: var(--ink-strong); }
+.site-footer a:hover { color: #fff; }
+.footer-mark { display: block; width: 4.75rem; color: #fff; }
+.footer-mark:hover { color: rgb(255 255 255 / 0.8); }
 .footer-mark svg { display: block; width: 100%; height: auto; fill: currentColor; }
 .footer-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr)); gap: 1.5rem var(--col-gap); }
-.footer-name { color: var(--ink-strong); font-weight: 500; }
+.footer-name { color: #fff; font-weight: 500; }
 .footer-nav { display: flex; flex-direction: column; align-items: flex-start; }
-.foot-credit { line-height: 1.3; }
-.site-footer.has-plan .footer-inner { padding-bottom: 0; }
-.foot-plan { position: relative; z-index: 0; height: clamp(13rem, 34vw, 29rem); margin-top: -1.5rem; overflow: hidden; }
-.foot-plan img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 50% 100%); filter: brightness(var(--lift, 1)) var(--plan-key); }
-.foot-plan.as-drawn img { filter: brightness(var(--lift, 1)); }
-.foot-plan::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.86) 14%, rgba(255, 255, 255, 0.4) 34%, rgba(255, 255, 255, 0) 56%);
-}
-@media (max-width: 47.99rem) { .foot-plan img { object-position: var(--focus-phone, var(--focus, 50% 100%)); } }
 @media (min-width: 56rem) {
   .footer-inner { grid-template-columns: repeat(12, minmax(0, 1fr)); }
   .footer-mark { grid-column: 1 / span 4; }
   .footer-cols { grid-column: 5 / span 8; }
-  .foot-credit { grid-column: 1 / -1; }
 }
-@media print { .foot-plan { display: none; } }
 
 /* Pictures and passages fade in as they come into view. Without scripts everything simply shows.
    A block that holds a picture stays opaque and fades its parts instead, so that the picture keeps
    its place above the mark's strip of paper while it fades. */
 .js .reveal { opacity: 0; transition: opacity 1.1s ease; }
 .js .reveal.is-in { opacity: 1; }
-.js :is(.collage > .reveal, .project-list > .reveal, .drawing-row > .reveal, .photo-row.reveal, .plan.reveal, .stage-figure.reveal, .person.reveal) { opacity: 1; }
-.js :is(.collage > .reveal .card, .project-list > .reveal .card, .drawing-row > .reveal .card, .photo-row.reveal figure, .plan.reveal, .stage-figure.reveal, .person.reveal) > * { opacity: 0; transition: opacity 1.1s ease, color 0.2s ease; }
-.js :is(.collage > .reveal.is-in .card, .project-list > .reveal.is-in .card, .drawing-row > .reveal.is-in .card, .photo-row.reveal.is-in figure, .plan.reveal.is-in, .stage-figure.reveal.is-in, .person.reveal.is-in) > * { opacity: 1; }
+.js :is(.feature-grid > .reveal, .project-list > .reveal, .drawing-row > .reveal, .photo-row.reveal, .plan.reveal, .stage-figure.reveal, .person.reveal) { opacity: 1; }
+.js :is(.feature-grid > .reveal .card, .project-list > .reveal .card, .drawing-row > .reveal .card, .photo-row.reveal figure, .plan.reveal, .stage-figure.reveal, .person.reveal) > * { opacity: 0; transition: opacity 1.1s ease, color 0.2s ease; }
+.js :is(.feature-grid > .reveal.is-in .card, .project-list > .reveal.is-in .card, .drawing-row > .reveal.is-in .card, .photo-row.reveal.is-in figure, .plan.reveal.is-in, .stage-figure.reveal.is-in, .person.reveal.is-in) > * { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-slide, .card-image img, .drawing-image img, .travel-mark, .float-nav, .float-links { transition: none; }
-  .js .reveal, .js :is(.collage > .reveal .card, .project-list > .reveal .card, .drawing-row > .reveal .card, .photo-row.reveal figure, .plan.reveal, .stage-figure.reveal, .person.reveal) > * { opacity: 1; transition: none; }
+  .js .reveal, .js :is(.feature-grid > .reveal .card, .project-list > .reveal .card, .drawing-row > .reveal .card, .photo-row.reveal figure, .plan.reveal, .stage-figure.reveal, .person.reveal) > * { opacity: 1; transition: none; }
 }

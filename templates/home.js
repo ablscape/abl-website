@@ -42,8 +42,8 @@ module.exports = function home(ctx) {
   const shown = featured.length ? featured : projects.slice(0, 3);
   const selected = shown.length ? `<section class="selected">
   ${sectionLabel('Selected work')}
-  <ul class="collage">
-    ${shown.map((p) => `<li>${projectCard(ctx, p, '(min-width: 900px) 60vw, 100vw')}</li>`).join('\n    ')}
+  <ul class="feature-grid">
+    ${shown.map((p) => `<li>${projectCard(ctx, p, '(min-width: 768px) 50vw, 100vw')}</li>`).join('\n    ')}
   </ul>
   <p class="more"><a class="text-link" href="${u('/work/')}">All work</a></p>
 </section>` : '';
@@ -78,7 +78,6 @@ module.exports = function home(ctx) {
 
   return {
     title: '',
-    shows: [site.backdrop].concat(site.drawings || []),
     bodyClass: 'home',
     image: slides.length ? `/work/${slides[0].project.slug}/photos/${slides[0].photo.variants[slides[0].photo.variants.length - 1].name}` : '',
     body: `<h1 class="visually-hidden">${esc(site.name)}</h1>

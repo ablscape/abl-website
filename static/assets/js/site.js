@@ -174,7 +174,7 @@
   }
 
   // Pictures and passages fade in as they come into view.
-  var targets = document.querySelectorAll('.collage > li, .project-list > li, .drawing-row > li, .photo-row, .plan, .statement-text, .firm-text, .person, .stage-figure, .pull, .services dl > div');
+  var targets = document.querySelectorAll('.feature-grid > li, .project-list > li, .drawing-row > li, .photo-row, .plan, .statement-text, .firm-text, .person, .stage-figure, .pull, .services dl > div');
   if ('IntersectionObserver' in window && targets.length) {
     var seen = new IntersectionObserver(function (entries) {
       each(entries, function (entry) {
