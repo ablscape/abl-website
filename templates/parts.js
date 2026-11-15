@@ -32,7 +32,7 @@ function sectionLabel(text) {
 function planBackdrop(ctx, ref, options) {
   const project = ref && ctx.projects.find((p) => p.slug === ref.project);
   const item = project && (project.drawings.find((d) => d.file === ref.file) || project.photos.find((d) => d.file === ref.file));
-  if (!item) return { plan: '', credit: '' };
+  if (!item) return { plan: '', credit: '', ratio: '' };
   const base = `/work/${project.slug}/photos/`;
   const srcset = item.variants.map((v) => `${ctx.u(base + v.name)} ${v.width}w`).join(', ');
   const biggest = item.variants[item.variants.length - 1];
@@ -54,6 +54,8 @@ function planBackdrop(ctx, ref, options) {
     // The credit names what the drawing is of, the project, and nothing else: the firm asked for the kind of
     // drawing ("Plan of the entrance,") to be left out.
     credit: `<p class="statement-credit"><a href="${ctx.u(project.url)}">${esc(project.title)}</a></p>`,
+    // The drawing's own proportions, for a block that takes its height from them (the plan across the home page).
+    ratio: `${item.width} / ${item.height}`,
   };
 }
 

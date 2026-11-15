@@ -39,7 +39,7 @@ module.exports = function home(ctx) {
   // The statement over one of the firm's plans, which spans the window: "backdrop" in site.json names a project
   // and one of its drawings. On a phone the statement comes first and the whole plan follows.
   const back = planBackdrop(ctx, site.backdrop, { lazy: true, wide: true });
-  const statement = `<section class="statement home-statement${back.plan ? ' has-plan' : ''}">
+  const statement = `<section class="statement home-statement${back.plan ? ' has-plan' : ''}"${back.ratio ? ` style="--plan-ratio: ${back.ratio}"` : ''}>
   ${back.plan}
   <div class="statement-inner">
     <p class="statement-text">${esc(site.statement)}</p>

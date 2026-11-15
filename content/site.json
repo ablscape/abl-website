@@ -144,7 +144,8 @@
     "project": "lime-kiln-theater",
     "file": "01",
     "lift": 1.2,
-    "asDrawn": true
+    "asDrawn": true,
+    "focus": "50% 70%"
   },
   "drawings": [
     {

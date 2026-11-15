@@ -266,20 +266,26 @@ a.travel-mark:hover { color: var(--ink-strong); }
       linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 16%, rgb(var(--paper-rgb) / 0) 70%, var(--paper) calc(100% - 3rem));
   }
   .statement-text { max-width: min(19.5em, 56vw); }
-  /* On the home page the plan runs across the whole width of the window as a low band, under the account of the
-     firm, and the statement is set over it at the left: the firm asked for the plan to span the page with the
-     statement superimposed (round 23). The plan is lightened under the words, with no box, and it rises out of
-     the page at its head and sinks back at its foot, so that the band has no edge. This is the one place where a
-     drawing is trimmed to fill a band, at its head and foot; "focus" in "backdrop" says which part to keep. */
+  /* On the home page the plan runs across the whole width of the window, under the account of the firm, and the
+     statement is set over it in the upper left: the firm asked for the plan to span the page with the statement
+     superimposed (round 23). The band is as tall as the plan's own proportions make it, so that the whole plan
+     shows, and never taller than four fifths of the window: at first it was a low band that showed three fifths
+     of the plan's height, and the firm asked for the space to be larger, "so you don't need to zoom in so much".
+     Where the window is too low for the whole plan it is trimmed a little at its head and foot; "focus" in
+     "backdrop" says which part to keep. The plan is lightened under the words, with no box, and it rises out of
+     the page at its head and sinks back at its foot, so that the band has no edge. The statement stands over the
+     plan's open ground, clear of the theater and its parking, which are the subject of the drawing. The height
+     is written out and not left to aspect-ratio, which would narrow the band wherever its height is capped. */
   .home-statement { margin-top: clamp(1.5rem, 3vw, 3rem); }
-  .home-statement.has-plan { min-height: clamp(23rem, 31vw, 30rem); }
+  .home-statement.has-plan { min-height: max(23rem, min(calc(100vw / (var(--plan-ratio, 2 / 1))), 80vh)); }
   .home-statement .statement-plan { left: 0; max-width: none; aspect-ratio: auto; }
   .home-statement .statement-plan::after {
     background:
-      linear-gradient(90deg, rgb(var(--paper-rgb) / 0.82) 0%, rgb(var(--paper-rgb) / 0.78) 46%, rgb(var(--paper-rgb) / 0.36) 61%, rgb(var(--paper-rgb) / 0) 78%),
-      linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 18%, rgb(var(--paper-rgb) / 0) 80%, var(--paper) calc(100% - 1.25rem));
+      radial-gradient(ellipse 64% 46% at 18% 34%, rgb(var(--paper-rgb) / 0.86) 0%, rgb(var(--paper-rgb) / 0.8) 52%, rgb(var(--paper-rgb) / 0.4) 76%, rgb(var(--paper-rgb) / 0) 100%),
+      linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 12%, rgb(var(--paper-rgb) / 0) 87%, var(--paper) calc(100% - 1rem));
   }
-  .home-statement .statement-inner { padding-block: clamp(3rem, 5vw, 4.5rem); }
+  .home-statement.has-plan { align-items: start; }
+  .home-statement .statement-inner { padding-block: 9.5% 0; }
   .home-statement .statement-text { max-width: min(17em, 46vw); }
   /* Where words lie over the faded side of a drawing they clear it around themselves, with no box. */
   .statement.has-plan :is(.statement-text, h1, .page-lead p) { text-shadow: var(--haze-text); }
@@ -616,15 +622,30 @@ address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px 
 .inquiry p:last-child { margin-bottom: 0; }
 .trap { position: absolute; left: -999rem; }
 
-/* Footer: a low band at the foot of every page in the green of the logo's "abl", with the "abl" in white at the
-   left and nothing else. No picture. It carried the firm's name, its address, its telephone and emails, and the
-   five links until round 23, when the firm asked for them to come off and for the band to be made lower; they
-   stand on the Contact page and in the header. */
-.site-footer { margin-top: clamp(5rem, 10vw, 9rem); background: var(--sage); color: #fff; }
-.footer-inner { max-width: var(--page); margin: 0 auto; padding: clamp(1.6rem, 2.4vw, 2.1rem) var(--gutter); }
-.footer-mark, .footer-mark:hover { display: block; width: 4.75rem; color: #fff; }
+/* Footer: a low band at the foot of every page in the green of the logo's "abl", with the essentials in white:
+   the "abl" at the left and, from the fifth column, the firm's name and address and its telephone and emails.
+   No picture, and no links to the pages, which repeated the header: in round 23 the firm asked for something to
+   come off the footer and for the band to be made smaller, everything was taken off, and the firm then said it
+   wanted the essentials kept. The green is a middle tone, so the words are full white and a weight heavier
+   than running text. */
+.site-footer { margin-top: clamp(5rem, 10vw, 9rem); background: var(--sage); color: #fff; font-size: var(--fs-small); font-weight: 500; line-height: 1.6; }
+.footer-inner {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem var(--col-gap);
+  max-width: var(--page); margin: 0 auto; padding: clamp(2rem, 3vw, 2.75rem) var(--gutter);
+}
+.site-footer p { margin: 0; }
+.site-footer a { border-bottom: 1px solid transparent; }
+.site-footer a:hover { border-bottom-color: #fff; }
+.footer-mark, .footer-mark:hover { display: block; width: 4.75rem; color: #fff; border-bottom: 0; }
 .footer-mark:hover { opacity: 0.85; }
 .footer-mark svg { display: block; width: 100%; height: auto; fill: currentColor; }
+.footer-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr)); gap: 1.25rem var(--col-gap); }
+.footer-name { font-weight: 600; }
+@media (min-width: 56rem) {
+  .footer-inner { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .footer-mark { grid-column: 1 / span 4; }
+  .footer-cols { grid-column: 5 / span 8; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 44rem; }
+}
 
 /* Pictures and passages fade in as they come into view. Without scripts everything simply shows.
    A block that holds a picture stays opaque and fades its parts instead, so that the picture keeps
