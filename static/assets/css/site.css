@@ -29,8 +29,8 @@
 
   /* Type: four sizes. A heading is never smaller than the text it stands over.
      Set a size by one of these names; do not write a size into a rule. */
-  --fs-large: clamp(1.75rem, 3vw, 2.6rem);       /* titles, the statement on the home page, a remark set large */
-  --fs-medium: clamp(1.2rem, 1.55vw, 1.4rem);    /* headings of sections and their parts, opening paragraphs, names in lists */
+  --fs-large: clamp(1.75rem, 3vw, 2.6rem);       /* titles, a remark set large */
+  --fs-medium: clamp(1.2rem, 1.55vw, 1.4rem);    /* headings of sections and their parts, opening paragraphs, the statement on the home page, names in lists */
   --fs-text: 1.125rem;                           /* all running text */
   --fs-small: 0.9rem;                            /* captions, facts, labels, the links at the head and foot of the page */
 
@@ -247,7 +247,9 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .statement-plan.as-drawn img { filter: brightness(var(--lift, 1)); }
 .statement-plan::after { content: ""; position: absolute; inset: 0; }
 .statement-inner { position: relative; width: 100%; max-width: var(--page); margin: 0 auto; padding: clamp(3rem, 6vw, 5.5rem) var(--gutter); }
-.statement-text { max-width: 19.5em; margin: 0; font-size: var(--fs-large); font-weight: 300; line-height: 1.28; letter-spacing: -0.012em; color: var(--ink-strong); }
+/* The statement is set at the size of an opening paragraph: the firm found it too large over its plan at the
+   size of a title ("make the words smaller so that it goes better with the page"). */
+.statement-text { max-width: 26em; margin: 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
 .statement-credit { position: absolute; left: var(--edge); bottom: 1.4rem; margin: 0; font-size: var(--fs-small); line-height: 1.3; text-align: left; color: var(--slate); }
 @media (min-width: 64rem) {
   .statement-inner, .statement-credit { z-index: 3; }
@@ -269,29 +271,30 @@ a.travel-mark:hover { color: var(--ink-strong); }
       linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 16%, rgb(var(--paper-rgb) / 0) 70%, var(--paper) calc(100% - 3rem));
   }
   .statement-text { max-width: min(19.5em, 56vw); }
-  /* On the home page the plan runs across the whole width of the window, under the account of the firm, and the
-     statement is set over it in the upper left: the firm asked for the plan to span the page with the statement
-     superimposed (round 23). The statement and its plan take the whole window: the firm found the statement's
-     type too large for the plan behind it and asked for "that particular part to take up the entire screen".
-     The plan covers the window, so where the window is less wide than the plan it is trimmed at its sides, and
-     "focus" in "backdrop" says which side to keep. At first it was a low band that showed three fifths of the
-     plan's height, and then a band as tall as the plan's own proportions. The plan is lightened under the words,
-     with no box, and it rises out of the page at its head and sinks back at its foot, so that the band has no
-     edge. The statement stands over the plan's open ground, clear of the theater and its parking, which are the
-     subject of the drawing. */
+  /* On the home page the plan stands under the account of the firm at its file's own size, 1,280 pixels wide
+     for the Lime Kiln plan, centered, with the statement set over it in the upper left: the firm asked for the
+     plan to span the page with the statement superimposed (round 23), then for the block to take the whole
+     window, and then, finding the plan "too blurry" and the words too large at that size, to "keep it to the
+     extent of the original file's dimensions and make the words smaller". The plan is never enlarged past its
+     own pixels on the page (on a Retina screen it is still shown at twice them; a larger scan would cure that).
+     In a window narrower than the file the plan is as wide as the window. It is lightened under the words, with
+     no box, and rises out of the page at its head, sides and foot, so that it has no edge. The statement stands
+     over the plan's open ground, clear of the theater and its parking, which are the subject of the drawing. */
   .home-statement { margin-top: clamp(1.5rem, 3vw, 3rem); }
-  /* In a window much taller for its width than the plan, the plan would be enlarged past one and a half times
-     to cover it, so there the block stops short of the window's foot. */
-  .home-statement.has-plan { min-height: max(34rem, min(100vh, calc(150vw / (var(--plan-ratio, 2 / 1))))); }
-  .home-statement .statement-plan { left: 0; max-width: none; aspect-ratio: auto; }
+  .home-statement.has-plan { min-height: min(calc(min(100vw, var(--plan-w, 1280px)) / (var(--plan-ratio, 2 / 1))), 90vh); }
+  .home-statement .statement-plan { left: 0; right: 0; width: min(100%, var(--plan-w, 1280px)); max-width: none; margin-inline: auto; aspect-ratio: auto; }
   .home-statement .statement-plan::after {
     background:
-      radial-gradient(ellipse 64% 46% at 18% 34%, rgb(var(--paper-rgb) / 0.86) 0%, rgb(var(--paper-rgb) / 0.8) 52%, rgb(var(--paper-rgb) / 0.4) 76%, rgb(var(--paper-rgb) / 0) 100%),
+      radial-gradient(ellipse 60% 44% at 20% 30%, rgb(var(--paper-rgb) / 0.86) 0%, rgb(var(--paper-rgb) / 0.8) 52%, rgb(var(--paper-rgb) / 0.4) 76%, rgb(var(--paper-rgb) / 0) 100%),
+      linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 7%, rgb(var(--paper-rgb) / 0) 93%, var(--paper) 100%),
       linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 12%, rgb(var(--paper-rgb) / 0) 87%, var(--paper) calc(100% - 1rem));
   }
   .home-statement.has-plan { align-items: start; }
-  .home-statement .statement-inner { padding-block: 17vh 0; }
-  .home-statement .statement-text { max-width: min(17em, 46vw); }
+  /* The words and the credit keep to the plan: the text's block is no wider than the plan, so the statement
+     starts inside the plan's left edge, and the credit stands at the plan's right edge, however wide the window. */
+  .home-statement .statement-inner { max-width: min(var(--page), var(--plan-w, 1280px)); padding-block: clamp(2.5rem, 5vw, 4.5rem) 0; }
+  .home-statement .statement-credit { right: max(clamp(1rem, 1.8vw, 2rem), calc((100% - min(100%, var(--plan-w, 1280px))) / 2 + 1.25rem)); }
+  .home-statement .statement-text { max-width: min(24em, 46vw); }
   /* Where words lie over the faded side of a drawing they clear it around themselves, with no box. */
   .statement.has-plan :is(.statement-text, h1, .page-lead p) { text-shadow: var(--haze-text); }
   /* Behind a page's heading the drawing reaches up behind the header to the top of the window. It is lightened

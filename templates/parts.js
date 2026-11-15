@@ -56,6 +56,7 @@ function planBackdrop(ctx, ref, options) {
     credit: `<p class="statement-credit"><a href="${ctx.u(project.url)}">${esc(project.title)}</a></p>`,
     // The drawing's own proportions, for a block that takes its height from them (the plan across the home page).
     ratio: `${item.width} / ${item.height}`,
+    width: item.width,
   };
 }
 
