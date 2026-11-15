@@ -1,7 +1,7 @@
 'use strict';
 
-const { esc, paragraphs, toCome, reviewNote } = require('../lib/html');
-const { sectionLabel, pageHead, planBackdrop } = require('./parts');
+const { esc, paragraphs, picture, toCome, reviewNote, liftStyle } = require('../lib/html');
+const { pageHead } = require('./parts');
 
 // The Client, Site, Design team diagram: three points, with an arrow in each direction along every side.
 const DIALOGUE_SVG = `<svg class="dialogue-drawing" viewBox="0 0 400 320" role="img" aria-labelledby="dialogue-title">
@@ -24,10 +24,12 @@ const DIALOGUE_SVG = `<svg class="dialogue-drawing" viewBox="0 0 400 320" role="
     </svg>`;
 
 // Process: the title and opening over one of the firm's drawings, as on the other pages; then the parts of the
-// firm's process, each lying on a drawing of its own where it names one; a remark of Arthur Bartenstein's set
-// large; and the ways to work with the firm. Everything comes from "process" in content/site.json.
+// firm's process in order, every one set the same way, with its number and name at the left and its text at the
+// right under a hairline; and the firm's capabilities, set the same way without a number. A part may carry a
+// remark, the Client, Site, Design team drawing, or a picture; each stands in the text's own column, under the
+// text. Everything comes from "process" in content/site.json.
 module.exports = function process(ctx) {
-  const { site } = ctx;
+  const { site, projects, u } = ctx;
   const p = site.process || {};
   const sections = Array.isArray(p.sections) ? p.sections : [];
   const services = p.services || {};
@@ -50,89 +52,60 @@ module.exports = function process(ctx) {
   ${paragraphs(intro)}
 </section>` : '';
 
-  // What stands beside a part that has no drawing of its own: the Dialogue drawing, or, in previews with notes,
-  // a frame that holds the place of a photograph still to come ("figure": { "toCome": "what it will show" }).
-  const besidePart = (sec) => {
-    if (sec.diagram) return `<div class="stage-picture is-diagram">
-    ${DIALOGUE_SVG}
-  </div>`;
+  const quote = (q) => (q && q.text ? `<blockquote class="part-quote">
+      <p>${esc(q.text)}</p>
+      <footer>${esc(q.by || '')}</footer>
+    </blockquote>` : '');
+
+  // What a part may show under its text: the Dialogue drawing; a drawing or photograph of the firm's, named by
+  // its project and number; or, in previews with notes, a frame that holds the place of a photograph still to
+  // come ("figure": { "toCome": "what it will show" }).
+  const pictureOf = (sec) => {
+    if (sec.diagram) return `<div class="part-diagram">
+      ${DIALOGUE_SVG}
+    </div>`;
     const ref = sec.figure;
-    if (ref && typeof ref.toCome === 'string' && ctx.showNotes) return `<div class="stage-picture is-to-come">
-    <div class="frame-to-come"><span class="photo-to-come">Photograph to come: ${esc(ref.toCome)}</span></div>
-  </div>`;
-    return '';
+    if (!ref) return '';
+    if (typeof ref.toCome === 'string') {
+      return ctx.showNotes ? `<div class="part-figure is-to-come">
+      <div class="frame-to-come"><span class="photo-to-come">Photograph to come: ${esc(ref.toCome)}</span></div>
+    </div>` : '';
+    }
+    const project = projects.find((pr) => pr.slug === ref.project);
+    const drawing = project && project.drawings.find((d) => d.file === ref.file);
+    const photo = project && !drawing && project.photos.find((ph) => ph.file === ref.file);
+    const item = drawing || photo;
+    if (!item) return '';
+    const lift = drawing ? liftStyle(Object.assign({}, drawing, ref.lift ? { lift: ref.lift } : {})) : '';
+    return `<figure class="part-figure">
+      <span class="frame" ${drawing ? `data-sheet${lift}` : 'data-photo'}>${picture(ctx, project, item, { sizes: '(min-width: 900px) 40rem, 100vw' })}</span>
+      <figcaption><a href="${u(project.url)}">${esc(ref.caption || item.caption || (drawing ? 'Plan' : 'Photograph'))}, ${esc(project.title)}</a></figcaption>
+    </figure>`;
   };
 
-  const quote = (q) => (q && q.text ? `<blockquote class="pull">
-  <p>${esc(q.text)}</p>
-  <footer>${esc(q.by || '')}</footer>
-</blockquote>` : '');
-
-  const stage = (title, text, pic, extra) => `<section class="stage ${pic ? 'has-picture' : 'is-text-only'}${extra ? ` ${extra}` : ''}">
-  ${sectionLabel(title)}
-  <div class="stage-text">
-    ${text}
+  const part = (number, title, text, extra) => `<section class="part">
+  <h2 class="part-title">${number ? `<span class="part-number">${number}</span>` : ''}${esc(title)}</h2>
+  <div class="part-body">
+    ${text}${extra ? `
+    ${extra}` : ''}
   </div>
-  ${pic}
 </section>`;
 
-  // A part that names one of the firm's drawings lies on it, as the heading of a page does: the drawing is the
-  // ground of the part, with no frame, and fades into the page. "figure" takes the same settings as "backdrop".
-  const plate = (title, text, ref) => {
-    const back = planBackdrop(ctx, ref, { lazy: true });
-    if (!back.plan) return '';
-    return `<section class="statement stage-plate has-plan">
-  ${back.plan}
-  <div class="statement-inner">
-    ${sectionLabel(title)}
-    <div class="stage-text">
-      ${text}
-    </div>
-  </div>
-  ${back.credit}
-</section>`;
-  };
-
-  const blocks = sections.map((sec) => {
+  const blocks = sections.map((sec, i) => {
     const text = Array.isArray(sec.text) && sec.text.length ? paragraphs(sec.text) : `<p>${toCome(ctx, 'this part of the process, in the firm\'s words')}</p>`;
-    const onDrawing = sec.figure && typeof sec.figure.toCome !== 'string' ? plate(sec.title, text, sec.figure) : '';
-    if (onDrawing) return { textOnly: false, after: quote(sec.quote), html: onDrawing };
-    const pic = besidePart(sec);
-    return { textOnly: !pic, after: quote(sec.quote), html: stage(sec.title, text, pic, sec.diagram ? 'has-diagram' : '') };
+    const extra = [quote(sec.quote), pictureOf(sec)].filter(Boolean).join('\n    ');
+    return part(String(i + 1).padStart(2, '0'), sec.title, text, extra);
   });
 
   const serviceText = Array.isArray(services.intro) ? services.intro : (services.intro ? [services.intro] : []);
   if (serviceText.length || items.length) {
-    blocks.push({
-      textOnly: true,
-      after: '',
-      html: stage('Capabilities', `${reviewNote(ctx, services.reviewNote)}
-    ${serviceText.map((line) => `<p class="services-intro">${esc(line)}</p>`).join('\n    ')}
-    ${items.length ? `<dl>
-      ${items.map((s) => `<div>
-        <dt>${esc(s.name)}</dt>
-        <dd>${s.text ? esc(s.text) : toCome(ctx, 'what this includes')}</dd>
+    blocks.push(part('', 'Capabilities', `${reviewNote(ctx, services.reviewNote)}
+    ${serviceText.map((line) => `<p>${esc(line)}</p>`).join('\n    ')}`, items.length ? `<dl class="capabilities">
+      ${items.map((sv) => `<div>
+        <dt>${esc(sv.name)}</dt>
+        <dd>${sv.text ? esc(sv.text) : toCome(ctx, 'what this includes')}</dd>
       </div>`).join('\n      ')}
-    </dl>` : ''}`, '', 'services'),
-    });
-  }
-
-  // Two parts in a row that have no picture share one row, side by side, so neither leaves half the page empty.
-  const out = [];
-  for (let i = 0; i < blocks.length; i += 1) {
-    const a = blocks[i];
-    const b = blocks[i + 1];
-    if (a.textOnly && !a.after && b && b.textOnly) {
-      out.push(`<div class="stage-pair">
-${a.html}
-${b.html}
-</div>
-${b.after}`);
-      i += 1;
-    } else {
-      out.push(`${a.html}
-${a.after}`);
-    }
+    </dl>` : ''));
   }
 
   return {
@@ -141,6 +114,8 @@ ${a.after}`);
     body: `${head}
 ${noteBlock}
 ${introBlock}
-${out.join('\n')}`,
+<div class="parts">
+${blocks.join('\n')}
+</div>`,
   };
 };

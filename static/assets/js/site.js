@@ -20,10 +20,11 @@
     notesToggle.addEventListener('click', function () { setNotes(!root.classList.contains('notes-off')); });
   }
 
-  // The traveling mark. Once the header has scrolled out of view, "abl" stays where the "abl" of the logo
-  // stood, at the logo's own size (the stylesheet keeps the two in register). Every photograph gets a white
-  // copy of the mark and every drawing a green one, fixed at the same spot and clipped to the picture, so the
-  // mark reads green over the page and over drawings, and white over photographs.
+  // The "abl" that stays. A mark fixed to the window draws the "abl" of the logo, at the logo's own place and size
+  // (the stylesheet keeps the two in register), and the logo in the header shows its two words only, so that the
+  // header scrolls away and the letters stay where they were. Every photograph gets a white copy of the mark and
+  // every drawing a green one, fixed at the same spot and clipped to the picture, so the mark reads green over
+  // the page and over drawings, and white over photographs.
   var mark = document.querySelector('[data-travel-mark]');
   var header = document.querySelector('.site-header');
   if (mark && header) {
@@ -39,14 +40,17 @@
       });
       return row;
     };
-    each(document.querySelectorAll('[data-photo], [data-sheet]'), function (frame) {
-      var kind = frame.hasAttribute('data-photo') ? 'on-photo' : 'on-sheet';
+    var copyOfMark = function (kind) {
       var copy = document.createElement('span');
       copy.className = 'travel-mark travel-mark-' + kind;
       copy.setAttribute('aria-hidden', 'true');
       copy.innerHTML = mark.innerHTML;
+      return copy;
+    };
+    each(document.querySelectorAll('[data-photo], [data-sheet]'), function (frame) {
+      var kind = frame.hasAttribute('data-photo') ? 'on-photo' : 'on-sheet';
       frame.classList.add('carries-mark');
-      frame.appendChild(copy);
+      frame.appendChild(copyOfMark(kind));
       if (nav) frame.appendChild(drawLinks(kind));
     });
 
@@ -64,13 +68,46 @@
       document.body.appendChild(floating);
     }
 
+    // Pointing at the top of the window while the links are there lays a bar of the page's color behind them,
+    // with a green mark and dark links over it. The keyboard brings it too, when it reaches the links.
+    var pointed = false;
+    var focused = false;
+    var setBar = function () {
+      root.classList.toggle('bar-on', (pointed || focused) && root.classList.contains('nav-on'));
+    };
+    if (floating) {
+      var bar = document.createElement('span');
+      bar.className = 'float-bar';
+      bar.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(bar);
+      document.body.appendChild(copyOfMark('on-bar'));
+      floating.addEventListener('focusin', function () { focused = true; setBar(); });
+      floating.addEventListener('focusout', function () { focused = false; setBar(); });
+      if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+        window.addEventListener('mousemove', function (event) {
+          var over = event.clientY <= header.offsetHeight;
+          if (over !== pointed) { pointed = over; setBar(); }
+        }, { passive: true });
+        root.addEventListener('mouseleave', function () { pointed = false; setBar(); });
+      }
+    }
+
     var lastY = window.pageYOffset;
     var waiting = false;
+    // Whatever stands above the header (the bar of a preview build) pushes the logo down; the mark starts as
+    // far down and rises with the page to its own place.
+    var above = 0;
+    var shifted = false;
+    var measure = function () { above = Math.max(0, header.getBoundingClientRect().top + window.pageYOffset); };
     var update = function () {
       waiting = false;
       var y = window.pageYOffset;
+      var shift = Math.max(0, above - y);
+      if (shift > 0 || shifted) {
+        root.style.setProperty('--mark-shift', shift + 'px');
+        shifted = shift > 0;
+      }
       var past = header.getBoundingClientRect().bottom < 0;
-      root.classList.toggle('mark-on', past);
       var showNav = root.classList.contains('nav-on');
       if (!past) showNav = false;
       else if (y < lastY - 6) showNav = true;
@@ -78,12 +115,16 @@
       if (Math.abs(y - lastY) > 6) lastY = y;
       root.classList.toggle('nav-on', showNav);
       if (floating) floating.inert = !showNav;
+      setBar();
     };
     window.addEventListener('scroll', function () {
       if (!waiting) { waiting = true; window.requestAnimationFrame(update); }
     }, { passive: true });
-    window.addEventListener('resize', update);
+    window.addEventListener('resize', function () { measure(); update(); });
+    window.addEventListener('load', function () { measure(); update(); });
+    measure();
     update();
+    root.classList.add('mark-ready');
   }
 
   // Home: fade from one photograph to the next. Visitors can pause it.
@@ -174,7 +215,7 @@
   }
 
   // Pictures and passages fade in as they come into view.
-  var targets = document.querySelectorAll('.project-list > li, .drawing-row > li, .photo-row, .plan, .statement-text, .firm-text, .person, .stage-figure, .pull, .services dl > div');
+  var targets = document.querySelectorAll('.project-list > li, .drawing-row > li, .photo-row, .plan, .statement-text, .firm-text, .person, .part-figure');
   if ('IntersectionObserver' in window && targets.length) {
     var seen = new IntersectionObserver(function (entries) {
       each(entries, function (entry) {
