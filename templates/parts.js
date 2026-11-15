@@ -66,13 +66,16 @@ function pageHead(ctx, ref, inner) {
   // "shift" moves the drawing down a little on a wide screen ("2.75rem"), so that a line of it meets a line of
   // the text beside it; the credit moves with it.
   const shift = back.plan && ref && typeof ref.shift === 'string' && /^\d+(\.\d+)?rem$/.test(ref.shift) ? ` style="--shift: ${ref.shift}"` : '';
+  // A hairline closes every heading, with or without a drawing: the firm asked for the line under the heading
+  // to be used consistently. It carries the same "shift", so that it clears a drawing moved down.
   return `<section class="statement page-statement${back.plan ? ' has-plan' : ''}"${shift}>
   ${back.plan}
   <div class="statement-inner">
     ${inner}
   </div>
   ${back.credit}
-</section>`;
+</section>
+<div class="head-rule"${shift} aria-hidden="true"></div>`;
 }
 
 module.exports = { projectCard, sectionLabel, planBackdrop, pageHead };

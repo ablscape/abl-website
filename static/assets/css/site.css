@@ -253,14 +253,16 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .statement-credit { position: absolute; left: var(--edge); bottom: 1.4rem; margin: 0; font-size: var(--fs-small); line-height: 1.3; text-align: left; color: var(--slate); }
 @media (min-width: 64rem) {
   .statement-inner, .statement-credit { z-index: 3; }
-  /* The credit stands at the right, at the foot of the drawing it names. */
-  /* It stands at the outer edge of the window, where the drawing ends, so that it does not sit over the text
-     that follows the heading; a drawing moved down by "shift" takes its credit with it. */
-  .statement-credit { left: auto; right: clamp(1rem, 1.8vw, 2rem); bottom: calc(1.4rem - var(--shift, 0px)); text-align: right; text-shadow: var(--haze-text); }
+  /* The credit stands at the right, at the outer edge of the window, so that it does not sit over the text that
+     follows the heading. On the home page it stands at the foot of the plan; under a page's heading it stands
+     beneath the drawing, above the hairline, and a drawing moved down by "shift" takes it along. */
+  .statement-credit { left: auto; right: clamp(1rem, 1.8vw, 2rem); bottom: 1.4rem; text-align: right; text-shadow: var(--haze-text); }
+  .page-statement .statement-credit { top: calc(100% + 0.6rem + var(--shift, 0px)); bottom: auto; }
   /* The drawing at the right: its height is the block's, its width follows from its own proportions ("--ratio"),
-     and it never takes more than 62 percent of the window, so that the text keeps the left. It fades into the page
-     at its left, top and bottom. */
-  .statement-plan { left: auto; right: 0; aspect-ratio: var(--ratio, 2 / 1); max-width: 62%; }
+     and it never takes more than 72 percent of the window, so that the text keeps the left. It fades into the page
+     at its left, top and bottom. The cap was 62 percent, which in a window under 1,200 pixels wide left the drawing
+     shorter than its heading, so that the text ran on below the drawing; the firm found that "visually sloppy". */
+  .statement-plan { left: auto; right: 0; aspect-ratio: var(--ratio, 2 / 1); max-width: 72%; }
   /* At its foot the drawing has sunk into the page before the line of its credit, which stands on clear paper. The
      picture stops two pixels short of the block, or a block whose height is not a whole number of pixels shows the
      picture's last row as a faint line under the fade. */
@@ -268,7 +270,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
   .statement-plan::after {
     background:
       linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0.72) 13%, rgb(var(--paper-rgb) / 0) 36%),
-      linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 16%, rgb(var(--paper-rgb) / 0) 70%, var(--paper) calc(100% - 3rem));
+      linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 16%, rgb(var(--paper-rgb) / 0) 84%, var(--paper) calc(100% - 1.25rem));
   }
   .statement-text { max-width: min(19.5em, 56vw); }
   /* On the home page the plan stands under the account of the firm at its file's own size, 1,280 pixels wide
@@ -310,8 +312,12 @@ a.travel-mark:hover { color: var(--ink-strong); }
       linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0.72) 13%, rgb(var(--paper-rgb) / 0) 36%),
       radial-gradient(ellipse 14.5rem 5rem at calc(100% - var(--edge) - var(--logo-w) / 2) calc(var(--head-pad) + var(--logo-w) * 20 / 232 - var(--shift, 0px)), var(--paper) 0%, rgb(var(--paper-rgb) / 0.96) 52%, rgb(var(--paper-rgb) / 0) 100%),
       linear-gradient(180deg, rgb(var(--paper-rgb) / 0.6) 0, rgb(var(--paper-rgb) / 0.5) calc(var(--head-h) * 0.6 - var(--shift, 0px)), rgb(var(--paper-rgb) / 0) calc(var(--head-h) + 2.5rem - var(--shift, 0px))),
-      linear-gradient(180deg, rgb(var(--paper-rgb) / 0) 0%, rgb(var(--paper-rgb) / 0) 68%, var(--paper) calc(100% - 3rem));
+      linear-gradient(180deg, rgb(var(--paper-rgb) / 0) 0%, rgb(var(--paper-rgb) / 0) 84%, var(--paper) calc(100% - 1.25rem));
   }
+  /* The heading's text ends where the drawing's ink ends: the drawing keeps its ink to within a little of the
+     block's foot, and the text stops the same little above it. The firm did not like text that "goes beyond where
+     the sketch ended". */
+  .page-statement .statement-inner { padding-bottom: 2rem; }
 }
 @media (max-width: 63.99rem) {
   /* Phones and tablets: the text first, then the whole drawing across the page, rising out of it and sinking back. */
@@ -513,9 +519,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
   .page-intro > *, .process-intro > * { grid-column: 5 / span 8; }
 }
 
-.people { max-width: var(--page); margin: clamp(1.5rem, 2.5vw, 2rem) auto 0; padding: 0 var(--gutter); }
+.people { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
 .person { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem var(--col-gap); padding: clamp(2.5rem, 5vw, 4.5rem) 0; border-top: 1px solid var(--hair); }
-.person:first-child { padding-top: clamp(2rem, 3vw, 2.75rem); }
 .person:last-child { padding-bottom: 0; }
 .person-photo { display: grid; place-items: center; width: 100%; max-width: 17rem; aspect-ratio: 4 / 5; background: var(--fill); }
 .person-photo img { width: 100%; height: 100%; object-fit: cover; }
@@ -543,9 +548,17 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .dg-center { fill: var(--accent); font: 300 21px var(--sans); letter-spacing: 0.02em; }
 
 /* Work, People, Process and Contact open over one of the firm's drawings, named in "backdrop" under each page in site.json. */
-.page-statement { margin-top: 0; margin-bottom: clamp(1.5rem, 2.5vw, 2rem); }
-/* A heading with no drawing beside it needs no room for one to sink into the page: what follows stands closer. */
-.page-statement:not(.has-plan) { margin-bottom: 0; }
+.page-statement { margin: 0; }
+/* A hairline closes every heading, at the firm's word ("we need to be consistent with our usage of that grey line
+   we have after the main picture thing on most pages"): it keeps the page's margins, and what follows stands the
+   same distance under it on every page. On a wide screen it clears the credit beneath the drawing, and a drawing
+   moved down by "shift" moves it down as much. */
+.head-rule { max-width: var(--page); margin: 1.5rem auto 0; padding: 0 var(--gutter); }
+.head-rule::before { content: ""; display: block; border-top: 1px solid var(--hair); }
+@media (min-width: 64rem) { .head-rule { margin-top: calc(2.75rem + var(--shift, 0px)); } }
+.head-rule + :is(.filters, .page-intro, .contact-grid, .process-note, .plain) { margin-top: clamp(2rem, 3vw, 2.75rem); }
+.head-rule + :is(.people, .parts) { margin-top: 0; }
+.head-rule + .people > .person:first-child, .head-rule + .parts > .part:first-child { padding-top: clamp(2rem, 3vw, 2.75rem); border-top: 0; }
 @media (min-width: 64rem) {
   .page-statement.has-plan { min-height: min(32.5vh, 17.5rem); }
   /* The title stands at the same height on every page, whether or not an opening follows it: it is set at the
@@ -553,7 +566,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
      close under it: the firm asked for the pages to be "shifted up so there's less wasted space above", and
      found "a ton of wasted space" under the sketch on the People page. */
   .page-statement { align-items: start; }
-  .page-statement .statement-inner { padding-block: clamp(1rem, 1.6vw, 1.5rem) clamp(3rem, 5vw, 4.25rem); }
+  .page-statement .statement-inner { padding-block: clamp(1rem, 1.6vw, 1.5rem) 2rem; }
 }
 .page-statement .page-head, .page-statement .page-head.has-lead { display: block; max-width: none; margin: 0; padding: 0; }
 .page-statement .page-lead { max-width: 34rem; margin-top: clamp(1.25rem, 2.5vw, 2rem); }
@@ -571,8 +584,6 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .parts { max-width: var(--page); margin: clamp(2.5rem, 6vw, 4.5rem) auto 0; padding: 0 var(--gutter); }
 .part { padding: clamp(2rem, 4vw, 3.25rem) 0 clamp(2.25rem, 4.5vw, 3.75rem); border-top: 1px solid var(--hair); }
 .part:last-child { padding-bottom: 0; }
-/* The parts of a page that follow its heading directly stand as close under it as the people do. */
-.page-statement + .parts { margin-top: clamp(1.5rem, 2.5vw, 2rem); }
 .part-head { margin: 0 0 1.4rem; }
 .part-title { margin: 0; font-size: var(--fs-medium); font-weight: 400; line-height: 1.3; color: var(--ink-strong); }
 .part-number { display: block; margin-bottom: 0.4rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.06em; line-height: 1.3; font-variant-numeric: tabular-nums; color: var(--accent); }
