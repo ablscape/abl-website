@@ -42,8 +42,8 @@ module.exports = function home(ctx) {
   const shown = featured.length ? featured : projects.slice(0, 3);
   const selected = shown.length ? `<section class="selected">
   ${sectionLabel('Selected work')}
-  <ul class="feature-grid">
-    ${shown.map((p) => `<li>${projectCard(ctx, p, '(min-width: 768px) 50vw, 100vw')}</li>`).join('\n    ')}
+  <ul class="project-list">
+    ${shown.map((p) => `<li>${projectCard(ctx, p, '(min-width: 1500px) 700px, (min-width: 768px) 48vw, 92vw')}</li>`).join('\n    ')}
   </ul>
   <p class="more"><a class="text-link" href="${u('/work/')}">All work</a></p>
 </section>` : '';

@@ -4,8 +4,8 @@ const { TYPES } = require('../lib/content');
 const { esc, reviewNote } = require('../lib/html');
 const { projectCard, pageHead } = require('./parts');
 
-// Work: every project, one to a line: the picture from one edge of the window to the other and, beneath it,
-// the kind of project, its name and its place. One row of buttons narrows the list: all, then each type.
+// Work: every project, two to a line inside the page's margins: the picture and, beneath it, the kind of
+// project, its name and its place. One row of buttons narrows the list: all, then each type.
 module.exports = function work(ctx) {
   const { projects, site } = ctx;
   const types = TYPES.filter((type) => projects.some((p) => p.type === type));
@@ -20,7 +20,7 @@ module.exports = function work(ctx) {
 
   const grid = projects.length ? `<ul class="project-grid project-list" data-project-grid data-default="${defaultFilter}">
   ${projects.map((p) => `<li data-type="${p.type}">
-    ${projectCard(ctx, p, '100vw')}
+    ${projectCard(ctx, p, '(min-width: 1500px) 700px, (min-width: 768px) 48vw, 92vw')}
   </li>`).join('\n  ')}
 </ul>` : '<p class="empty">Project pages are on their way.</p>';
 

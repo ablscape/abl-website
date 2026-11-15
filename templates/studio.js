@@ -36,11 +36,10 @@ module.exports = function studio(ctx) {
   const s = site.studio;
   const paras = Array.isArray(s.intro) ? s.intro : [];
 
-  // The first paragraph is the lead, set large beside the heading; the rest follow in the text column.
-  const lead = paras.length ? `<div class="page-lead">
-    <p>${esc(paras[0])}</p>
-  </div>` : '';
-  const rest = paras.length > 1 || s.note ? `<section class="studio-intro">
+  // The heading of the page carries the title alone, so that it stays low. The firm's account follows in the
+  // text column: its first paragraph set a size larger, as the opening, and the rest beneath it.
+  const rest = paras.length || s.note ? `<section class="studio-intro">
+  ${paras.length ? `<p class="studio-lead">${esc(paras[0])}</p>` : ''}
   ${paragraphs(paras.slice(1))}
   ${s.note ? `<p class="studio-note">${esc(s.note)}</p>` : ''}
 </section>` : '';
@@ -48,9 +47,8 @@ module.exports = function studio(ctx) {
   return {
     title: 'People',
     description: `The people of ${site.name} and how the studio works with clients.`,
-    body: `${pageHead(ctx, site.studio && site.studio.backdrop, `<div class="page-head${lead ? ' has-lead' : ''}">
+    body: `${pageHead(ctx, site.studio && site.studio.backdrop, `<div class="page-head">
   <h1>People</h1>
-  ${lead}
 </div>`)}
 ${rest}
 <section class="people">

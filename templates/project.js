@@ -44,8 +44,7 @@ module.exports = function projectPage(ctx, project, next) {
       ${caption(photo)}
     </figure>`;
 
-  // Photographs other than the lead, dealt out as one wide, then a pair, then one wide. Each row runs from one
-  // edge of the window to the other.
+  // Photographs other than the lead, dealt out as one wide, then a pair, then one wide.
   const cover = project.coverPhoto;
   const paired = project.drawings.map((d) => d.builtPhoto).filter(Boolean);
   const rest = project.photos.filter((photo) => photo !== cover && !paired.includes(photo));
@@ -55,7 +54,7 @@ module.exports = function projectPage(ctx, project, next) {
     else { groups.push(rest.slice(i, i + 2)); i += 2; }
   }
   const groupHtml = (group) => group.length === 1
-    ? `<div class="photo-row photo-one">\n    ${photoFigure(group[0], '100vw')}\n  </div>`
+    ? `<div class="photo-row photo-one">\n    ${photoFigure(group[0], '(min-width: 1500px) 1400px, 100vw')}\n  </div>`
     : `<div class="photo-row photo-pair">\n    ${group.map((p, i) => photoFigure(p, i === 0 ? '(min-width: 900px) 58vw, 100vw' : '(min-width: 900px) 42vw, 100vw')).join('\n    ')}\n  </div>`;
 
   const drawingHtml = (d) => {
