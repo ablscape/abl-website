@@ -4,8 +4,8 @@ const { esc, paragraphs, picture, toCome, reviewNote, liftStyle } = require('../
 const { STORY_PARTS } = require('../lib/content');
 
 // One project page: the lead image; the title, the facts and the first part of the story side by side;
-// then the firm's drawings, as ink on the white of the page with no frame, the ground giving way around them;
-// and the rest of the story interleaved with the photographs.
+// then the firm's drawings, as ink on the white of the page with no frame, each beside the photograph of what
+// was built from it where the drawing names one; and the rest of the story interleaved with the photographs.
 module.exports = function projectPage(ctx, project, next) {
   const { u } = ctx;
 
@@ -46,7 +46,8 @@ module.exports = function projectPage(ctx, project, next) {
 
   // Photographs other than the lead, dealt out as one wide, then a pair, then one wide.
   const cover = project.coverPhoto;
-  const rest = project.photos.filter((photo) => photo !== cover);
+  const paired = project.drawings.map((d) => d.builtPhoto).filter(Boolean);
+  const rest = project.photos.filter((photo) => photo !== cover && !paired.includes(photo));
   const groups = [];
   for (let i = 0; i < rest.length;) {
     if (groups.length % 2 === 0 || i === rest.length - 1) { groups.push(rest.slice(i, i + 1)); i += 1; }
@@ -56,10 +57,22 @@ module.exports = function projectPage(ctx, project, next) {
     ? `<div class="photo-row photo-one">\n    ${photoFigure(group[0], '(min-width: 1100px) 1000px, 100vw')}\n  </div>`
     : `<div class="photo-row photo-pair">\n    ${group.map((p) => photoFigure(p, '(min-width: 1100px) 520px, 100vw')).join('\n    ')}\n  </div>`;
 
-  const drawingHtml = (d) => `<figure class="plan">
+  const drawingHtml = (d) => {
+    if (!d.builtPhoto) {
+      return `<figure class="plan">
       <div class="frame" data-sheet${liftStyle(d)}>${picture(ctx, project, d, { sizes: '(min-width: 1100px) 1100px, 100vw' })}</div>
       ${caption(d)}
     </figure>`;
+    }
+    // The drawing and the place as built, side by side; one caption for the two.
+    const photo = d.builtPhoto;
+    const words = [d.caption, photo.caption, photo.credit ? `Photograph: ${photo.credit}.` : ''].filter(Boolean).map(esc).join(' ');
+    return `<figure class="plan plan-pair">
+      <div class="frame pair-plan" data-sheet${liftStyle(d)}>${picture(ctx, project, d, { sizes: '(min-width: 900px) 58vw, 100vw' })}</div>
+      <div class="frame pair-photo" data-photo>${picture(ctx, project, photo, { sizes: '(min-width: 900px) 42vw, 100vw' })}</div>
+      ${words ? `<figcaption>${words}</figcaption>` : ''}
+    </figure>`;
+  };
 
   // Lay the page out: first part beside the title; drawings; then photographs and parts in turn.
   // When no drawing or photograph falls between the parts, the whole story reads as one column beside the title.
@@ -95,6 +108,7 @@ module.exports = function projectPage(ctx, project, next) {
 
   return {
     title: project.title,
+    project: project.slug,
     description: project.summary,
     image: `/work/${project.slug}/photos/${largest}`,
     bodyClass: 'project-page',

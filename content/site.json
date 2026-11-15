@@ -144,6 +144,21 @@
     "lift": 1.2,
     "asDrawn": true
   },
+  "foot": [
+    {
+      "project": "green-spring",
+      "file": "05",
+      "caption": "Sketch",
+      "focus": "50% 100%",
+      "focusPhone": "50% 100%"
+    },
+    {
+      "project": "montpelier-visitor-arrival",
+      "file": "05",
+      "focus": "50% 60%",
+      "focusPhone": "40% 60%"
+    }
+  ],
   "drawings": [
     {
       "project": "green-spring",

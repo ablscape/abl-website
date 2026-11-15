@@ -3,21 +3,14 @@
 const { esc, paragraphs, toCome, reviewNote } = require('../lib/html');
 const { sectionLabel, pageHead, planBackdrop } = require('./parts');
 
-// The Client, Site, Design team diagram: three points, with an arrow in each direction along every side. It
-// clears the drawn ground around itself, as text does, with a white that has no edge.
+// The Client, Site, Design team diagram: three points, with an arrow in each direction along every side.
 const DIALOGUE_SVG = `<svg class="dialogue-drawing" viewBox="0 0 400 320" role="img" aria-labelledby="dialogue-title">
       <title id="dialogue-title">A triangle joining the client, the site and the design team, with arrows in both directions along each side</title>
       <defs>
         <marker id="dg-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
           <path class="dg-head" d="M1 1.5 L9 5 L1 8.5"/>
         </marker>
-        <radialGradient id="dg-clear">
-          <stop offset="0" stop-color="#fff"/>
-          <stop offset="0.62" stop-color="#fff" stop-opacity="0.97"/>
-          <stop offset="1" stop-color="#fff" stop-opacity="0"/>
-        </radialGradient>
       </defs>
-      <ellipse cx="200" cy="164" rx="285" ry="225" fill="url(#dg-clear)"/>
       <path class="dg-line" d="M186 72 L98 238" marker-start="url(#dg-arrow)" marker-end="url(#dg-arrow)"/>
       <path class="dg-line" d="M214 72 L302 238" marker-start="url(#dg-arrow)" marker-end="url(#dg-arrow)"/>
       <path class="dg-line" d="M118 260 L282 260" marker-start="url(#dg-arrow)" marker-end="url(#dg-arrow)"/>
@@ -113,7 +106,7 @@ module.exports = function process(ctx) {
     blocks.push({
       textOnly: true,
       after: '',
-      html: stage('Services', `${reviewNote(ctx, services.reviewNote)}
+      html: stage('Capabilities', `${reviewNote(ctx, services.reviewNote)}
     ${serviceText.map((line) => `<p class="services-intro">${esc(line)}</p>`).join('\n    ')}
     ${items.length ? `<dl>
       ${items.map((s) => `<div>
@@ -144,6 +137,7 @@ ${a.after}`);
 
   return {
     title: 'Process',
+    shows: [p.backdrop].concat((p.sections || []).map((sec) => sec.figure)),
     description: `How ${site.name} works: research into the history of a site, design in dialogue with the client, mock-ups before construction, and the firm's presence until the planting is established.`,
     body: `${head}
 ${noteBlock}

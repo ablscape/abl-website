@@ -78,6 +78,7 @@ module.exports = function home(ctx) {
 
   return {
     title: '',
+    shows: [site.backdrop].concat(site.drawings || []),
     bodyClass: 'home',
     image: slides.length ? `/work/${slides[0].project.slug}/photos/${slides[0].photo.variants[slides[0].photo.variants.length - 1].name}` : '',
     body: `<h1 class="visually-hidden">${esc(site.name)}</h1>

@@ -4,7 +4,8 @@ const { TYPES } = require('../lib/content');
 const { esc, reviewNote } = require('../lib/html');
 const { projectCard, pageHead } = require('./parts');
 
-// Work: every project in a staggered collage, with one row of buttons to narrow the list: all, then each type.
+// Work: every project, one to a line: the picture across the width of the page and, beneath it, the kind of
+// project, its name and its place. One row of buttons narrows the list: all, then each type.
 module.exports = function work(ctx) {
   const { projects, site } = ctx;
   const types = TYPES.filter((type) => projects.some((p) => p.type === type));
@@ -17,9 +18,9 @@ module.exports = function work(ctx) {
   ${buttons.map(([value, label]) => `<button type="button" data-filter="${value}" aria-pressed="false">${label}</button>`).join('\n  ')}
 </div>` : '';
 
-  const grid = projects.length ? `<ul class="project-grid collage" data-project-grid data-default="${defaultFilter}">
+  const grid = projects.length ? `<ul class="project-grid project-list" data-project-grid data-default="${defaultFilter}">
   ${projects.map((p) => `<li data-type="${p.type}">
-    ${projectCard(ctx, p, '(min-width: 900px) 60vw, 100vw')}
+    ${projectCard(ctx, p, '(min-width: 1500px) 1400px, 100vw')}
   </li>`).join('\n  ')}
 </ul>` : '<p class="empty">Project pages are on their way.</p>';
 
@@ -31,6 +32,7 @@ module.exports = function work(ctx) {
 
   return {
     title: 'Work',
+    shows: [site.work && site.work.backdrop].concat(projects.filter((p) => p.coverPhoto && p.coverPhoto.isDrawing).map((p) => ({ project: p.slug, file: p.coverPhoto.file }))),
     description: `Selected projects by ${site.name}: campus, civic, preservation and residential landscapes.`,
     body: `${pageHead(ctx, site.work && site.work.backdrop, `<div class="page-head${intro ? ' has-lead' : ''}">
   <h1>Work</h1>

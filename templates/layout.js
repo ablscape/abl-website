@@ -1,6 +1,7 @@
 'use strict';
 
 const { esc, markSvg } = require('../lib/html');
+const { planBackdrop } = require('./parts');
 
 const NAV = [
   ['Work', '/work/'],
@@ -15,12 +16,18 @@ function telHref(phone) {
 }
 
 // The frame around every page: head, the header with the links at the left and the logo at the right,
-// the "abl" mark that travels with the page once the header has scrolled away, and the footer.
+// the "abl" mark that travels with the page once the header has scrolled away, and the footer, which stands
+// over one of the firm's drawings ("foot" in content/site.json: one drawing, or a list to choose from).
 module.exports = function layout(ctx, page) {
   const { site, u } = ctx;
   const title = page.title ? `${page.title} | ${site.name}` : site.name;
   const description = page.description || site.description;
   const base = site.url.replace(/\/$/, '');
+  // The drawing at the foot of the page: the first one named that the page does not already show (a page says
+  // which drawings it shows in "shows", and a project page shows its own), so that none stands twice on a page.
+  const shown = (page.shows || []).filter((ref) => ref && ref.project).map((ref) => `${ref.project}/${ref.file}`);
+  const footRef = [].concat(site.foot || []).find((ref) => ref && ref.project && ref.project !== page.project && !shown.includes(`${ref.project}/${ref.file}`));
+  const foot = planBackdrop(ctx, footRef, { lazy: true, foot: true });
   const links = (withCurrent) => NAV.map(([label, href]) => {
     const current = withCurrent && ctx.section === href ? ' aria-current="page"' : '';
     return `<a href="${u(href)}"${current}>${label}</a>`;
@@ -75,7 +82,6 @@ document.documentElement.className = 'js';
 </script>
 </head>
 <body${page.bodyClass ? ` class="${esc(page.bodyClass)}"` : ''}>
-<div class="page-ground" data-ground aria-hidden="true"></div>
 <a class="skip-link" href="#main">Skip to content</a>
 ${ctx.showNotes ? '<p class="preview-bar">Preview build. Gray notes mark text and photographs still to come. They never appear on the live site. <button class="notes-toggle" type="button" data-notes-toggle hidden>Hide notes</button></p>\n' : ''}<header class="site-header">
   <nav class="site-nav" aria-label="Main">
@@ -87,15 +93,19 @@ ${ctx.showNotes ? '<p class="preview-bar">Preview build. Gray notes mark text an
 <main id="main">
 ${page.body}
 </main>
-<footer class="site-footer">
-  <a class="footer-mark" href="${u('/')}" aria-label="${esc(site.name)}, home">${markSvg()}</a>
-  <div class="footer-cols">
-    <p><span class="footer-name">${esc(site.name)}</span><br>${site.address.map(esc).join('<br>')}</p>
-    <p><a href="${telHref(site.phone)}">${esc(site.phone)}</a>${site.emails.map((e) => `<br><a href="mailto:${esc(e.address)}">${esc(e.address)}</a>`).join('')}</p>
-    <nav class="footer-nav" aria-label="Footer">
-      ${links(false)}
-    </nav>
+<footer class="site-footer${foot.plan ? ' has-plan' : ''}">
+  <div class="footer-inner">
+    <a class="footer-mark" href="${u('/')}" aria-label="${esc(site.name)}, home">${markSvg()}</a>
+    <div class="footer-cols">
+      <p><span class="footer-name">${esc(site.name)}</span><br>${site.address.map(esc).join('<br>')}</p>
+      <p><a href="${telHref(site.phone)}">${esc(site.phone)}</a>${site.emails.map((e) => `<br><a href="mailto:${esc(e.address)}">${esc(e.address)}</a>`).join('')}</p>
+      <nav class="footer-nav" aria-label="Footer">
+        ${links(false)}
+      </nav>
+    </div>
+    ${foot.credit}
   </div>
+  ${foot.plan}
 </footer>
 <script src="${u('/assets/js/site.js')}" defer></script>
 </body>

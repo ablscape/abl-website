@@ -29,6 +29,7 @@ function sectionLabel(text) {
 //   "from"     on a wide screen, how far from the left the drawing starts, as "36%", when its subject would
 //              otherwise fall under the text
 //   "asDrawn"  true to keep the drawing's own colors
+// "options.foot" makes it the drawing at the foot of a page, which carries other class names.
 // Returns the picture and its credit, or two empty strings when no drawing is named.
 function planBackdrop(ctx, ref, options) {
   const project = ref && ctx.projects.find((p) => p.slug === ref.project);
@@ -45,13 +46,14 @@ function planBackdrop(ctx, ref, options) {
   if (place(ref.focusPhone)) vars.push(`--focus-phone: ${ref.focusPhone}`);
   const from = typeof ref.from === 'string' && /^\d{1,2}%$/.test(ref.from) ? ref.from : '';
   if (from) vars.push(`--from: ${from}`);
-  const classes = ['statement-plan'];
+  const foot = Boolean(options && options.foot);
+  const classes = [foot ? 'foot-plan' : 'statement-plan'];
   if (ref.asDrawn === true) classes.push('as-drawn');
-  if (from) classes.push('is-side');
+  if (from && !foot) classes.push('is-side');
   const lazy = options && options.lazy ? ' loading="lazy"' : '';
   return {
     plan: `<div class="${classes.join(' ')}" data-sheet aria-hidden="true"${vars.length ? ` style="${vars.join('; ')}"` : ''}><img src="${ctx.u(base + biggest.name)}" srcset="${srcset}" sizes="100vw" width="${item.width}" height="${item.height}" alt=""${lazy} decoding="async"></div>`,
-    credit: `<p class="statement-credit"><a href="${ctx.u(project.url)}">${esc(ref.caption || item.caption || 'Plan')}, ${esc(project.title)}</a></p>`,
+    credit: `<p class="${foot ? 'foot-credit' : 'statement-credit'}"><a href="${ctx.u(project.url)}">${esc(ref.caption || item.caption || 'Plan')}, ${esc(project.title)}</a></p>`,
   };
 }
 
