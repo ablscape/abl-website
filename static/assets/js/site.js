@@ -20,10 +20,10 @@
     notesToggle.addEventListener('click', function () { setNotes(!root.classList.contains('notes-off')); });
   }
 
-  // The traveling mark. Once the header has scrolled out of view, "abl" stays at the top right. Every
-  // photograph gets a white copy of the mark and every drawing a green one, fixed at the same spot and
-  // clipped to the picture, so the mark reads green over the page and over drawings, and white over
-  // photographs.
+  // The traveling mark. Once the header has scrolled out of view, "abl" stays where the "abl" of the logo
+  // stood, at the logo's own size (the stylesheet keeps the two in register). Every photograph gets a white
+  // copy of the mark and every drawing a green one, fixed at the same spot and clipped to the picture, so the
+  // mark reads green over the page and over drawings, and white over photographs.
   var mark = document.querySelector('[data-travel-mark]');
   var header = document.querySelector('.site-header');
   if (mark && header) {
