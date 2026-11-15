@@ -79,9 +79,12 @@ body {
   font-size: var(--fs-text);
   font-weight: 400;
   line-height: 1.6;
+  /* A page shorter than the window still fills it: the footer stands at the foot of the window, not in mid-air
+     with white beneath it ("Page not found", "Inquiry sent", and any page on a tall screen). */
+  display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh;
 }
 /* A picture may reach past the page's margins to the edge of the window; nothing may make the window scroll sideways. */
-main { overflow-x: clip; }
+main { flex: 1 0 auto; overflow-x: clip; }
 img { display: block; max-width: 100%; height: auto; }
 h1, h2, h3 { font-weight: 400; line-height: 1.15; margin: 0; color: var(--ink-strong); }
 p { margin: 0 0 1em; }
@@ -116,7 +119,7 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 /* Header: the links at the left, the logo at the right. */
 .site-header {
   display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
-  max-width: var(--page); margin: 0 auto; padding: var(--head-pad) var(--gutter) 1.5rem;
+  width: 100%; max-width: var(--page); margin: 0 auto; padding: var(--head-pad) var(--gutter) 1.5rem;
   /* On a wide screen the drawing behind a page's heading stands at the right and runs up behind the header, which
      stands above it. The drawing is lightened there and cleared where the logo stands (see the drawing's own
      rules), and the words of the header carry the haze the mark has. Nothing changes under the pointer: a header
@@ -339,6 +342,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* Page headings: the title at the left, a lead paragraph at the right. */
 .page-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem var(--col-gap); max-width: var(--page); margin: 0 auto; padding: clamp(2.5rem, 6vw, 5.5rem) var(--gutter) clamp(2rem, 4vw, 3.5rem); }
 .page-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; }
+/* A page with no drawing ("Page not found", "Inquiry sent") sets its title at the height every other title has. */
+@media (min-width: 64rem) { .page-head { padding-top: clamp(2.25rem, 4vw, 3.5rem); } }
 .page-lead p:last-child { max-width: 31em; margin: 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
 @media (min-width: 56rem) {
   .page-head.has-lead { grid-template-columns: repeat(12, minmax(0, 1fr)); }
@@ -386,7 +391,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .project-opening { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem var(--col-gap); }
 .project-kind { margin: 0 0 0.7rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; line-height: 1.3; text-transform: uppercase; color: var(--slate); }
 .project-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; }
-.project-summary { max-width: 24em; margin: 0.9rem 0 2rem; font-size: var(--fs-text); line-height: 1.45; color: var(--slate); }
+.project-summary { max-width: 22em; margin: 0.9rem 0 2rem; font-size: var(--fs-text); line-height: 1.45; color: var(--slate); }
 .project-lead, .project-text { max-width: 40rem; }
 .story-part + .story-part { margin-top: 2.75rem; }
 .story-part h2 { margin-bottom: 0.7rem; font-size: var(--fs-medium); font-weight: 400; line-height: 1.3; color: var(--ink-strong); }
@@ -400,9 +405,10 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .title-block dd { margin: 0; font-size: var(--fs-small); line-height: 1.4; color: var(--ink-strong); }
 @media (min-width: 56rem) {
   .project-opening { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  /* The text starts in the fifth column, where the text of People, Capabilities, Process and Contact starts. */
   .project-head { grid-column: 1 / span 4; }
-  .project-lead { grid-column: 6 / span 7; }
-  .project-text { margin-left: calc((100% + var(--col-gap)) / 12 * 5); }
+  .project-lead { grid-column: 5 / span 8; }
+  .project-text { margin-left: calc((100% + var(--col-gap)) / 12 * 4); }
 }
 /* On a wide, tall window the title and facts stay beside a long story while it is read. */
 @media (min-width: 56rem) and (min-height: 46rem) {
@@ -447,7 +453,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 
 .project-next {
   display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 1rem;
-  max-width: var(--page); margin: clamp(4rem, 9vw, 8rem) auto 0; padding: 2rem var(--gutter) 0;
+  /* The line above it keeps the page's margins, as every other hairline does. */
+  margin: clamp(4rem, 9vw, 8rem) var(--edge-box) 0; padding: 2rem 0 0;
   border-top: 1px solid var(--hair);
 }
 .next-label { display: block; margin-bottom: 0.3rem; color: var(--slate); font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; }
@@ -467,6 +474,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 
 .people { max-width: var(--page); margin: clamp(3rem, 6vw, 5rem) auto 0; padding: 0 var(--gutter); }
 .person { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem var(--col-gap); padding: clamp(2.5rem, 5vw, 4.5rem) 0; border-top: 1px solid var(--hair); }
+.person:last-child { padding-bottom: 0; }
 .person-photo { display: grid; place-items: center; width: 100%; max-width: 17rem; aspect-ratio: 4 / 5; background: var(--fill); }
 .person-photo img { width: 100%; height: 100%; object-fit: cover; }
 .photo-to-come { padding: 0.2rem 0.45rem; background: var(--paper); font-size: var(--fs-small); }
@@ -496,6 +504,9 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .page-statement { margin-top: 0; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
 @media (min-width: 64rem) {
   .page-statement.has-plan { min-height: min(36vh, 21rem); }
+  /* The title stands at the same height on every page, whether or not an opening follows it: it is set at the
+     head of its block, not centered in it. */
+  .page-statement { align-items: start; }
   .page-statement .statement-inner { padding-block: clamp(2.25rem, 4vw, 3.5rem) clamp(3rem, 5vw, 4.25rem); }
 }
 .page-statement .page-head, .page-statement .page-head.has-lead { display: block; max-width: none; margin: 0; padding: 0; }
@@ -560,7 +571,8 @@ address p { margin-bottom: 1.2rem; }
 address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px solid var(--accent); }
 .contact-pointer { max-width: 22rem; margin-top: 2.25rem; font-size: var(--fs-small); color: var(--slate); }
 
-.inquiry { max-width: 46rem; padding: clamp(1.5rem, 3vw, 2.5rem); border: 1px solid var(--hair); background: var(--paper); }
+/* The form stands in the text's column with no box around it: its fields are the only frames. */
+.inquiry { max-width: 40rem; }
 .inquiry h2 { margin-bottom: 1.5rem; font-size: var(--fs-medium); font-weight: 400; }
 .inquiry p { margin: 0 0 1.15rem; }
 .inquiry label { display: block; margin-bottom: 0.35rem; font-size: var(--fs-small); color: var(--ink-strong); }

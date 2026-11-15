@@ -4,7 +4,8 @@ const { esc } = require('../lib/html');
 const { pageHead } = require('./parts');
 const { telHref } = require('./layout');
 
-// Contact: where the studio is, and one form that also screens new inquiries. Services are on the Process page.
+// Contact: where the firm is, and one form that also screens new inquiries. What the firm does is on the
+// Capabilities page; how a project proceeds is on the Process page.
 module.exports = function contact(ctx) {
   const { site, u } = ctx;
   const c = site.contact;
