@@ -68,30 +68,6 @@
       document.body.appendChild(floating);
     }
 
-    // Pointing at the top of the window while the links are there lays a bar of the page's color behind them,
-    // with a green mark and dark links over it. The keyboard brings it too, when it reaches the links.
-    var pointed = false;
-    var focused = false;
-    var setBar = function () {
-      root.classList.toggle('bar-on', (pointed || focused) && root.classList.contains('nav-on'));
-    };
-    if (floating) {
-      var bar = document.createElement('span');
-      bar.className = 'float-bar';
-      bar.setAttribute('aria-hidden', 'true');
-      document.body.appendChild(bar);
-      document.body.appendChild(copyOfMark('on-bar'));
-      floating.addEventListener('focusin', function () { focused = true; setBar(); });
-      floating.addEventListener('focusout', function () { focused = false; setBar(); });
-      if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
-        window.addEventListener('mousemove', function (event) {
-          var over = event.clientY <= header.offsetHeight;
-          if (over !== pointed) { pointed = over; setBar(); }
-        }, { passive: true });
-        root.addEventListener('mouseleave', function () { pointed = false; setBar(); });
-      }
-    }
-
     var lastY = window.pageYOffset;
     var waiting = false;
     // Whatever stands above the header (the bar of a preview build) pushes the logo down; the mark starts as
@@ -115,7 +91,6 @@
       if (Math.abs(y - lastY) > 6) lastY = y;
       root.classList.toggle('nav-on', showNav);
       if (floating) floating.inert = !showNav;
-      setBar();
     };
     window.addEventListener('scroll', function () {
       if (!waiting) { waiting = true; window.requestAnimationFrame(update); }
