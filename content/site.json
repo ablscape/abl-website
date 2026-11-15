@@ -47,7 +47,6 @@
       "file": "04",
       "caption": "Sketch",
       "asDrawn": true,
-      "from": "37%",
       "focus": "30% 45%",
       "focusPhone": "22% 50%"
     }
@@ -58,7 +57,6 @@
       "file": "04",
       "lift": 1.2,
       "asDrawn": true,
-      "from": "38%",
       "focus": "45% 50%",
       "focusPhone": "50% 50%"
     },

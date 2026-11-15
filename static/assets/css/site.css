@@ -8,12 +8,11 @@
 @font-face { font-family: "Barlow"; src: url("../fonts/barlow-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
 
 :root {
-  /* Colors: a toned sheet, near-black type, the logo's green, a deep green for the foot of the page, and one
-     warm accent. The sheet is an off-white with a little gray-green in it, like drafting paper, never cream or
-     yellow. To make the whole
-     site lighter or darker, change --paper and give --paper-rgb the same color as three numbers. */
-  --paper: #f7f9f7;
-  --paper-rgb: 247 249 247;
+  /* Colors: a white page, near-black type, the logo's green, a deep green for the foot of the page, and one warm
+     accent. The firm tried a gray-green page and asked three times for it whiter; it is white. To tone the whole
+     site, change --paper and give --paper-rgb the same color as three numbers; never cream or yellow. */
+  --paper: #ffffff;
+  --paper-rgb: 255 255 255;
   --ink: #272c29;          /* body text */
   --ink-strong: #1a1f1c;   /* headings and names */
   --slate: #626865;        /* captions, labels, secondary text */
@@ -40,8 +39,8 @@
   --gutter: clamp(1.25rem, 3.6vw, 3.25rem);
   --col-gap: clamp(1.25rem, 2.6vw, 2.75rem);
   --edge: max(var(--gutter), calc((100vw - var(--page)) / 2 + var(--gutter))); /* window edge to content edge */
-  --mark-w: 6.25rem;       /* width of the traveling "abl" */
-  --mark-top: 1.75rem;
+  --mark-w: 5.1rem;        /* width of the traveling "abl": the width of the "abl" in the header logo, which it replaces */
+  --mark-top: 2rem;        /* and its place: the header's top padding plus the logo's own inset */
   --head-h: 5.75rem;       /* the height of the header: a drawing behind a page's heading reaches up this far behind it */
 
   /* The haze around the mark and the returning links wherever they are dark, over the page and over drawings:
@@ -55,7 +54,7 @@
      plans as drawn; one backdrop keeps its own colors with "asDrawn" in content/site.json. */
   --plan-key: hue-rotate(18deg);
 }
-@media (max-width: 40rem) { :root { --mark-w: 4.25rem; --mark-top: 1rem; } }
+@media (max-width: 36rem) { :root { --mark-w: 3.9rem; --mark-top: 1.3rem; } }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -105,38 +104,40 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .notes-off .review-note, .notes-off .draft-tag, .notes-off .title-block div:has(.to-come), .notes-off .person-photo:has(.photo-to-come), .notes-off p:has(> .to-come:only-child) { display: none; }
 .draft-tag { margin-left: 0.6rem; padding: 0.15rem 0.4rem 0.2rem; background: var(--note); font-size: var(--fs-small); font-weight: 500; line-height: 1; letter-spacing: 0; vertical-align: middle; color: var(--ink-strong); }
 
-/* Header: the links at the left, the logo at the right. */
+/* Header: the logo at the left, the links at the right. */
 .site-header {
   display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
   max-width: var(--page); margin: 0 auto; padding: 1.75rem var(--gutter) 1.5rem;
-  /* On a wide screen the drawing behind a page's heading runs up behind the header. The header stands above it;
-     the logo lies on a soft patch of the sheet's color that has no edge, and the links carry the same haze the
-     traveling mark has. On a page with no drawing behind the header neither can be seen. */
+  /* On a wide screen the drawing behind a page's heading stands at the right and runs up behind the header. The
+     header stands above it, and the links lie on a soft patch of the page's color that has no edge, the way the
+     returning links do. On a page with no drawing behind the header the patch cannot be seen. */
   position: relative; z-index: 4;
 }
-.site-header .logo { position: relative; }
-.site-header .logo::before { content: ""; position: absolute; z-index: -1; inset: -0.5rem -1.1rem -0.6rem; border-radius: 2rem; background: var(--paper); filter: blur(0.8rem); opacity: 0.82; }
-.site-header .logo img { position: relative; filter: var(--haze); }
-.site-header .site-nav a { text-shadow: var(--haze-text); }
+.site-header .site-nav { position: relative; padding-top: 0.3rem; }
+.site-header .site-nav::before { content: ""; position: absolute; z-index: -1; inset: -0.9rem -1.6rem -0.9rem; border-radius: 2rem; background: var(--paper); filter: blur(0.85rem); opacity: 0.97; }
+.site-header .site-nav a { position: relative; font-weight: 500; color: var(--ink-strong); text-shadow: var(--haze-text); }
 .site-nav, .float-nav, .float-links { display: flex; flex-wrap: wrap; gap: clamp(1.1rem, 2.4vw, 2.1rem); font-size: var(--fs-small); line-height: 1; }
 .site-nav a, .float-nav a { padding: 0.35rem 0 0.4rem; color: var(--ink); border-bottom: 1px solid transparent; }
 .site-nav a:hover, .float-nav a:hover { color: var(--ink-strong); border-bottom-color: var(--accent); }
 .site-nav a[aria-current="page"], .float-nav a[aria-current="page"] { color: var(--ink-strong); border-bottom-color: var(--accent); }
 .logo img { width: 232px; }
 @media (max-width: 36rem) {
-  .site-header { flex-direction: column-reverse; align-items: flex-start; padding-block: 1.1rem 0.9rem; }
+  /* On a phone the logo stands above the links, both at the left. */
+  .site-header { flex-direction: column; align-items: flex-start; padding-block: 1.1rem 0.9rem; }
+  .site-header .site-nav { padding-top: 0; }
   .logo img { width: 178px; }
   .site-nav, .float-nav, .float-links { gap: 1.15rem; font-size: var(--fs-small); }
 }
 
-/* The traveling mark: once the header has scrolled away, "abl" stays at the top right of the window.
+/* The traveling mark: once the header has scrolled away, the "abl" of the logo stays where it stood, at the top
+   left of the window, at the logo's own size.
    It is green over the page and over drawings, and white over photographs. Each picture carries its
    own copy, fixed at the same place and clipped to the picture, so the change follows the picture's edge.
    Where the mark is green it carries a soft white haze, so that text or linework passing beneath it
    fades out around the letters: deeper over the page, where running text passes, and lighter over a
    drawing. There is no box behind it. */
 .travel-mark {
-  position: fixed; top: var(--mark-top); right: var(--edge); z-index: 1;
+  position: fixed; top: var(--mark-top); left: var(--edge); z-index: 1;
   display: block; width: var(--mark-w); color: var(--sage); filter: var(--haze-deep);
   opacity: 0; visibility: hidden; transition: opacity 0.45s ease, visibility 0s linear 0.45s;
 }
@@ -149,13 +150,13 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* Rules later in this file that set "position" on a picture (the plan behind the statement) still apply. */
 .carries-mark { position: relative; z-index: 2; clip-path: inset(0); }
 
-/* The links return when the visitor scrolls back up, drawn the way the mark is. Over the page and over
+/* The links return at the top right when the visitor scrolls back up, drawn the way the mark is. Over the page and over
    drawings they are dark, in medium weight, on a patch of white haze that has no edge. Over photographs
    they are white with a dark shadow close around the letters. Each picture carries its own copy. The
    links themselves lie on top, unseen, to take the pointer and the keyboard, and show only their
    terracotta rule. */
 .float-nav, .float-links {
-  position: fixed; top: calc(var(--mark-top) - 0.55rem); left: calc(var(--edge) - 0.9rem);
+  position: fixed; top: calc(var(--mark-top) - 0.6rem); right: calc(var(--edge) - 0.9rem);
   padding: 0.7rem 0.9rem; font-weight: 500;
   opacity: 0; visibility: hidden; transform: translateY(-0.4rem);
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
@@ -196,60 +197,52 @@ a.travel-mark:hover { color: var(--ink-strong); }
 @media (max-width: 40rem) { .hero-frame { min-height: 0; max-height: none; aspect-ratio: 3 / 2; } }
 
 /* The firm's drawings on the page. One lies behind the statement on the home page and one behind the heading of
-   each other page; "backdrop" in content/site.json names it. A drawing is ink on the sheet: its paper takes the
-   color of the page (see "Drawings on the sheet" below), it has no frame and no band, and it dissolves into the
-   page below and toward the text. Nothing moves. On a wide screen the text lies at the left, beside the drawing
-   or over its faded side, and the drawing behind a page's heading runs up behind the header to the top of the
-   window, so that the page begins with the drawing and not with a bare strip. On a phone or a tablet the text
-   comes first and the drawing emerges beneath it. */
+   each other page; "backdrop" in content/site.json names it. A drawing is ink on the page: its paper takes the
+   page's color (see "Drawings on the sheet" below), it has no frame and no band, and it dissolves into the page.
+   Nothing moves. The drawing is shown whole and never enlarged to fill the band: the files are small, and a
+   drawing stretched across the window looks soft. On a wide screen it stands at the right, as tall as the block
+   and as wide as its own proportions make it, with the text at the left, and behind a page's heading it reaches
+   up behind the header to the top of the window. On a phone or a tablet the text comes first and the whole
+   drawing follows across the page. */
 .statement { position: relative; display: grid; align-items: center; margin-top: clamp(1.5rem, 4vw, 3.5rem); }
 @media (min-width: 64rem) { .statement.has-plan { min-height: min(54vh, 34rem); } }
 .statement-plan { position: absolute; inset: 0; overflow: hidden; }
 .statement-plan img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 50% 50%); filter: brightness(var(--lift, 1)) var(--plan-key); }
 .statement-plan.as-drawn img { filter: brightness(var(--lift, 1)); }
-.statement-plan::after {
-  content: ""; position: absolute; inset: 0;
-  background:
-    linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0.94) 26%, rgb(var(--paper-rgb) / 0.5) 52%, rgb(var(--paper-rgb) / 0) 78%),
-    linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 18%, rgb(var(--paper-rgb) / 0) 74%, var(--paper) 100%);
-}
+.statement-plan::after { content: ""; position: absolute; inset: 0; }
 .statement-inner { position: relative; width: 100%; max-width: var(--page); margin: 0 auto; padding: clamp(3rem, 6vw, 5.5rem) var(--gutter); }
 .statement-text { max-width: 19.5em; margin: 0; font-size: var(--fs-large); font-weight: 300; line-height: 1.28; letter-spacing: -0.012em; color: var(--ink-strong); }
 .statement-credit { position: absolute; left: var(--edge); bottom: 1.4rem; margin: 0; font-size: var(--fs-small); line-height: 1.3; text-align: left; color: var(--slate); }
-@media (min-width: 40.0625rem) {
-  .statement-text { max-width: min(19.5em, calc(100% - var(--mark-w) - 2.5rem)); }
-}
 @media (min-width: 64rem) {
-  /* The text lies over the plan, to the left of the mark's place. */
   .statement-inner, .statement-credit { z-index: 3; }
-  /* A drawing whose subject would fall under the text starts farther right ("from") and fades in from there. */
-  .statement-plan.is-side { left: var(--from); }
-  .statement-plan.is-side::after {
+  /* The drawing at the right: its height is the block's, its width follows from its own proportions ("--ratio"),
+     and it never takes more than 62 percent of the window, so that the text keeps the left. It fades into the page
+     at its left, top and bottom. */
+  .statement-plan { left: auto; right: 0; aspect-ratio: var(--ratio, 2 / 1); max-width: 62%; }
+  .statement-plan::after {
     background:
-      linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0.6) 14%, rgb(var(--paper-rgb) / 0) 34%),
-      linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 18%, rgb(var(--paper-rgb) / 0) 74%, var(--paper) 100%);
+      linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0.72) 13%, rgb(var(--paper-rgb) / 0) 36%),
+      linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 16%, rgb(var(--paper-rgb) / 0) 78%, var(--paper) 100%);
   }
+  .statement-text { max-width: min(19.5em, 56vw); }
+  /* Where words lie over the faded side of a drawing they clear it around themselves, with no box. */
+  .statement.has-plan :is(.statement-text, h1, .page-lead p) { text-shadow: var(--haze-text); }
   /* Behind a page's heading the drawing reaches up behind the header and meets the top of the window at full
-     strength; it still dissolves into the page below and toward the text. */
+     strength. */
   .page-statement.has-plan .statement-plan { top: calc(-1 * var(--head-h)); }
   .page-statement.has-plan .statement-plan::after {
     background:
-      linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0.94) 26%, rgb(var(--paper-rgb) / 0.5) 52%, rgb(var(--paper-rgb) / 0) 78%),
-      linear-gradient(180deg, rgb(var(--paper-rgb) / 0) 0%, rgb(var(--paper-rgb) / 0) 72%, var(--paper) 100%);
-  }
-  .page-statement.has-plan .statement-plan.is-side::after {
-    background:
-      linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0.6) 14%, rgb(var(--paper-rgb) / 0) 34%),
-      linear-gradient(180deg, rgb(var(--paper-rgb) / 0) 0%, rgb(var(--paper-rgb) / 0) 72%, var(--paper) 100%);
+      linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0.72) 13%, rgb(var(--paper-rgb) / 0) 36%),
+      linear-gradient(180deg, rgb(var(--paper-rgb) / 0) 0%, rgb(var(--paper-rgb) / 0) 76%, var(--paper) 100%);
   }
 }
 @media (max-width: 63.99rem) {
-  /* Phones and tablets: the text first, then the drawing, rising out of the page and sinking back into it. */
+  /* Phones and tablets: the text first, then the whole drawing across the page, rising out of it and sinking back. */
   .statement.has-plan { display: flex; flex-direction: column; min-height: 0; }
   .statement-inner { order: 1; padding-block: clamp(2.5rem, 6vw, 4rem) 1.25rem; }
-  .statement-plan { order: 2; position: relative; inset: auto; height: min(64vw, 21rem); }
+  .statement-plan { order: 2; position: relative; inset: auto; aspect-ratio: var(--ratio, 2 / 1); }
   .statement-plan img { object-position: var(--focus-phone, var(--focus, 50% 50%)); }
-  .statement-plan::after { background: linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 24%, rgb(var(--paper-rgb) / 0) 76%, var(--paper) 100%); }
+  .statement-plan::after { background: linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 20%, rgb(var(--paper-rgb) / 0) 80%, var(--paper) 100%); }
   .statement-credit { order: 3; position: static; align-self: flex-start; padding: 0.25rem var(--gutter) 0; }
 }
 
@@ -314,11 +307,12 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .filters button:hover { color: var(--ink-strong); border-bottom-color: var(--accent); }
 .filters button[aria-pressed="true"] { color: var(--ink-strong); border-bottom-color: var(--accent); }
 .project-grid { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
-/* Projects are listed two to a line, on the Work page and under "Selected work" on the home page, inside the page's
-   margins, so that there is space at the outer edges and a narrower space between the two; on a phone, one to a
-   line. Beneath each picture stand the kind of project, its name and its place. One project alone across the
-   whole window was tried and looked too large. */
-.project-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(3rem, 5vw, 4.5rem) clamp(1rem, 1.8vw, 1.75rem); max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); list-style: none; }
+/* Projects are listed two to a line, on the Work page and under "Selected work" on the home page; on a phone, one
+   to a line. The list is wider than the text of the page: it keeps only a little space at the outer edges of the
+   window and a narrow space between the two pictures, so that the pictures are as large as two to a line allows.
+   Beneath each picture stand the kind of project, its name and its place. One project alone across the whole
+   window was tried and looked too large. */
+.project-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.75rem, 4.5vw, 4.25rem) clamp(0.6rem, 1vw, 1rem); max-width: none; margin: 0; padding: 0 clamp(1rem, 1.8vw, 2rem); list-style: none; }
 .project-list > li[hidden] { display: none; }
 @media (min-width: 48rem) { .project-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
@@ -454,8 +448,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 }
 .page-statement .page-head, .page-statement .page-head.has-lead { display: block; max-width: none; margin: 0; padding: 0; }
 .page-statement .page-lead { max-width: 34rem; margin-top: clamp(1.25rem, 2.5vw, 2rem); }
-/* Beside a drawing that starts partway across, the opening keeps to its own side. */
-@media (min-width: 64rem) { .page-statement:has(.is-side) .page-lead { max-width: min(31rem, calc(37% - 2.5rem)); } }
+/* The opening keeps to the left of the drawing. */
+@media (min-width: 64rem) { .page-statement.has-plan .page-lead { max-width: min(31rem, 34vw); } }
 .page-statement + .stage { padding-top: clamp(1.25rem, 3vw, 2.5rem); }
 
 /* Process: a note for the firm, in previews only, under the heading. */

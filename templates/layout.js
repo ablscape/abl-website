@@ -14,7 +14,7 @@ function telHref(phone) {
   return 'tel:+1' + digits;
 }
 
-// The frame around every page: head, the header with the links at the left and the logo at the right,
+// The frame around every page: head, the header with the logo at the left and the links at the right,
 // the "abl" mark that travels with the page once the header has scrolled away, and the footer, a plain block of
 // deep green. The footer is marked the way a photograph is, so that the mark and the returning links turn white
 // wherever they pass over it.
@@ -79,10 +79,10 @@ document.documentElement.className = 'js';
 <body${page.bodyClass ? ` class="${esc(page.bodyClass)}"` : ''}>
 <a class="skip-link" href="#main">Skip to content</a>
 ${ctx.showNotes ? '<p class="preview-bar">Preview build. Gray notes mark text and photographs still to come. They never appear on the live site. <button class="notes-toggle" type="button" data-notes-toggle hidden>Hide notes</button></p>\n' : ''}<header class="site-header">
+  <a class="logo" href="${u('/')}"><img src="${u('/assets/img/logo.svg')}" width="232" height="40" alt="${esc(site.name)}"></a>
   <nav class="site-nav" aria-label="Main">
       ${links(true)}
   </nav>
-  <a class="logo" href="${u('/')}"><img src="${u('/assets/img/logo.svg')}" width="232" height="40" alt="${esc(site.name)}"></a>
 </header>
 <a class="travel-mark" href="${u('/')}" aria-label="${esc(site.name)}, home" data-travel-mark>${markSvg()}</a>
 <main id="main">
