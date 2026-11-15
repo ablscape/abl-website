@@ -27,6 +27,7 @@ function sectionLabel(text) {
 //   "focus"    where the subject sits, across and down, as "60% 40%", for the rare window in which the drawing
 //              has to be trimmed; "focusPhone" the same for phones
 //   "asDrawn"  true to keep the drawing's own colors
+//   "shift"    how far to move the drawing down behind a page's heading on a wide screen, as "2.75rem"
 // Returns the picture and its credit, or two empty strings when no drawing is named.
 function planBackdrop(ctx, ref, options) {
   const project = ref && ctx.projects.find((p) => p.slug === ref.project);
@@ -46,8 +47,10 @@ function planBackdrop(ctx, ref, options) {
   const classes = ['statement-plan'];
   if (ref.asDrawn === true) classes.push('as-drawn');
   const lazy = options && options.lazy ? ' loading="lazy"' : '';
+  // Behind a heading the drawing takes at most 62 percent of a wide window; across the home page it takes all of it.
+  const sizes = options && options.wide ? '100vw' : '(min-width: 1024px) 62vw, 100vw';
   return {
-    plan: `<div class="${classes.join(' ')}" data-sheet aria-hidden="true"${vars.length ? ` style="${vars.join('; ')}"` : ''}><img src="${ctx.u(base + biggest.name)}" srcset="${srcset}" sizes="(min-width: 1024px) 62vw, 100vw" width="${item.width}" height="${item.height}" alt=""${lazy} decoding="async"></div>`,
+    plan: `<div class="${classes.join(' ')}" data-sheet aria-hidden="true"${vars.length ? ` style="${vars.join('; ')}"` : ''}><img src="${ctx.u(base + biggest.name)}" srcset="${srcset}" sizes="${sizes}" width="${item.width}" height="${item.height}" alt=""${lazy} decoding="async"></div>`,
     // The credit names what the drawing is of, the project, and nothing else: the firm asked for the kind of
     // drawing ("Plan of the entrance,") to be left out.
     credit: `<p class="statement-credit"><a href="${ctx.u(project.url)}">${esc(project.title)}</a></p>`,
@@ -57,7 +60,10 @@ function planBackdrop(ctx, ref, options) {
 // The heading of a page, set over a plan when one is named.
 function pageHead(ctx, ref, inner) {
   const back = planBackdrop(ctx, ref);
-  return `<section class="statement page-statement${back.plan ? ' has-plan' : ''}">
+  // "shift" moves the drawing down a little on a wide screen ("2.75rem"), so that a line of it meets a line of
+  // the text beside it; the credit moves with it.
+  const shift = back.plan && ref && typeof ref.shift === 'string' && /^\d+(\.\d+)?rem$/.test(ref.shift) ? ` style="--shift: ${ref.shift}"` : '';
+  return `<section class="statement page-statement${back.plan ? ' has-plan' : ''}"${shift}>
   ${back.plan}
   <div class="statement-inner">
     ${inner}

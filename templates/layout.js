@@ -16,9 +16,11 @@ function telHref(phone) {
 }
 
 // The frame around every page: head, the header with the links at the left and the logo at the right,
-// the "abl" mark that travels with the page once the header has scrolled away, and the footer, a plain block of
-// the logo's green. The footer is marked the way a photograph is, so that the mark and the returning links turn
-// white wherever they pass over it.
+// the "abl" mark that travels with the page once the header has scrolled away, and the footer, a low band of
+// the logo's green that carries the "abl" and nothing else: the firm asked for the name, the address, the
+// telephone, the emails and the links to come off it, and they stand on the Contact page and in the header. The
+// footer is marked the way a photograph is, so that the mark and the returning links turn white wherever they
+// pass over it.
 module.exports = function layout(ctx, page) {
   const { site, u } = ctx;
   const title = page.title ? `${page.title} | ${site.name}` : site.name;
@@ -92,13 +94,6 @@ ${page.body}
 <footer class="site-footer" data-photo>
   <div class="footer-inner">
     <a class="footer-mark" href="${u('/')}" aria-label="${esc(site.name)}, home">${markSvg()}</a>
-    <div class="footer-cols">
-      <p><span class="footer-name">${esc(site.name)}</span><br>${site.address.map(esc).join('<br>')}</p>
-      <p><a href="${telHref(site.phone)}">${esc(site.phone)}</a>${site.emails.map((e) => `<br><a href="mailto:${esc(e.address)}">${esc(e.address)}</a>`).join('')}</p>
-      <nav class="footer-nav" aria-label="Footer">
-        ${links(false)}
-      </nav>
-    </div>
   </div>
 </footer>
 <script src="${u('/assets/js/site.js')}" defer></script>

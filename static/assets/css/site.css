@@ -224,8 +224,10 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .hero-toggle:hover { color: var(--accent); }
 /* On a phone the frame is three to two, which shows three quarters of each photograph's width. */
 @media (max-width: 40rem) { .hero-frame { aspect-ratio: 3 / 2; } }
-/* On a computer the band is lower than the photographs, and never taller than three fifths of the window. */
-@media (min-width: 64rem) { .hero-frame { aspect-ratio: 14 / 5; max-height: max(58vh, 22rem); } }
+/* On a computer the band is much lower than the photographs: 15 to 4, and never taller than 46 percent of the
+   window. The firm asked that the photograph be cropped to span the window, not enlarged to fill it: "i just
+   don't like how far down it goes". */
+@media (min-width: 64rem) { .hero-frame { aspect-ratio: 15 / 4; max-height: max(46vh, 20rem); } }
 
 /* The firm's drawings on the page. One lies behind the statement on the home page and one behind the heading of
    each other page; "backdrop" in content/site.json names it. A drawing is ink on the page: its paper takes the
@@ -247,7 +249,9 @@ a.travel-mark:hover { color: var(--ink-strong); }
 @media (min-width: 64rem) {
   .statement-inner, .statement-credit { z-index: 3; }
   /* The credit stands at the right, at the foot of the drawing it names. */
-  .statement-credit { left: auto; right: var(--edge-box); text-align: right; text-shadow: var(--haze-text); }
+  /* It stands at the outer edge of the window, where the drawing ends, so that it does not sit over the text
+     that follows the heading; a drawing moved down by "shift" takes its credit with it. */
+  .statement-credit { left: auto; right: clamp(1rem, 1.8vw, 2rem); bottom: calc(1.4rem - var(--shift, 0px)); text-align: right; text-shadow: var(--haze-text); }
   /* The drawing at the right: its height is the block's, its width follows from its own proportions ("--ratio"),
      and it never takes more than 62 percent of the window, so that the text keeps the left. It fades into the page
      at its left, top and bottom. */
@@ -262,23 +266,36 @@ a.travel-mark:hover { color: var(--ink-strong); }
       linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 16%, rgb(var(--paper-rgb) / 0) 70%, var(--paper) calc(100% - 3rem));
   }
   .statement-text { max-width: min(19.5em, 56vw); }
-  /* On the home page the statement stands beside the plan, clear of its linework, and close under the photographs,
-     so that it begins on the first screen. */
-  .home-statement { margin-top: clamp(0.5rem, 1.5vw, 1.5rem); }
-  .home-statement.has-plan { min-height: min(46vh, 28rem); }
-  .home-statement .statement-inner { padding-block: clamp(2rem, 3.5vw, 3rem) clamp(3rem, 6vw, 5.5rem); }
-  .home-statement .statement-text { max-width: min(16.5em, 44vw); }
+  /* On the home page the plan runs across the whole width of the window as a low band, under the account of the
+     firm, and the statement is set over it at the left: the firm asked for the plan to span the page with the
+     statement superimposed (round 23). The plan is lightened under the words, with no box, and it rises out of
+     the page at its head and sinks back at its foot, so that the band has no edge. This is the one place where a
+     drawing is trimmed to fill a band, at its head and foot; "focus" in "backdrop" says which part to keep. */
+  .home-statement { margin-top: clamp(1.5rem, 3vw, 3rem); }
+  .home-statement.has-plan { min-height: clamp(23rem, 31vw, 30rem); }
+  .home-statement .statement-plan { left: 0; max-width: none; aspect-ratio: auto; }
+  .home-statement .statement-plan::after {
+    background:
+      linear-gradient(90deg, rgb(var(--paper-rgb) / 0.82) 0%, rgb(var(--paper-rgb) / 0.78) 46%, rgb(var(--paper-rgb) / 0.36) 61%, rgb(var(--paper-rgb) / 0) 78%),
+      linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 18%, rgb(var(--paper-rgb) / 0) 80%, var(--paper) calc(100% - 1.25rem));
+  }
+  .home-statement .statement-inner { padding-block: clamp(3rem, 5vw, 4.5rem); }
+  .home-statement .statement-text { max-width: min(17em, 46vw); }
   /* Where words lie over the faded side of a drawing they clear it around themselves, with no box. */
   .statement.has-plan :is(.statement-text, h1, .page-lead p) { text-shadow: var(--haze-text); }
   /* Behind a page's heading the drawing reaches up behind the header to the top of the window. It is lightened
      there, and cleared where the logo stands, so that the header reads over it; neither has an edge. The "abl"
-     of the logo is drawn by the mark, which lies above this clearing, and the logo's two words by the header. */
-  .page-statement.has-plan .statement-plan { top: calc(-1 * var(--head-h)); }
+     of the logo is drawn by the mark, which lies above this clearing, and the logo's two words by the header.
+     "shift" in the drawing's entry moves it down by that much, so that a line of the drawing meets a line of the
+     text beside it: the firm asked for the Work page's plan lower, its lower line of trees level with the last
+     line of the introduction. The lightening and the clearing stay where the header is. */
+  .page-statement.has-plan .statement-plan { top: calc(-1 * var(--head-h) + var(--shift, 0px)); bottom: calc(-1 * var(--shift, 0px)); }
   .page-statement.has-plan .statement-plan::after {
     background:
+      linear-gradient(180deg, var(--paper) 0, rgb(var(--paper-rgb) / 0) var(--shift, 0px)),
       linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0.72) 13%, rgb(var(--paper-rgb) / 0) 36%),
-      radial-gradient(ellipse 14.5rem 5rem at calc(100% - var(--edge) - var(--logo-w) / 2) calc(var(--head-pad) + var(--logo-w) * 20 / 232), var(--paper) 0%, rgb(var(--paper-rgb) / 0.96) 52%, rgb(var(--paper-rgb) / 0) 100%),
-      linear-gradient(180deg, rgb(var(--paper-rgb) / 0.6) 0, rgb(var(--paper-rgb) / 0.5) calc(var(--head-h) * 0.6), rgb(var(--paper-rgb) / 0) calc(var(--head-h) + 2.5rem)),
+      radial-gradient(ellipse 14.5rem 5rem at calc(100% - var(--edge) - var(--logo-w) / 2) calc(var(--head-pad) + var(--logo-w) * 20 / 232 - var(--shift, 0px)), var(--paper) 0%, rgb(var(--paper-rgb) / 0.96) 52%, rgb(var(--paper-rgb) / 0) 100%),
+      linear-gradient(180deg, rgb(var(--paper-rgb) / 0.6) 0, rgb(var(--paper-rgb) / 0.5) calc(var(--head-h) * 0.6 - var(--shift, 0px)), rgb(var(--paper-rgb) / 0) calc(var(--head-h) + 2.5rem - var(--shift, 0px))),
       linear-gradient(180deg, rgb(var(--paper-rgb) / 0) 0%, rgb(var(--paper-rgb) / 0) 68%, var(--paper) calc(100% - 3rem));
   }
 }
@@ -296,9 +313,10 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .selected, .drawings, .firm { max-width: var(--page); margin: 0 auto; padding: clamp(4rem, 9vw, 8rem) var(--gutter) 0; }
 .more { margin: clamp(3rem, 6vw, 5rem) 0 0; font-size: var(--fs-text); }
 
-/* A short account of the firm follows the statement: its name at the left and the paragraph at the right, the way
-   the parts of the Process page are set. It stood at the foot of the home page until round 20, where the firm
-   found it hidden, and beside the plan in rounds 20 and 21, where the firm wanted the statement instead. */
+/* A short account of the firm follows the photographs: its name at the left and the paragraph at the right, the
+   way the parts of the Process page are set. It stood at the foot of the home page until round 20, where the firm
+   found it hidden, beside the plan in rounds 20 and 21, where the firm wanted the statement instead, and under
+   the statement in round 22; in round 23 the firm asked for it above the plan. */
 .firm { padding-top: clamp(2.5rem, 5vw, 4.5rem); }
 .firm-text { max-width: 34em; margin: 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.45; color: var(--ink-strong); }
 @media (min-width: 56rem) {
@@ -311,6 +329,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* Selected work on the home page is listed as the Work page lists every project, two to a line, but inside the
    page's margins: the firm asked for the Work page's pictures larger and for these a little smaller. */
 .selected .project-list { padding: 0; gap: clamp(2.75rem, 4.5vw, 4.25rem) var(--col-gap); }
+/* The plan above it has already sunk into the page, so Selected work stands closer under it. */
+.home-statement.has-plan + .selected { padding-top: clamp(3rem, 6vw, 5.5rem); }
 
 /* A project as it is listed: its picture, the kind of project, its name and its place. */
 .card { display: block; }
@@ -388,10 +408,14 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* Parts of the story that follow one another with no photograph between them sit closer together. */
 .project-body > .project-opening + .project-text, .project-body > .project-text + .project-text { margin-top: 2.5rem; }
 
+/* The title of a project stands alone across the page, the way the title of every other page does, with the
+   summary under it as an opening; the facts and the text begin on one line beneath. Until round 23 the title
+   and the facts shared the narrow column at the left, and the text beside them began above the title: the firm
+   found the title too slight there and the two columns awkward together. */
 .project-opening { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem var(--col-gap); }
 .project-kind { margin: 0 0 0.7rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; line-height: 1.3; text-transform: uppercase; color: var(--slate); }
 .project-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; }
-.project-summary { max-width: 22em; margin: 0.9rem 0 2rem; font-size: var(--fs-text); line-height: 1.45; color: var(--slate); }
+.project-summary { max-width: 30em; margin: 1.1rem 0 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
 .project-lead, .project-text { max-width: 40rem; }
 .story-part + .story-part { margin-top: 2.75rem; }
 .story-part h2 { margin-bottom: 0.7rem; font-size: var(--fs-medium); font-weight: 400; line-height: 1.3; color: var(--ink-strong); }
@@ -404,15 +428,17 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .title-block dt { font-size: var(--fs-small); color: var(--slate); }
 .title-block dd { margin: 0; font-size: var(--fs-small); line-height: 1.4; color: var(--ink-strong); }
 @media (min-width: 56rem) {
-  .project-opening { grid-template-columns: repeat(12, minmax(0, 1fr)); }
-  /* The text starts in the fifth column, where the text of People, Capabilities, Process and Contact starts. */
-  .project-head { grid-column: 1 / span 4; }
-  .project-lead { grid-column: 5 / span 8; }
+  .project-opening { grid-template-columns: repeat(12, minmax(0, 1fr)); row-gap: clamp(2.75rem, 4.5vw, 4rem); }
+  .project-head { grid-column: 1 / -1; }
+  /* The facts stand in the first four columns and the text starts in the fifth, where the text of People,
+     Capabilities, Process and Contact starts. The text's first line stands level with the first of the facts. */
+  .project-facts { grid-column: 1 / span 4; }
+  .project-lead { grid-column: 5 / span 8; padding-top: 0.3rem; }
   .project-text { margin-left: calc((100% + var(--col-gap)) / 12 * 4); }
 }
-/* On a wide, tall window the title and facts stay beside a long story while it is read. */
+/* On a wide, tall window the facts stay beside a long story while it is read. */
 @media (min-width: 56rem) and (min-height: 46rem) {
-  .project-head { position: sticky; top: 6.5rem; align-self: start; }
+  .project-facts { position: sticky; top: 6.5rem; align-self: start; }
 }
 
 /* A plan or sketch, large, as ink on the sheet, with no frame. On a phone it runs from edge to edge. */
@@ -465,7 +491,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* People and Process: text in the right-hand columns, under the lead. */
 .studio-intro, .process-intro { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
 .studio-intro p, .process-intro p { max-width: 40rem; font-size: var(--fs-text); line-height: 1.62; }
-.studio-intro .studio-lead { max-width: 31em; margin-bottom: 1.4rem; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
+.studio-intro .studio-lead { max-width: 29em; margin-bottom: 1.4rem; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
 .studio-intro .studio-note { margin-top: 1.5rem; color: var(--slate); font-size: var(--fs-small); }
 @media (min-width: 56rem) {
   .studio-intro, .process-intro { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); }
@@ -543,7 +569,9 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .part-quote p::before { content: "\201C"; }
 .part-quote p::after { content: "\201D"; }
 .part-quote footer { margin-top: 0.6rem; font-size: var(--fs-small); color: var(--slate); }
-.part-diagram { margin: 2.25rem 0 0; }
+/* The Dialogue diagram stands centered under the text it follows, within the text's own measure. */
+.part-diagram { max-width: 38rem; margin: 2.25rem 0 0; }
+.part-diagram .dialogue-drawing { margin-inline: auto; }
 .part-figure { max-width: 40rem; margin: 2.25rem 0 0; }
 .part-figure .frame { display: block; position: relative; overflow: hidden; }
 .part-figure img { width: 100%; height: auto; }
@@ -551,13 +579,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .frame-to-come { display: grid; place-items: center; aspect-ratio: 3 / 2; background: var(--fill); }
 .frame-to-come .photo-to-come { max-width: 80%; text-align: center; }
 .notes-off .part-figure.is-to-come { display: none; }
-/* The Capabilities page sets each capability the way the Process page sets its parts. Under a capability stand
-   the projects that show it: their names, one to a line, each linked to its page, with the place in gray. */
-.part-projects { list-style: none; max-width: 38rem; margin: 0; padding: 0; font-size: var(--fs-text); line-height: 1.62; }
-.part-body > p + .part-projects { margin-top: -0.35em; }
-.part-projects a { color: var(--ink-strong); border-bottom: 1px solid var(--hair); }
-.part-projects a:hover { color: var(--accent); border-bottom-color: var(--accent); }
-.part-projects span { color: var(--slate); }
+/* The Capabilities page sets each capability the way the Process page sets its parts: its name at the left and,
+   at the right, a sentence explaining what it is. */
 
 /* Contact */
 .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem var(--col-gap); max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
@@ -589,28 +612,15 @@ address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px 
 .inquiry p:last-child { margin-bottom: 0; }
 .trap { position: absolute; left: -999rem; }
 
-/* Footer: a plain block at the foot of every page in the green of the logo's "abl", with the name, the address
-   and the links in white. No picture. The green is a middle tone, so the words are full white and a weight
-   heavier than running text. */
-.site-footer { margin-top: clamp(5rem, 10vw, 9rem); background: var(--sage); color: #fff; font-size: var(--fs-small); font-weight: 500; line-height: 1.6; }
-.footer-inner {
-  display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem var(--col-gap);
-  max-width: var(--page); margin: 0 auto; padding: clamp(3rem, 5vw, 4.5rem) var(--gutter);
-}
-.site-footer p { margin: 0; }
-.site-footer a { border-bottom: 1px solid transparent; }
-.site-footer a:hover { border-bottom-color: #fff; }
-.footer-mark, .footer-mark:hover { display: block; width: 4.75rem; color: #fff; border-bottom: 0; }
+/* Footer: a low band at the foot of every page in the green of the logo's "abl", with the "abl" in white at the
+   left and nothing else. No picture. It carried the firm's name, its address, its telephone and emails, and the
+   five links until round 23, when the firm asked for them to come off and for the band to be made lower; they
+   stand on the Contact page and in the header. */
+.site-footer { margin-top: clamp(5rem, 10vw, 9rem); background: var(--sage); color: #fff; }
+.footer-inner { max-width: var(--page); margin: 0 auto; padding: clamp(1.6rem, 2.4vw, 2.1rem) var(--gutter); }
+.footer-mark, .footer-mark:hover { display: block; width: 4.75rem; color: #fff; }
 .footer-mark:hover { opacity: 0.85; }
 .footer-mark svg { display: block; width: 100%; height: auto; fill: currentColor; }
-.footer-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr)); gap: 1.5rem var(--col-gap); }
-.footer-name { font-weight: 600; }
-.footer-nav { display: flex; flex-direction: column; align-items: flex-start; }
-@media (min-width: 56rem) {
-  .footer-inner { grid-template-columns: repeat(12, minmax(0, 1fr)); }
-  .footer-mark { grid-column: 1 / span 4; }
-  .footer-cols { grid-column: 5 / span 8; }
-}
 
 /* Pictures and passages fade in as they come into view. Without scripts everything simply shows.
    A block that holds a picture stays opaque and fades its parts instead, so that the picture keeps

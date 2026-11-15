@@ -82,7 +82,7 @@ function openItems() {
   const caps = site.capabilities || {};
   if (isText(caps.note)) items.push(`Capabilities: the page has a review note ("${caps.note}")`);
   if (!isText(caps.lead)) items.push('Capabilities: the opening is missing');
-  (caps.items || []).forEach((item) => { if (!isText(item.text)) items.push(`Capabilities: "${item.name}" has no sentence on what it includes`); });
+  (caps.items || []).forEach((item) => { if (!isText(item.text)) items.push(`Capabilities: "${item.name}" has no sentence explaining what it is`); });
   return [...new Set(items)];
 }
 

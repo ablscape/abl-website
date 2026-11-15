@@ -18,7 +18,7 @@ Nothing reaches the live site until you say publish.
 - "Swap the first photograph on the VMI page for the one attached."
 - "Put Courthouse Square first on the home page."
 - "Add Bugs's biography to the People page: ..."
-- "On the Capabilities page, add Lime Kiln Theater under Master planning."
+- "On the Capabilities page, change the sentence under Master planning to: ..."
 - "On the Process page, change the second paragraph under Research to: ..."
 - "Change the phone number to ..."
 - "Hide the Thornhill project for now."

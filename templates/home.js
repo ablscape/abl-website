@@ -3,9 +3,9 @@
 const { esc, picture, liftStyle } = require('../lib/html');
 const { projectCard, sectionLabel, planBackdrop } = require('./parts');
 
-// Home: photographs of built work across the whole width of the window, in a low band; the firm's statement
-// beside one of its own plans; a short account of the firm; the featured projects; and a row of the firm's
-// drawings.
+// Home: photographs of built work across the whole width of the window, in a low band; a short account of the
+// firm; one of the firm's own plans across the whole width of the window, with the firm's statement set over
+// it; the featured projects; and a row of the firm's drawings.
 module.exports = function home(ctx) {
   const { site, projects, u } = ctx;
 
@@ -36,8 +36,9 @@ module.exports = function home(ctx) {
   </div>
 </section>`;
   }
-  // The statement beside one of the firm's plans: "backdrop" in site.json names a project and one of its drawings.
-  const back = planBackdrop(ctx, site.backdrop, { lazy: true });
+  // The statement over one of the firm's plans, which spans the window: "backdrop" in site.json names a project
+  // and one of its drawings. On a phone the statement comes first and the whole plan follows.
+  const back = planBackdrop(ctx, site.backdrop, { lazy: true, wide: true });
   const statement = `<section class="statement home-statement${back.plan ? ' has-plan' : ''}">
   ${back.plan}
   <div class="statement-inner">
@@ -46,7 +47,8 @@ module.exports = function home(ctx) {
   ${back.credit}
 </section>`;
 
-  // A short account of the firm follows: the first paragraph of the People page's introduction.
+  // A short account of the firm stands between the photographs and the plan: the first paragraph of the People
+  // page's introduction.
   const intro = Array.isArray(site.studio.intro) && site.studio.intro.length ? site.studio.intro[0] : '';
   const firm = intro ? `<section class="firm">
   ${sectionLabel('The firm')}
@@ -88,8 +90,8 @@ module.exports = function home(ctx) {
     image: slides.length ? `/work/${slides[0].project.slug}/photos/${slides[0].photo.variants[slides[0].photo.variants.length - 1].name}` : '',
     body: `<h1 class="visually-hidden">${esc(site.name)}</h1>
 ${pictures}
-${statement}
 ${firm}
+${statement}
 ${selected}
 ${drawings}`,
   };

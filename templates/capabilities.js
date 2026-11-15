@@ -3,14 +3,14 @@
 const { esc, toCome, reviewNote } = require('../lib/html');
 const { pageHead } = require('./parts');
 
-// Capabilities: the title and the firm's one-sentence account of what it does, over one of the firm's drawings, as
-// on the other pages; then each capability in the form the Process page gives its parts, a hairline with the name
-// at the left and, at the right, a sentence on what it includes and the projects on the site that show it; then
-// what the firm does for private properties, and its qualifications. Everything comes from "capabilities" in
-// content/site.json; the qualifications are read from the People page's note and from each person's registration,
-// so that they are written once.
+// Capabilities: the title and the firm's one-sentence account of what it does, over one of the firm's drawings
+// when "backdrop" names one, as on the other pages; then each capability in the form the Process page gives its
+// parts, a hairline with the name at the left and, at the right, a sentence explaining what the capability is;
+// then what the firm does for private properties. Everything comes from "capabilities" in content/site.json.
+// The page listed the projects that show each capability, and closed with the firm's qualifications, until the
+// firm asked for explanations in place of the examples and for the qualifications to stay on the People page.
 module.exports = function capabilities(ctx) {
-  const { site, people, projects, u } = ctx;
+  const { site } = ctx;
   const c = site.capabilities || {};
   const items = Array.isArray(c.items) ? c.items : [];
 
@@ -35,32 +35,14 @@ module.exports = function capabilities(ctx) {
   </div>
 </section>`;
 
-  // The projects that show a capability, in the order the Work page lists them. Drafts are left off the live site,
-  // so a capability may stand there with no projects under it.
-  const shown = (slugs) => projects.filter((p) => (slugs || []).includes(p.slug));
-  const projectList = (list) => (list.length ? `<ul class="part-projects">
-      ${list.map((p) => `<li><a href="${u(p.url)}">${esc(p.title)}</a>${p.location ? `<span>, ${esc(p.location)}</span>` : ''}</li>`).join('\n      ')}
-    </ul>` : '');
-
   const blocks = items.map((item) => {
-    // The sentence is still to come from the firm; its place is marked only in a preview with notes.
-    const text = item.text ? `<p>${esc(item.text)}</p>` : (ctx.showNotes ? `<p>${toCome(ctx, 'what this includes, in a sentence')}</p>` : '');
-    return part(item.name, [text, projectList(shown(item.projects))].filter(Boolean).join('\n    '));
+    // A capability whose sentence is still to come stands by its name; its place is marked only in a preview
+    // with notes.
+    const text = item.text ? `<p>${esc(item.text)}</p>` : (ctx.showNotes ? `<p>${toCome(ctx, 'what this is, in a sentence')}</p>` : '');
+    return part(item.name, text);
   });
 
   if (c.private) blocks.push(part('Private properties', `<p>${esc(c.private)}</p>`));
-
-  if (c.qualifications) {
-    const lines = [];
-    if (site.studio && site.studio.note) lines.push(`<p>${esc(site.studio.note)}</p>`);
-    (Array.isArray(people) ? people : []).forEach((person) => {
-      const reg = (person.facts || []).find((f) => f.label === 'Registration');
-      if (reg && Array.isArray(reg.items) && reg.items.length) {
-        lines.push(`<p>${esc(person.name)}${person.credentials ? `, ${esc(person.credentials)}` : ''}: ${reg.items.map(esc).join(', ')}</p>`);
-      }
-    });
-    if (lines.length) blocks.push(part('Qualifications', lines.join('\n    ')));
-  }
 
   return {
     title: 'Capabilities',

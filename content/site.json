@@ -101,41 +101,30 @@
   },
   "capabilities": {
     "lead": "ABL provides master planning, landscape architecture, cultural landscape reports, feasibility studies and planting design for campuses, civic spaces and historic properties.",
-    "note": "Assembled November 15, 2026 from text already on the site: the two sentences that closed the Process page, each project's own statement of the firm's role, and the registration and certification given on the People page. The firm to confirm which projects stand under each capability, and to say in a sentence what each includes.",
-    "backdrop": {
-      "project": "childrens-garden-carrier-arboretum",
-      "file": "04",
-      "asDrawn": true
-    },
+    "note": "The opening and the sentence on private properties are the two sentences that closed the Process page. On November 15, 2026 the firm asked for an explanation of each capability in place of the projects that were listed under it, and for the qualifications to come off this page. The explanations are being worked out with the firm; each capability stands by its name until its sentence is approved.",
     "items": [
       {
         "name": "Master planning",
-        "text": "",
-        "projects": ["kendal-at-lexington", "virginia-horse-center", "lime-kiln-theater", "childrens-garden-carrier-arboretum", "green-spring"]
+        "text": ""
       },
       {
         "name": "Landscape architecture",
-        "text": "",
-        "projects": ["courthouse-square", "virginia-military-institute", "kendal-at-lexington"]
+        "text": ""
       },
       {
         "name": "Cultural landscape reports",
-        "text": "",
-        "projects": ["green-spring", "kendal-at-lexington"]
+        "text": ""
       },
       {
         "name": "Feasibility studies",
-        "text": "",
-        "projects": ["washington-and-lee-university"]
+        "text": ""
       },
       {
         "name": "Planting design",
-        "text": "",
-        "projects": ["main-street-triangle", "courthouse-square"]
+        "text": ""
       }
     ],
-    "private": "For private properties the firm is engaged for a consultation, a planting plan, a master plan, or the design of a single element such as a stair.",
-    "qualifications": true
+    "private": "For private properties the firm is engaged for a consultation, a planting plan, a master plan, or the design of a single element such as a stair."
   },
   "contact": {
     "projectTypes": [
@@ -176,7 +165,8 @@
     "introNote": "Drafted by Claude on November 11, 2026. The firm to confirm the wording.",
     "backdrop": {
       "project": "montpelier-visitor-arrival",
-      "file": "05"
+      "file": "05",
+      "shift": "2.75rem"
     }
   }
 }
