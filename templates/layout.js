@@ -5,6 +5,7 @@ const { esc, markSvg } = require('../lib/html');
 const NAV = [
   ['Work', '/work/'],
   ['People', '/people/'],
+  ['Capabilities', '/capabilities/'],
   ['Process', '/process/'],
   ['Contact', '/contact/'],
 ];

@@ -63,7 +63,8 @@ module.exports = function home(ctx) {
   <p class="more"><a class="text-link" href="${u('/work/')}">All work</a></p>
 </section>` : '';
 
-  // The firm's own plans and sketches, each linked to its project.
+  // The firm's own plans and sketches, each linked to its project and named by it alone: the firm asked for the
+  // kind of drawing ("Plan of the entrance") to be left out.
   const sheets = site.drawings
     .map((entry) => {
       const project = projects.find((p) => p.slug === entry.project);
@@ -77,7 +78,6 @@ module.exports = function home(ctx) {
     ${sheets.map(({ project, drawing }) => `<li><a class="card" href="${u(project.url)}">
       <span class="drawing-image" data-sheet${liftStyle(drawing)}>${picture(ctx, project, drawing, { sizes: '(min-width: 900px) 30vw, 100vw' })}</span>
       <span class="card-title">${esc(project.title)}</span>
-      <span class="card-meta">${esc(drawing.caption || 'Plan')}</span>
     </a></li>`).join('\n    ')}
   </ul>
 </section>` : '';

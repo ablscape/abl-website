@@ -22,7 +22,6 @@ function sectionLabel(text) {
 
 // One of the firm's drawings to lie behind a heading, named by its project and number in content/site.json.
 // It may also say:
-//   "caption"  the word for the credit, in place of the drawing's own caption
 //   "lift"     how far to brighten a drawing made on gray paper, so that its paper becomes the page's white
 //              (255 divided by the paper's brightness: 1.2 for paper of about 213)
 //   "focus"    where the subject sits, across and down, as "60% 40%", for the rare window in which the drawing
@@ -49,7 +48,9 @@ function planBackdrop(ctx, ref, options) {
   const lazy = options && options.lazy ? ' loading="lazy"' : '';
   return {
     plan: `<div class="${classes.join(' ')}" data-sheet aria-hidden="true"${vars.length ? ` style="${vars.join('; ')}"` : ''}><img src="${ctx.u(base + biggest.name)}" srcset="${srcset}" sizes="(min-width: 1024px) 62vw, 100vw" width="${item.width}" height="${item.height}" alt=""${lazy} decoding="async"></div>`,
-    credit: `<p class="statement-credit"><a href="${ctx.u(project.url)}">${esc(ref.caption || item.caption || 'Plan')}, ${esc(project.title)}</a></p>`,
+    // The credit names what the drawing is of, the project, and nothing else: the firm asked for the kind of
+    // drawing ("Plan of the entrance,") to be left out.
+    credit: `<p class="statement-credit"><a href="${ctx.u(project.url)}">${esc(project.title)}</a></p>`,
   };
 }
 

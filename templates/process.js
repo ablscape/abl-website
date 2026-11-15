@@ -25,15 +25,14 @@ const DIALOGUE_SVG = `<svg class="dialogue-drawing" viewBox="0 0 400 320" role="
 
 // Process: the title and opening over one of the firm's drawings, as on the other pages; then the parts of the
 // firm's process in order, every one set the same way, with its number and name at the left and its text at the
-// right under a hairline; and the firm's capabilities, set the same way without a number. A part may carry a
+// right under a hairline. (The firm's capabilities closed this page until round 23, when the firm asked for a
+// page of their own, before Process in the header: see capabilities.js.) A part may carry a
 // remark, which stands under its name at the left, and the Client, Site, Design team drawing or a picture, which
 // stands in the text's own column, under the text. Everything comes from "process" in content/site.json.
 module.exports = function process(ctx) {
   const { site, projects, u } = ctx;
   const p = site.process || {};
   const sections = Array.isArray(p.sections) ? p.sections : [];
-  const services = p.services || {};
-  const items = Array.isArray(services.items) ? services.items : [];
   const intro = Array.isArray(p.intro) ? p.intro : [];
 
   const head = pageHead(ctx, p.backdrop, `<div class="page-head has-lead">
@@ -99,17 +98,6 @@ module.exports = function process(ctx) {
     const text = Array.isArray(sec.text) && sec.text.length ? paragraphs(sec.text) : `<p>${toCome(ctx, 'this part of the process, in the firm\'s words')}</p>`;
     return part(String(i + 1).padStart(2, '0'), sec.title, text, pictureOf(sec), quote(sec.quote));
   });
-
-  const serviceText = Array.isArray(services.intro) ? services.intro : (services.intro ? [services.intro] : []);
-  if (serviceText.length || items.length) {
-    blocks.push(part('', 'Capabilities', `${reviewNote(ctx, services.reviewNote)}
-    ${serviceText.map((line) => `<p>${esc(line)}</p>`).join('\n    ')}`, items.length ? `<dl class="capabilities">
-      ${items.map((sv) => `<div>
-        <dt>${esc(sv.name)}</dt>
-        <dd>${sv.text ? esc(sv.text) : toCome(ctx, 'what this includes')}</dd>
-      </div>`).join('\n      ')}
-    </dl>` : ''));
-  }
 
   return {
     title: 'Process',

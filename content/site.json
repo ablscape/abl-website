@@ -46,7 +46,6 @@
     "backdrop": {
       "project": "washington-and-lee-university",
       "file": "04",
-      "caption": "Sketch",
       "asDrawn": true,
       "focus": "30% 45%",
       "focusPhone": "22% 50%"
@@ -98,14 +97,45 @@
           "toCome": "the team at work on a construction site"
         }
       }
+    ]
+  },
+  "capabilities": {
+    "lead": "ABL provides master planning, landscape architecture, cultural landscape reports, feasibility studies and planting design for campuses, civic spaces and historic properties.",
+    "note": "Assembled November 15, 2026 from text already on the site: the two sentences that closed the Process page, each project's own statement of the firm's role, and the registration and certification given on the People page. The firm to confirm which projects stand under each capability, and to say in a sentence what each includes.",
+    "backdrop": {
+      "project": "childrens-garden-carrier-arboretum",
+      "file": "04",
+      "asDrawn": true
+    },
+    "items": [
+      {
+        "name": "Master planning",
+        "text": "",
+        "projects": ["kendal-at-lexington", "virginia-horse-center", "lime-kiln-theater", "childrens-garden-carrier-arboretum", "green-spring"]
+      },
+      {
+        "name": "Landscape architecture",
+        "text": "",
+        "projects": ["courthouse-square", "virginia-military-institute", "kendal-at-lexington"]
+      },
+      {
+        "name": "Cultural landscape reports",
+        "text": "",
+        "projects": ["green-spring", "kendal-at-lexington"]
+      },
+      {
+        "name": "Feasibility studies",
+        "text": "",
+        "projects": ["washington-and-lee-university"]
+      },
+      {
+        "name": "Planting design",
+        "text": "",
+        "projects": ["main-street-triangle", "courthouse-square"]
+      }
     ],
-    "services": {
-      "intro": [
-        "ABL provides master planning, landscape architecture, cultural landscape reports, feasibility studies and planting design for campuses, civic spaces and historic properties.",
-        "For private properties the firm is engaged for a consultation, a planting plan, a master plan, or the design of a single element such as a stair."
-      ],
-      "items": []
-    }
+    "private": "For private properties the firm is engaged for a consultation, a planting plan, a master plan, or the design of a single element such as a stair.",
+    "qualifications": true
   },
   "contact": {
     "projectTypes": [

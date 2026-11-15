@@ -63,7 +63,7 @@
      plans as drawn; one backdrop keeps its own colors with "asDrawn" in content/site.json. */
   --plan-key: hue-rotate(18deg);
 }
-@media (max-width: 36rem) { :root { --logo-w: 178px; --head-pad: 1.1rem; } }
+@media (max-width: 40rem) { :root { --logo-w: 178px; --head-pad: 1.1rem; } }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -131,11 +131,13 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .site-nav a:hover, .float-nav a:hover { color: var(--ink-strong); border-bottom-color: var(--accent); }
 .site-nav a[aria-current="page"], .float-nav a[aria-current="page"] { color: var(--ink-strong); border-bottom-color: var(--accent); }
 .logo img { width: var(--logo-w); }
-@media (max-width: 36rem) {
+@media (max-width: 40rem) {
   /* On a phone the logo stands above the links, both at the left. */
   .site-header { flex-direction: column-reverse; align-items: flex-start; padding-bottom: 0.9rem; }
-  .site-nav, .float-nav, .float-links { gap: 1.15rem; font-size: var(--fs-small); }
+  /* Five links stand on one line on a phone: the space between them gives way as the window narrows. */
+  .site-nav, .float-nav, .float-links { gap: clamp(0.6rem, 4.2vw, 1.15rem); font-size: var(--fs-small); }
 }
+@media (max-width: 22.4rem) { .site-nav, .float-nav, .float-links { gap: 0.45rem; } }
 
 /* The "abl" that stays. The "abl" of the logo never leaves the window: once the script has run, a mark fixed to
    the window draws it, exactly where the logo's own "abl" stands and at its size, and the logo in the header shows
@@ -157,7 +159,7 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .mark-ready .travel-mark { opacity: 1; visibility: visible; }
 /* The logo in the header keeps its two words. The clip is wide on its other three sides, so the words keep their haze. */
 .mark-ready .site-header .logo img { clip-path: inset(-1.5rem -1.5rem -1.5rem 38%); }
-@media (max-width: 36rem) { .travel-mark { right: auto; left: var(--edge-box); } }
+@media (max-width: 40rem) { .travel-mark { right: auto; left: var(--edge-box); } }
 .travel-mark svg { display: block; width: 100%; height: auto; fill: currentColor; }
 a.travel-mark:hover { color: var(--ink-strong); }
 .travel-mark-on-photo, .travel-mark-on-sheet { pointer-events: none; }
@@ -166,8 +168,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* Rules later in this file that set "position" on a picture (the plan behind the statement) still apply. */
 .carries-mark { position: relative; z-index: 2; clip-path: inset(0); }
 
-/* The links return when the visitor scrolls back up, where they stood in the header (on a phone, at the top right,
-   beside the mark), drawn the way the mark is. Over the page and over
+/* The links return when the visitor scrolls back up, where they stood in the header (on a phone, beneath the
+   mark), drawn the way the mark is. Over the page and over
    drawings they are dark, in medium weight, on a patch of white haze that has no edge. Over photographs
    they are white with a dark shadow close around the letters. Each picture carries its own copy. The
    links themselves lie on top, unseen, to take the pointer and the keyboard, and show only their
@@ -178,9 +180,9 @@ a.travel-mark:hover { color: var(--ink-strong); }
   opacity: 0; visibility: hidden; transform: translateY(-0.4rem);
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
 }
-@media (max-width: 36rem) { .float-nav, .float-links { top: calc(var(--mark-top) - 0.6rem); left: auto; right: calc(var(--edge-box) - 0.9rem); } }
-/* On the narrowest phones the four links draw closer together, to clear the mark. */
-@media (max-width: 22.4rem) { .float-nav, .float-links { gap: 0.6rem; padding-inline: 0.5rem; right: calc(var(--edge-box) - 0.5rem); } }
+/* On a phone the links return where they stood in the header too: beneath the mark, at the left. (With four links
+   they returned at the top right, beside the mark; five do not fit there.) */
+@media (max-width: 40rem) { .float-nav, .float-links { top: calc(var(--head-pad) + var(--logo-w) * 40 / 232 + 1rem - 0.7rem); } }
 .float-nav { z-index: 5; }
 .float-nav a, .float-nav a:hover, .float-nav a[aria-current="page"] { color: transparent; }
 .float-links {
@@ -505,10 +507,10 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .process-note { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
 .process-note .review-note { margin-bottom: 0; }
 
-/* The parts of the process, in order, and the firm's capabilities after them. Every part is set the same way: a
+/* The parts of the process, in order; the Capabilities page sets each capability the same way. Every part is a
    hairline, its number and name at the left, its text at the right, in one column and one measure down the page.
-   What a part carries besides text (a remark, the Dialogue drawing, a picture) stands under the text, in the
-   text's column. Until round 20 each part had a layout of its own, and the firm found the page cumbersome. */
+   A remark stands under the part's name; the Dialogue drawing or a picture stands under the text, in the text's
+   column. Until round 20 each part had a layout of its own, and the firm found the page cumbersome. */
 .parts { max-width: var(--page); margin: clamp(2.5rem, 6vw, 4.5rem) auto 0; padding: 0 var(--gutter); }
 .part { padding: clamp(2rem, 4vw, 3.25rem) 0 clamp(2.25rem, 4.5vw, 3.75rem); border-top: 1px solid var(--hair); }
 .part:last-child { padding-bottom: 0; }
@@ -538,12 +540,13 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .frame-to-come { display: grid; place-items: center; aspect-ratio: 3 / 2; background: var(--fill); }
 .frame-to-come .photo-to-come { max-width: 80%; text-align: center; }
 .notes-off .part-figure.is-to-come { display: none; }
-/* Capabilities named one by one, when the firm lists them. */
-.capabilities { max-width: 46rem; margin: 2rem 0 0; border-top: 1px solid var(--hair); }
-.capabilities > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.3rem var(--col-gap); padding: 1.1rem 0; border-bottom: 1px solid var(--hair); }
-.capabilities dt { font-weight: 500; color: var(--ink-strong); }
-.capabilities dd { margin: 0; }
-@media (min-width: 40rem) { .capabilities > div { grid-template-columns: 13rem minmax(0, 1fr); } }
+/* The Capabilities page sets each capability the way the Process page sets its parts. Under a capability stand
+   the projects that show it: their names, one to a line, each linked to its page, with the place in gray. */
+.part-projects { list-style: none; max-width: 38rem; margin: 0; padding: 0; font-size: var(--fs-text); line-height: 1.62; }
+.part-body > p + .part-projects { margin-top: -0.35em; }
+.part-projects a { color: var(--ink-strong); border-bottom: 1px solid var(--hair); }
+.part-projects a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.part-projects span { color: var(--slate); }
 
 /* Contact */
 .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem var(--col-gap); max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }

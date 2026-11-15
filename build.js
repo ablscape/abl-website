@@ -22,6 +22,7 @@ const work = require('./templates/work');
 const projectPage = require('./templates/project');
 const studio = require('./templates/studio');
 const processPage = require('./templates/process');
+const capabilitiesPage = require('./templates/capabilities');
 const contact = require('./templates/contact');
 const { sent, notFound } = require('./templates/simple');
 
@@ -78,9 +79,10 @@ function openItems() {
     if (!Array.isArray(sec.text) || !sec.text.length) items.push(`Process: the part "${sec.title}" has no text`);
     if (sec.figure && isText(sec.figure.toCome)) items.push(`Process: the part "${sec.title}" waits for a photograph (${sec.figure.toCome})`);
   });
-  const services = pr.services || {};
-  if (isText(services.reviewNote)) items.push(`Process: the services have a review note ("${services.reviewNote}")`);
-  (services.items || []).forEach((service) => { if (!isText(service.text)) items.push(`Process: service "${service.name}" has no description`); });
+  const caps = site.capabilities || {};
+  if (isText(caps.note)) items.push(`Capabilities: the page has a review note ("${caps.note}")`);
+  if (!isText(caps.lead)) items.push('Capabilities: the opening is missing');
+  (caps.items || []).forEach((item) => { if (!isText(item.text)) items.push(`Capabilities: "${item.name}" has no sentence on what it includes`); });
   return [...new Set(items)];
 }
 
@@ -134,6 +136,7 @@ write('/', '/', home);
 write('/work/', '/work/', work);
 visible.forEach((p, i) => write(p.url, '/work/', (ctx) => projectPage(ctx, p, visible[(i + 1) % visible.length])));
 write('/people/', '/people/', studio);
+write('/capabilities/', '/capabilities/', capabilitiesPage);
 write('/process/', '/process/', processPage);
 write('/contact/', '/contact/', contact);
 write('/contact/sent/', '/contact/', sent);
