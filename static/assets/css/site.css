@@ -458,6 +458,13 @@ a.travel-mark:hover { color: var(--ink-strong); }
 @media (min-width: 56rem) {
   .photo-pair { grid-template-columns: 7fr 5fr; align-items: end; }
 }
+/* Computer renderings ("rendering": true on a drawing) follow the photographs, smaller: two to a line across three
+   quarters of the page, the first the wider, set to the right as the text is. The firm asked that photographs of
+   built work be more prominent than renderings, and that a rendering not be shown large. */
+@media (min-width: 56rem) {
+  .rendering-row { grid-template-columns: 7fr 5fr; align-items: end; width: 75%; margin-left: auto; }
+  .rendering-row.is-single { grid-template-columns: minmax(0, 1fr); width: 50%; }
+}
 
 .project-next {
   display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 1rem;

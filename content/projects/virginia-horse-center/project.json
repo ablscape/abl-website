@@ -45,12 +45,14 @@
     {
       "file": "05",
       "alt": "Aerial rendering of barns, arenas and parking set among fields and lines of trees",
-      "caption": ""
+      "caption": "",
+      "rendering": true
     },
     {
       "file": "06",
       "alt": "Rendering of a path through trees to a small two-story pavilion beside a fenced ring",
-      "caption": ""
+      "caption": "",
+      "rendering": true
     }
   ],
   "legacyUrls": [

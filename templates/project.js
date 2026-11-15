@@ -5,7 +5,8 @@ const { STORY_PARTS } = require('../lib/content');
 
 // One project page: the lead image; the title, the facts and the first part of the story side by side;
 // then the firm's drawings, as ink on the white of the page with no frame, each beside the photograph of what
-// was built from it where the drawing names one; and the rest of the story interleaved with the photographs.
+// was built from it where the drawing names one; the rest of the story interleaved with the photographs; and
+// last, smaller, any computer renderings ("rendering": true on a drawing), which give way to the photographs.
 module.exports = function projectPage(ctx, project, next) {
   const { u } = ctx;
 
@@ -74,11 +75,20 @@ module.exports = function projectPage(ctx, project, next) {
     </figure>`;
   };
 
-  // Lay the page out: first part beside the title; drawings; then photographs and parts in turn.
+  // Computer renderings stand after the photographs, two to a line and smaller, as plain pictures.
+  const renderings = project.drawings.filter((d) => d !== cover && d.rendering === true);
+  const renderingHtml = renderings.length ? `<div class="photo-row rendering-row${renderings.length === 1 ? ' is-single' : ''}">
+    ${renderings.map((d) => `<figure>
+      <div class="frame" data-photo>${picture(ctx, project, d, { sizes: '(min-width: 900px) 34vw, 100vw' })}</div>
+      ${caption(d)}
+    </figure>`).join('\n    ')}
+  </div>` : '';
+
+  // Lay the page out: first part beside the title; drawings; then photographs and parts in turn; then renderings.
   // When no drawing or photograph falls between the parts, the whole story reads as one column beside the title.
   const body = [];
-  const extraDrawings = project.drawings.filter((d) => d !== cover);
-  const opening = !groups.length && !extraDrawings.length ? parts.splice(0).join('\n      ') : (parts.shift() || '');
+  const extraDrawings = project.drawings.filter((d) => d !== cover && d.rendering !== true);
+  const opening = !groups.length && !extraDrawings.length && !renderings.length ? parts.splice(0).join('\n      ') : (parts.shift() || '');
   body.push(`<div class="project-opening">
     <div class="project-head">
       <p class="project-kind">${esc(project.type)}</p>
@@ -98,6 +108,7 @@ module.exports = function projectPage(ctx, project, next) {
     body.push(`<div class="project-text">${part}</div>`);
   });
   while (g < groups.length) body.push(groupHtml(groups[g++]));
+  if (renderingHtml) body.push(renderingHtml);
 
   const nextLink = next && next !== project ? `<nav class="project-next" aria-label="More work">
     <a href="${u(next.url)}"><span class="next-label">Next project</span> <span class="next-title">${esc(next.title)}</span></a>
