@@ -35,8 +35,11 @@
   --fs-small: 0.9rem;                            /* captions, facts, labels, the links at the head and foot of the page */
 
   /* Layout */
-  --page: 92rem;
-  --gutter: clamp(1.25rem, 3.6vw, 3.25rem);
+  --page: 96rem;           /* the page box, centered in a wider window; it holds the side margins (--gutter) */
+  /* The page's side margin: about a sixteenth of the window on a laptop (70 px at 1,280, 103 at 1,512), the width
+     of a phone's margin at the small end. It was 3.6 percent of the window (46 px at 1,280), which the firm found
+     "a bit too far to the left" against the site's generous vertical spacing. */
+  --gutter: clamp(1.25rem, 5.5vw, 5.25rem);
   --col-gap: clamp(1.25rem, 2.6vw, 2.75rem);
   --edge: max(var(--gutter), calc((100vw - var(--page)) / 2 + var(--gutter))); /* window edge to content edge */
   --logo-w: 232px;         /* width of the logo in the header */
