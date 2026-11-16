@@ -140,10 +140,12 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .site-header .logo { position: relative; }
 .site-header .logo img { position: relative; filter: var(--haze); }
 .site-header .site-nav a { text-shadow: var(--haze-text); }
-/* The links are set at the size of running text, with room between them, so that the top left of the page has
-   some weight against the logo at the right: the firm found the top left "boring" at the size of a caption. On a
-   phone they keep the smaller size, so that five stand on one line. */
-.site-nav, .float-nav, .float-links { display: flex; flex-wrap: wrap; gap: clamp(1.4rem, 2.8vw, 2.6rem); font-size: var(--fs-text); line-height: 1; }
+/* The links are set at 1rem, a little under running text, with room between them, so that the top left of the
+   page has some weight against the logo at the right and their letters stand a little smaller than the logo's
+   words (whose x-height is 9.25 px at the logo's 232 px; a link's is 8.2 px here): the firm found the top left
+   "boring" at the size of a caption, and at the size of running text found the words "bigger than the logo". On
+   a phone they keep the smaller size, so that five stand on one line. */
+.site-nav, .float-nav, .float-links { display: flex; flex-wrap: wrap; gap: clamp(1.3rem, 2.6vw, 2.4rem); font-size: 1rem; line-height: 1; }
 .site-nav a, .float-nav a { padding: 0.35rem 0 0.4rem; color: var(--ink); border-bottom: 1px solid transparent; }
 .site-nav a:hover, .float-nav a:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
 .site-nav a[aria-current="page"], .float-nav a[aria-current="page"] { color: var(--accent-ink); border-bottom-color: var(--accent); }
