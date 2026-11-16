@@ -340,18 +340,15 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .selected, .drawings, .firm { max-width: var(--page); margin: 0 auto; padding: clamp(4rem, 9vw, 8rem) var(--gutter) 0; }
 .more { margin: clamp(3rem, 6vw, 5rem) 0 0; font-size: var(--fs-text); }
 
-/* A short account of the firm follows the photographs, as the opening of the page: its name stands above the
-   paragraph, and the two are centered under the photographs. The name stood at the left margin with the
-   paragraph in the fifth column, the way the parts of the Process page are set, until the firm found it "way too
-   far to the left" on a page that did not "look like a main page". The account stood at the foot of the home
-   page until round 20, where the firm found it hidden, beside the plan in rounds 20 and 21, where the firm
-   wanted the statement instead, and under the statement in round 22; in round 23 the firm asked for it above
-   the plan. */
-.firm { padding-top: clamp(2.5rem, 4.5vw, 4rem); text-align: center; }
-.firm > .section-label, .firm-text { max-width: 34em; margin-inline: auto; }
-.firm > .section-label { margin-bottom: 1.1rem; }
-.firm > .section-label::before { margin-inline: auto; }
-.firm-text { margin-block: 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.45; color: var(--ink-strong); text-wrap: balance; }
+/* A short account of the firm follows the photographs, as the opening of the page: one paragraph, centered under
+   the photographs, with no label. The label "The firm" and its short rule stood over it, centered, until the firm
+   said "i don't like - the firm"; before that the label stood at the left margin with the paragraph in the fifth
+   column, the way the parts of the Process page are set, until the firm found it "way too far to the left" on a
+   page that did not "look like a main page". The account stood at the foot of the home page until round 20,
+   where the firm found it hidden, beside the plan in rounds 20 and 21, where the firm wanted the statement
+   instead, and under the statement in round 22; in round 23 the firm asked for it above the plan. */
+.firm { padding-top: clamp(2.75rem, 5vw, 4.5rem); text-align: center; }
+.firm-text { max-width: 34em; margin: 0 auto; font-size: var(--fs-medium); font-weight: 300; line-height: 1.45; color: var(--ink-strong); text-wrap: balance; }
 
 /* Selected work on the home page is listed as the Work page lists every project, two to a line, but inside the
    page's margins: the firm asked for the Work page's pictures larger and for these a little smaller. */
@@ -373,6 +370,9 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s cubic-bezier(0.2, 0.6, 0.2, 1); }
 .drawing-image img { width: 100%; transition: transform 1.4s cubic-bezier(0.2, 0.6, 0.2, 1); }
 .card:hover .card-image img, .card:hover .drawing-image img { transform: scale(1.025); }
+/* A drawing in the home page's row is not a link, so it keeps still under the pointer. */
+.card-still:hover .drawing-image img { transform: none; }
+.card-still:hover .card-title { color: var(--ink-strong); }
 .card-kind { display: block; margin-top: 1.05rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; line-height: 1.3; text-transform: uppercase; color: var(--slate); }
 .card-title { display: block; margin-top: 0.3rem; font-size: var(--fs-medium); font-weight: 400; line-height: 1.25; color: var(--ink-strong); transition: color 0.2s ease; }
 .card:hover .card-title { color: var(--accent); }

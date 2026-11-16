@@ -46,11 +46,11 @@ module.exports = function home(ctx) {
 </section>`;
 
   // A short account of the firm stands between the photographs and the plan: the first paragraph of the firm's
-  // introduction, which stands whole on the Capabilities page.
+  // introduction, which stands whole on the Capabilities page. It carries no label: "The firm", with its short rule,
+  // stood over it until the firm said "i don't like - the firm".
   const caps = site.capabilities || {};
   const intro = Array.isArray(caps.intro) && caps.intro.length ? caps.intro[0] : '';
-  const firm = intro ? `<section class="firm">
-  ${sectionLabel('The firm')}
+  const firm = intro ? `<section class="firm" aria-label="About the firm">
   <p class="firm-text">${esc(intro)}</p>
 </section>` : '';
 
@@ -64,8 +64,8 @@ module.exports = function home(ctx) {
   <p class="more"><a class="text-link" href="${u('/work/')}">All work</a></p>
 </section>` : '';
 
-  // The firm's own plans and sketches, each linked to its project and named by it alone: the firm asked for the
-  // kind of drawing ("Plan of the entrance") to be left out.
+  // The firm's own plans and sketches, each named by its project alone: the firm asked for the kind of drawing
+  // ("Plan of the entrance") to be left out, and for the drawings and their names not to be links.
   const sheets = site.drawings
     .map((entry) => {
       const project = projects.find((p) => p.slug === entry.project);
@@ -76,10 +76,10 @@ module.exports = function home(ctx) {
   const drawings = sheets.length ? `<section class="drawings">
   ${sectionLabel('Plans and drawings')}
   <ul class="drawing-row">
-    ${sheets.map(({ project, drawing }) => `<li><a class="card" href="${u(project.url)}">
+    ${sheets.map(({ project, drawing }) => `<li><div class="card card-still">
       <span class="drawing-image" data-sheet${liftStyle(drawing)}>${picture(ctx, project, drawing, { sizes: '(min-width: 900px) 30vw, 100vw' })}</span>
       <span class="card-title">${esc(project.title)}</span>
-    </a></li>`).join('\n    ')}
+    </div></li>`).join('\n    ')}
   </ul>
 </section>` : '';
 

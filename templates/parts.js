@@ -52,8 +52,8 @@ function planBackdrop(ctx, ref, options) {
   return {
     plan: `<div class="${classes.join(' ')}" data-sheet aria-hidden="true"${vars.length ? ` style="${vars.join('; ')}"` : ''}><img src="${ctx.u(base + biggest.name)}" srcset="${srcset}" sizes="${sizes}" width="${item.width}" height="${item.height}" alt=""${lazy} decoding="async"></div>`,
     // The credit names what the drawing is of, the project, and nothing else: the firm asked for the kind of
-    // drawing ("Plan of the entrance,") to be left out.
-    credit: `<p class="statement-credit"><a href="${ctx.u(project.url)}">${esc(project.title)}</a></p>`,
+    // drawing ("Plan of the entrance,") to be left out, and for the line not to be a link.
+    credit: `<p class="statement-credit">${esc(project.title)}</p>`,
     // The drawing's own proportions, for a block that takes its height from them (the plan across the home page).
     ratio: `${item.width} / ${item.height}`,
     width: item.width,
