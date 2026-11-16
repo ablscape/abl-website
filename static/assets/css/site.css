@@ -17,14 +17,16 @@
   --ink: #272c29;          /* body text */
   --ink-strong: #1a1f1c;   /* headings and names */
   --slate: #626865;        /* captions, labels, secondary text */
-  --hair: #dbe0dc;         /* hairlines */
+  --hair: #c9d6ce;         /* hairlines, tinted with the firm's green */
   --fill: #e8ece9;         /* empty frames: a cool gray, never a warm one */
   --sage: #648070;         /* the green of the logo's "abl": the traveling mark, the block at the foot of every page, and
                               every accent (short rules, underlines, the current link, the Send button under the pointer) */
   --sage-ink: #4b6354;     /* the same green darkened for small text on white (6.5 to 1 against the page): numerals,
-                              the kind of a project, links. The firm asked for more of the logo's green through the
-                              site, "done in a tasteful and professional way". The warm terracotta that carried the
-                              accents until then is gone: one color, the firm's own, used sparingly. */
+                              the kind of a project, the labels of sections, the current link, links. The firm asked
+                              for more of the logo's green through the site, "done in a tasteful and professional
+                              way", and then said it had not meant "make everything green" but "more color
+                              throughout": so the titles stay near-black, and the green sits in the small things
+                              and in the hairlines. The warm terracotta that carried the accents until then is gone. */
   --accent: var(--sage);
   --accent-ink: var(--sage-ink);
   --note: #b9c3bf;         /* preview notes only, never on the live site: gray, so that the notes lend the pages no color */
@@ -112,7 +114,7 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .text-link:hover { color: var(--ink-strong); border-bottom-color: var(--ink-strong); }
 
 /* The heading of a section, under a short terracotta rule. */
-.section-label { margin: 0 0 clamp(1.75rem, 3vw, 2.75rem); font-size: var(--fs-medium); font-weight: 400; line-height: 1.3; color: var(--ink-strong); }
+.section-label { margin: 0 0 clamp(1.75rem, 3vw, 2.75rem); font-size: var(--fs-medium); font-weight: 400; line-height: 1.3; color: var(--accent-ink); }
 .section-label::before { content: ""; display: block; width: 2.25rem; height: 2px; margin-bottom: 1rem; background: var(--accent); }
 
 /* Preview-only markers. None of these appear on the live site. */
@@ -138,10 +140,13 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .site-header .logo { position: relative; }
 .site-header .logo img { position: relative; filter: var(--haze); }
 .site-header .site-nav a { text-shadow: var(--haze-text); }
-.site-nav, .float-nav, .float-links { display: flex; flex-wrap: wrap; gap: clamp(1.1rem, 2.4vw, 2.1rem); font-size: var(--fs-small); line-height: 1; }
+/* The links are set at the size of running text, with room between them, so that the top left of the page has
+   some weight against the logo at the right: the firm found the top left "boring" at the size of a caption. On a
+   phone they keep the smaller size, so that five stand on one line. */
+.site-nav, .float-nav, .float-links { display: flex; flex-wrap: wrap; gap: clamp(1.4rem, 2.8vw, 2.6rem); font-size: var(--fs-text); line-height: 1; }
 .site-nav a, .float-nav a { padding: 0.35rem 0 0.4rem; color: var(--ink); border-bottom: 1px solid transparent; }
-.site-nav a:hover, .float-nav a:hover { color: var(--ink-strong); border-bottom-color: var(--accent); }
-.site-nav a[aria-current="page"], .float-nav a[aria-current="page"] { color: var(--ink-strong); border-bottom-color: var(--accent); }
+.site-nav a:hover, .float-nav a:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
+.site-nav a[aria-current="page"], .float-nav a[aria-current="page"] { color: var(--accent-ink); border-bottom-color: var(--accent); }
 .logo img { width: var(--logo-w); }
 @media (max-width: 40rem) {
   /* On a phone the logo stands above the links, both at the left. */
@@ -175,9 +180,9 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .travel-mark svg { display: block; width: 100%; height: auto; fill: currentColor; }
 a.travel-mark:hover { color: var(--ink-strong); }
 .travel-mark-on-photo, .travel-mark-on-sheet { pointer-events: none; }
-/* Over a photograph the mark keeps its green, with the white glaze around it, as it has over the page: the firm
-   asked for "the glaze around it so we can keep the original colors" (it was white over photographs until then). */
-.travel-mark-on-photo { color: var(--sage); filter: var(--haze-deep); }
+/* Over a photograph the mark is white, with a soft dark shadow: the firm asked once for its green with the glaze
+   there and withdrew it the same minute ("i don't think that looks good with the glaze"). */
+.travel-mark-on-photo { color: #fff; filter: drop-shadow(0 1px 9px rgba(0, 0, 0, 0.3)); }
 .travel-mark-on-sheet { filter: var(--haze); }
 /* Rules later in this file that set "position" on a picture (the plan behind the statement) still apply. */
 .carries-mark { position: relative; z-index: 2; clip-path: inset(0); }
@@ -206,7 +211,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 }
 .float-links span { padding: 0.35rem 0 0.4rem; border-bottom: 1px solid transparent; }
 .float-links::before { content: ""; position: absolute; z-index: -1; inset: 0.5rem 0.3rem; border-radius: 1.5rem; background: var(--paper); filter: blur(0.4rem); opacity: 0.86; }
-/* The returning links keep their dark letters over a photograph as well, on the same white haze. */
+.float-links-on-photo { color: #fff; text-shadow: 0 0 2px rgba(0, 0, 0, 0.65), 0 1px 3px rgba(0, 0, 0, 0.55), 0 2px 16px rgba(0, 0, 0, 0.5); }
+.float-links-on-photo::before { content: none; }
 .nav-on .float-nav, .nav-on .float-links { opacity: 1; visibility: visible; transform: none; transition: opacity 0.3s ease, transform 0.3s ease; }
 
 /* Home opens with photographs of built work across the top of the page, which follow one another; the firm's
@@ -231,16 +237,10 @@ a.travel-mark:hover { color: var(--ink-strong); }
    them, and a Pause button stands in their lower right corner for a keyboard, unseen until it is reached. */
 .hero { position: relative; }
 .hero-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(0 0 0 / 0) 36%, rgb(0 0 0 / 0.5) 100%); pointer-events: none; }
-/* On a computer the photographs run up behind the header to the top of the window: the firm found the white band
-   above the photographs "too blank". The header's links and logo keep their own colors over the photograph, on the
-   white glaze they carry everywhere, which the firm asked for ("have the glaze around it so we can keep the
-   original colors"); the glaze is a little deeper there than over the page. On a phone the header keeps its white
-   band, since the photograph is low there. */
-@media (min-width: 40rem) {
-  .home .hero { margin-top: calc(-1 * var(--head-h)); }
-  .home .site-header .site-nav a { text-shadow: var(--haze-text), 0 0 18px var(--paper), 0 0 28px rgb(var(--paper-rgb) / 0.9); }
-  .home .site-header .logo img { filter: var(--haze-deep); }
-}
+/* The header keeps its white band above the photographs. The firm found that band "too blank", the photographs
+   were run up behind the header for a few minutes, and the firm asked for the band back ("that top part not
+   have the photo around it") and for the top left made "less boring" instead: the links are set larger there
+   (see the header's rules). */
 .hero-words { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter) clamp(1.75rem, 3.6vw, 3.25rem); pointer-events: none; }
 .hero-title, .hero-place { margin: 0; color: #fff; text-shadow: 0 1px 2px rgb(0 0 0 / 0.45), 0 2px 18px rgb(0 0 0 / 0.35); }
 .hero-title { font-size: var(--fs-large); font-weight: 300; line-height: 1.15; letter-spacing: -0.012em; }
@@ -417,8 +417,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 
 /* Page headings: the title at the left, a lead paragraph at the right. */
 .page-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem var(--col-gap); max-width: var(--page); margin: 0 auto; padding: clamp(2.5rem, 6vw, 5.5rem) var(--gutter) clamp(2rem, 4vw, 3.5rem); }
-/* The title of a page is set in the firm's green, darkened for text: the one place the color carries a word. */
-.page-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; color: var(--accent-ink); }
+.page-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; }
 /* A page with no drawing ("Page not found", "Inquiry sent") sets its title at the height every other title has. */
 @media (min-width: 64rem) { .page-head { padding-top: clamp(1rem, 1.6vw, 1.5rem); } }
 .page-lead p:last-child { max-width: 31em; margin: 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
@@ -471,7 +470,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
    found the title too slight there and the two columns awkward together. */
 .project-opening { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem var(--col-gap); }
 .project-kind { margin: 0 0 0.7rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; line-height: 1.3; text-transform: uppercase; color: var(--slate); }
-.project-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; color: var(--accent-ink); }
+.project-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; }
 .project-summary { max-width: 30em; margin: 1.1rem 0 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
 .project-lead, .project-text { max-width: 40rem; }
 .story-part + .story-part { margin-top: 2.75rem; }
