@@ -27,23 +27,24 @@ module.exports = function home(ctx) {
     const frames = slides.map((s, i) => `<div class="hero-slide${i === 0 ? ' is-active' : ''}"${place(s.focus) ? ` style="--focus: ${s.focus}"` : ''}>
       ${picture(ctx, s.project, s.photo, { sizes: '100vw', lazy: i > 0 })}
     </div>`).join('\n    ');
+    // The firm's statement stands over the photographs, in white at the lower left, as the opening of the site:
+    // without it the firm found that the page "just doesn't look like a home page".
     pictures = `<section class="hero" data-hero aria-label="Photographs of selected projects">
   <div class="hero-frame" data-photo>
     ${frames}
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-words"><p class="hero-statement">${esc(site.statement)}</p></div>
   </div>
   <button class="hero-toggle" type="button" data-hero-toggle hidden>Pause</button>
 </section>`;
   }
-  // The statement over one of the firm's plans, shown at its file's own size and centered: "backdrop" in site.json
-  // names a project and one of its drawings. On a phone the statement comes first and the whole plan follows.
+  // One of the firm's plans, shown at its file's own size and centered, with its credit: "backdrop" in site.json
+  // names a project and one of its drawings. The statement stood over it until it moved up onto the photographs.
   const back = planBackdrop(ctx, site.backdrop, { lazy: true, wide: true });
-  const statement = `<section class="statement home-statement${back.plan ? ' has-plan' : ''}"${back.ratio ? ` style="--plan-ratio: ${back.ratio}; --plan-w: ${back.width}px"` : ''}>
+  const statement = back.plan ? `<section class="statement home-statement has-plan" aria-label="A plan by the firm"${back.ratio ? ` style="--plan-ratio: ${back.ratio}; --plan-w: ${back.width}px"` : ''}>
   ${back.plan}
-  <div class="statement-inner">
-    <p class="statement-text">${esc(site.statement)}</p>
-  </div>
   ${back.credit}
-</section>`;
+</section>` : '';
 
   // A short account of the firm stands between the photographs and the plan: the first paragraph of the firm's
   // introduction, which stands whole on the Capabilities page. It carries no label: "The firm", with its short rule,

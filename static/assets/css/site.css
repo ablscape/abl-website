@@ -215,11 +215,20 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.6s ease; }
 .hero-slide.is-active { opacity: 1; }
 .hero-slide img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 50% 50%); }
-/* Nothing is written beneath the photographs: the line that named the project and its place stood there, at the
-   right and then not as a link, until the firm asked for it to come off. A picture that changes by itself must be
-   stoppable, so the photographs stop while the pointer rests on them, and a Pause button stands in their lower
-   right corner for a keyboard, unseen until it is reached. */
+/* The firm's statement stands over the photographs, in white at the lower left, over a soft darkening of the
+   photograph's foot that has no edge: the opening of the site, which the firm found did not "look like a home
+   page" while the photographs stood alone. Nothing is written beneath the photographs: the line that named the
+   project and its place stood there, at the right and then not as a link, until the firm asked for it to come
+   off. A picture that changes by itself must be stoppable, so the photographs stop while the pointer rests on
+   them, and a Pause button stands in their lower right corner for a keyboard, unseen until it is reached. */
 .hero { position: relative; }
+.hero-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(0 0 0 / 0) 36%, rgb(0 0 0 / 0.5) 100%); pointer-events: none; }
+.hero-words { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter) clamp(1.75rem, 3.6vw, 3.25rem); pointer-events: none; }
+.hero-statement {
+  max-width: 19em; margin: 0; font-size: var(--fs-large); font-weight: 300; line-height: 1.22; letter-spacing: -0.012em;
+  color: #fff; text-shadow: 0 1px 2px rgb(0 0 0 / 0.45), 0 2px 18px rgb(0 0 0 / 0.35); text-wrap: balance;
+}
+@media (max-width: 40rem) { .hero-statement { font-size: var(--fs-medium); line-height: 1.3; } .hero-words { padding-bottom: 1.1rem; } }
 .hero-toggle {
   position: absolute; right: clamp(1rem, 1.8vw, 2rem); bottom: 1rem; z-index: 1;
   padding: 0.3rem 0.7rem; border: 0; border-radius: 2px; background: rgb(var(--paper-rgb) / 0.92); color: var(--ink-strong);
@@ -227,8 +236,9 @@ a.travel-mark:hover { color: var(--ink-strong); }
   opacity: 0; pointer-events: none;
 }
 .hero-toggle:focus-visible { opacity: 1; pointer-events: auto; outline: 2px solid var(--accent); outline-offset: 2px; }
-/* On a phone the frame is three to two, which shows three quarters of each photograph's width. */
-@media (max-width: 40rem) { .hero-frame { aspect-ratio: 3 / 2; } }
+/* On a phone the frame is four to three, which shows two thirds of each photograph's width and leaves room for
+   the statement over its foot. */
+@media (max-width: 40rem) { .hero-frame { aspect-ratio: 4 / 3; } }
 /* On a computer the band is lower than the photographs: 5 to 2, and never taller than 72 percent of the window.
    The firm asked that the photograph be cropped to span the window, not enlarged to fill it ("i just don't like
    how far down it goes", of a band of 14 to 5 and at most 58 percent), and then asked three times for the band
@@ -281,20 +291,18 @@ a.travel-mark:hover { color: var(--ink-strong); }
   }
   .statement-text { max-width: min(19.5em, 56vw); }
   /* On the home page the plan stands under the account of the firm at its file's own size, 1,280 pixels wide
-     for the Lime Kiln plan, centered, with the statement set over it in the upper left: the firm asked for the
-     plan to span the page with the statement superimposed (round 23), then for the block to take the whole
-     window, and then, finding the plan "too blurry" and the words too large at that size, to "keep it to the
-     extent of the original file's dimensions and make the words smaller". The plan is never enlarged past its
-     own pixels on the page (on a Retina screen it is still shown at twice them; a larger scan would cure that).
-     In a window narrower than the file the plan is as wide as the window. It is lightened under the words, with
-     no box, and rises out of the page at its head, sides and foot, so that it has no edge. The statement stands
-     over the plan's open ground, clear of the theater and its parking, which are the subject of the drawing. */
+     for the Lime Kiln plan, centered, with its credit beneath. The firm asked for the plan to span the page with
+     the statement superimposed (round 23), then for the block to take the whole window, and then, finding the
+     plan "too blurry" and the words too large at that size, to "keep it to the extent of the original file's
+     dimensions and make the words smaller"; in round 24 the statement moved up onto the photographs, and the plan
+     stands alone. The plan is never enlarged past its own pixels on the page (on a Retina screen it is still
+     shown at twice them; a larger scan would cure that). In a window narrower than the file the plan is as wide
+     as the window. It rises out of the page at its head, sides and foot, so that it has no edge. */
   .home-statement { margin-top: clamp(1.5rem, 3vw, 3rem); }
   .home-statement.has-plan { min-height: min(calc(min(100vw, var(--plan-w, 1280px)) / (var(--plan-ratio, 2 / 1))), 90vh); }
   .home-statement .statement-plan { left: 0; right: 0; width: min(100%, var(--plan-w, 1280px)); max-width: none; margin-inline: auto; aspect-ratio: auto; }
   .home-statement .statement-plan::after {
     background:
-      radial-gradient(ellipse 60% 44% at 20% 30%, rgb(var(--paper-rgb) / 0.86) 0%, rgb(var(--paper-rgb) / 0.8) 52%, rgb(var(--paper-rgb) / 0.4) 76%, rgb(var(--paper-rgb) / 0) 100%),
       linear-gradient(90deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 7%, rgb(var(--paper-rgb) / 0) 93%, var(--paper) 100%),
       linear-gradient(180deg, var(--paper) 0%, rgb(var(--paper-rgb) / 0) 12%, rgb(var(--paper-rgb) / 0) 87%, var(--paper) calc(100% - 1rem));
   }
