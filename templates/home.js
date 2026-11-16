@@ -27,24 +27,30 @@ module.exports = function home(ctx) {
     const frames = slides.map((s, i) => `<div class="hero-slide${i === 0 ? ' is-active' : ''}"${place(s.focus) ? ` style="--focus: ${s.focus}"` : ''}>
       ${picture(ctx, s.project, s.photo, { sizes: '100vw', lazy: i > 0 })}
     </div>`).join('\n    ');
-    // The firm's statement stands over the photographs, in white at the lower left, as the opening of the site:
-    // without it the firm found that the page "just doesn't look like a home page".
+    // The firm's name and its town stand over the photographs, in white at the lower left, as the opening of the
+    // site: with the photographs alone the firm found that the page "just doesn't look like a home page", and it
+    // wanted the statement kept over the plan below. The town is the last line of the address, without its ZIP code.
+    const town = (Array.isArray(site.address) && site.address.length ? String(site.address[site.address.length - 1]) : '').replace(/\s+\d{5}(-\d{4})?$/, '');
     pictures = `<section class="hero" data-hero aria-label="Photographs of selected projects">
   <div class="hero-frame" data-photo>
     ${frames}
     <div class="hero-scrim" aria-hidden="true"></div>
-    <div class="hero-words"><p class="hero-statement">${esc(site.statement)}</p></div>
+    <div class="hero-words"><p class="hero-title">${esc(site.name)}</p>${town ? `<p class="hero-place">${esc(town)}</p>` : ''}</div>
   </div>
   <button class="hero-toggle" type="button" data-hero-toggle hidden>Pause</button>
 </section>`;
   }
-  // One of the firm's plans, shown at its file's own size and centered, with its credit: "backdrop" in site.json
-  // names a project and one of its drawings. The statement stood over it until it moved up onto the photographs.
+  // The statement over one of the firm's plans, shown at its file's own size and centered: "backdrop" in site.json
+  // names a project and one of its drawings. The firm likes the statement here ("i liked the text ... over the
+  // sketch"). On a phone the statement comes first and the whole plan follows.
   const back = planBackdrop(ctx, site.backdrop, { lazy: true, wide: true });
-  const statement = back.plan ? `<section class="statement home-statement has-plan" aria-label="A plan by the firm"${back.ratio ? ` style="--plan-ratio: ${back.ratio}; --plan-w: ${back.width}px"` : ''}>
+  const statement = `<section class="statement home-statement${back.plan ? ' has-plan' : ''}"${back.ratio ? ` style="--plan-ratio: ${back.ratio}; --plan-w: ${back.width}px"` : ''}>
   ${back.plan}
+  <div class="statement-inner">
+    <p class="statement-text">${esc(site.statement)}</p>
+  </div>
   ${back.credit}
-</section>` : '';
+</section>`;
 
   // A short account of the firm stands between the photographs and the plan: the first paragraph of the firm's
   // introduction, which stands whole on the Capabilities page. It carries no label: "The firm", with its short rule,
