@@ -19,8 +19,14 @@
   --slate: #626865;        /* captions, labels, secondary text */
   --hair: #dbe0dc;         /* hairlines */
   --fill: #e8ece9;         /* empty frames: a cool gray, never a warm one */
-  --sage: #648070;         /* the green of the logo's "abl": the traveling mark and the block at the foot of every page */
-  --accent: #b1563a;       /* terracotta, the one warm color: short rules, numerals, links on hover */
+  --sage: #648070;         /* the green of the logo's "abl": the traveling mark, the block at the foot of every page, and
+                              every accent (short rules, underlines, the current link, the Send button under the pointer) */
+  --sage-ink: #4b6354;     /* the same green darkened for small text on white (6.5 to 1 against the page): numerals,
+                              the kind of a project, links. The firm asked for more of the logo's green through the
+                              site, "done in a tasteful and professional way". The warm terracotta that carried the
+                              accents until then is gone: one color, the firm's own, used sparingly. */
+  --accent: var(--sage);
+  --accent-ink: var(--sage-ink);
   --note: #b9c3bf;         /* preview notes only, never on the live site: gray, so that the notes lend the pages no color */
   --note-wash: #e7ebe8;
 
@@ -92,7 +98,7 @@ img { display: block; max-width: 100%; height: auto; }
 h1, h2, h3 { font-weight: 400; line-height: 1.15; margin: 0; color: var(--ink-strong); }
 p { margin: 0 0 1em; }
 a { color: inherit; text-decoration: none; }
-a:hover { color: var(--accent); }
+a:hover { color: var(--accent-ink); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 figure { margin: 0; }
 figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; color: var(--slate); }
@@ -102,8 +108,8 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .skip-link:focus { left: 1rem; top: 1rem; z-index: 20; background: var(--paper); padding: 0.5rem 0.75rem; }
 
 /* A link in running text or standing alone: dark, on a terracotta rule. */
-.text-link { color: var(--ink-strong); padding-bottom: 0.12em; border-bottom: 1px solid var(--accent); }
-.text-link:hover { color: var(--accent); }
+.text-link { color: var(--accent-ink); padding-bottom: 0.12em; border-bottom: 1px solid var(--accent); }
+.text-link:hover { color: var(--ink-strong); border-bottom-color: var(--ink-strong); }
 
 /* The heading of a section, under a short terracotta rule. */
 .section-label { margin: 0 0 clamp(1.75rem, 3vw, 2.75rem); font-size: var(--fs-medium); font-weight: 400; line-height: 1.3; color: var(--ink-strong); }
@@ -381,9 +387,9 @@ a.travel-mark:hover { color: var(--ink-strong); }
 /* A drawing in the home page's row is not a link, so it keeps still under the pointer. */
 .card-still:hover .drawing-image img { transform: none; }
 .card-still:hover .card-title { color: var(--ink-strong); }
-.card-kind { display: block; margin-top: 1.05rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; line-height: 1.3; text-transform: uppercase; color: var(--slate); }
+.card-kind { display: block; margin-top: 1.05rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; line-height: 1.3; text-transform: uppercase; color: var(--accent-ink); }
 .card-title { display: block; margin-top: 0.3rem; font-size: var(--fs-medium); font-weight: 400; line-height: 1.25; color: var(--ink-strong); transition: color 0.2s ease; }
-.card:hover .card-title { color: var(--accent); }
+.card:hover .card-title { color: var(--accent-ink); }
 .card-meta { display: block; margin-top: 0.2rem; font-size: var(--fs-small); line-height: 1.4; color: var(--slate); }
 
 /* The firm's plans in a row. */
@@ -396,7 +402,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 
 /* Page headings: the title at the left, a lead paragraph at the right. */
 .page-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem var(--col-gap); max-width: var(--page); margin: 0 auto; padding: clamp(2.5rem, 6vw, 5.5rem) var(--gutter) clamp(2rem, 4vw, 3.5rem); }
-.page-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; }
+/* The title of a page is set in the firm's green, darkened for text: the one place the color carries a word. */
+.page-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; color: var(--accent-ink); }
 /* A page with no drawing ("Page not found", "Inquiry sent") sets its title at the height every other title has. */
 @media (min-width: 64rem) { .page-head { padding-top: clamp(1rem, 1.6vw, 1.5rem); } }
 .page-lead p:last-child { max-width: 31em; margin: 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
@@ -449,7 +456,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
    found the title too slight there and the two columns awkward together. */
 .project-opening { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem var(--col-gap); }
 .project-kind { margin: 0 0 0.7rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; line-height: 1.3; text-transform: uppercase; color: var(--slate); }
-.project-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; }
+.project-head h1 { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.015em; color: var(--accent-ink); }
 .project-summary { max-width: 30em; margin: 1.1rem 0 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.42; color: var(--ink-strong); }
 .project-lead, .project-text { max-width: 40rem; }
 .story-part + .story-part { margin-top: 2.75rem; }
@@ -520,7 +527,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 }
 .next-label { display: block; margin-bottom: 0.3rem; color: var(--slate); font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; }
 .next-title { font-size: var(--fs-large); font-weight: 300; letter-spacing: -0.01em; color: var(--ink-strong); transition: color 0.2s ease; }
-.project-next a:hover .next-title { color: var(--accent); }
+.project-next a:hover .next-title { color: var(--accent-ink); }
 .project-next .all-work { font-size: var(--fs-text); }
 
 /* Capabilities and Process: text in the right-hand columns, under the heading. On Capabilities it is the firm's
@@ -561,7 +568,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .dg-head { fill: none; stroke: var(--ink-strong); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
 .dg-node { fill: var(--ink-strong); }
 .dg-label { fill: var(--ink-strong); font: 500 17px var(--sans); }
-.dg-center { fill: var(--accent); font: 300 21px var(--sans); letter-spacing: 0.02em; }
+.dg-center { fill: var(--accent-ink); font: 300 21px var(--sans); letter-spacing: 0.02em; }
 
 /* Work, People, Process and Contact open over one of the firm's drawings, named in "backdrop" under each page in site.json. */
 .page-statement { margin: 0; }
@@ -602,7 +609,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .part:last-child { padding-bottom: 0; }
 .part-head { margin: 0 0 1.4rem; }
 .part-title { margin: 0; font-size: var(--fs-medium); font-weight: 400; line-height: 1.3; color: var(--ink-strong); }
-.part-number { display: block; margin-bottom: 0.4rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.06em; line-height: 1.3; font-variant-numeric: tabular-nums; color: var(--accent); }
+.part-number { display: block; margin-bottom: 0.4rem; font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.06em; line-height: 1.3; font-variant-numeric: tabular-nums; color: var(--accent-ink); }
 .part-body > p { max-width: 38rem; margin: 0 0 1em; font-size: var(--fs-text); line-height: 1.62; }
 .part-body > :last-child { margin-bottom: 0; }
 @media (min-width: 56rem) {
@@ -640,7 +647,8 @@ a.travel-mark:hover { color: var(--ink-strong); }
 }
 address { font-size: var(--fs-text); font-style: normal; line-height: 1.55; }
 address p { margin-bottom: 1.2rem; }
-address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px solid var(--accent); }
+address a { color: var(--accent-ink); padding-bottom: 0.1em; border-bottom: 1px solid var(--accent); }
+address a:hover { color: var(--ink-strong); border-bottom-color: var(--ink-strong); }
 .contact-pointer { max-width: 22rem; margin-top: 2.25rem; font-size: var(--fs-small); color: var(--slate); }
 
 /* The form stands in the text's column with no box around it: its fields are the only frames. */
@@ -654,10 +662,10 @@ address a { color: var(--ink-strong); padding-bottom: 0.1em; border-bottom: 1px 
   border: 1px solid #bcc3be; border-radius: 0; background: #fff; color: var(--ink);
   font: 400 1.05rem/1.4 var(--sans);
 }
-.inquiry input:focus, .inquiry select:focus, .inquiry textarea:focus { border-color: var(--ink-strong); outline: none; }
+.inquiry input:focus, .inquiry select:focus, .inquiry textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 1px var(--accent); }
 .inquiry textarea { resize: vertical; }
 .inquiry button { padding: 0.9rem 1.6rem; border: 1px solid var(--ink-strong); background: var(--ink-strong); color: var(--paper); font: 500 1.02rem/1 var(--sans); cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease; }
-.inquiry button:hover { background: var(--accent); border-color: var(--accent); }
+.inquiry button:hover { background: var(--accent-ink); border-color: var(--accent-ink); }
 .inquiry p:last-child { margin-bottom: 0; }
 .trap { position: absolute; left: -999rem; }
 
