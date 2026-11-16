@@ -212,14 +212,16 @@ a.travel-mark:hover { color: var(--ink-strong); }
 .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.6s ease; }
 .hero-slide.is-active { opacity: 1; }
 .hero-slide img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 50% 50%); }
+/* The line beneath the photographs names the project and its place, at the right, at the outer edge of the window
+   where the credits of the drawings stand; the firm asked for it at the right and not clickable. Pause stays, since
+   a picture that changes by itself must be stoppable. */
 .hero-bar {
-  display: flex; align-items: baseline; justify-content: flex-start; gap: 1.5rem;
-  max-width: var(--page); margin: 0 auto; padding: 0.85rem var(--gutter) 0;
+  display: flex; align-items: baseline; justify-content: flex-end; gap: 1.5rem;
+  margin: 0; padding: 0.85rem clamp(1rem, 1.8vw, 2rem) 0;
   font-size: var(--fs-small); line-height: 1.4; color: var(--slate);
 }
-.hero-caption { margin: 0; }
-.hero-caption a { color: var(--ink-strong); font-weight: 500; }
-.hero-caption a:hover { color: var(--accent); }
+.hero-caption { margin: 0; text-align: right; }
+.hero-caption [data-hero-link] { color: var(--ink-strong); font-weight: 500; }
 .hero-toggle { flex: none; padding: 0; border: 0; background: none; color: var(--slate); font: inherit; cursor: pointer; }
 .hero-toggle:hover { color: var(--accent); }
 /* On a phone the frame is three to two, which shows three quarters of each photograph's width. */
@@ -240,7 +242,9 @@ a.travel-mark:hover { color: var(--ink-strong); }
    and as wide as its own proportions make it, with the text at the left, and behind a page's heading it reaches
    up behind the header to the top of the window. On a phone or a tablet the text comes first and the whole
    drawing follows across the page. */
-.statement { position: relative; display: grid; align-items: center; margin-top: clamp(1.5rem, 4vw, 3.5rem); }
+/* The block keeps its stacking to itself ("isolation"), so that its text, which lies above its drawing, still
+   passes beneath the mark and the returning links: the firm saw text going in front of the "abl". */
+.statement { position: relative; isolation: isolate; display: grid; align-items: center; margin-top: clamp(1.5rem, 4vw, 3.5rem); }
 @media (min-width: 64rem) { .statement.has-plan { min-height: min(54vh, 34rem); } }
 .statement-plan { position: absolute; inset: 0; overflow: hidden; }
 .statement-plan img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 50% 50%); filter: brightness(var(--lift, 1)) var(--plan-key); }
@@ -340,10 +344,11 @@ a.travel-mark:hover { color: var(--ink-strong); }
    page until round 20, where the firm found it hidden, beside the plan in rounds 20 and 21, where the firm
    wanted the statement instead, and under the statement in round 22; in round 23 the firm asked for it above
    the plan. */
-.firm { padding-top: clamp(2.5rem, 4.5vw, 4rem); }
+.firm { padding-top: clamp(2.5rem, 4.5vw, 4rem); text-align: center; }
 .firm > .section-label, .firm-text { max-width: 34em; margin-inline: auto; }
 .firm > .section-label { margin-bottom: 1.1rem; }
-.firm-text { margin-block: 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.45; color: var(--ink-strong); }
+.firm > .section-label::before { margin-inline: auto; }
+.firm-text { margin-block: 0; font-size: var(--fs-medium); font-weight: 300; line-height: 1.45; color: var(--ink-strong); text-wrap: balance; }
 
 /* Selected work on the home page is listed as the Work page lists every project, two to a line, but inside the
    page's margins: the firm asked for the Work page's pictures larger and for these a little smaller. */

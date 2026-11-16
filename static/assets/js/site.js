@@ -120,7 +120,6 @@
       var slide = slides[index];
       slide.classList.add('is-active');
       link.textContent = slide.getAttribute('data-title');
-      link.setAttribute('href', slide.getAttribute('data-href'));
       place.textContent = ', ' + slide.getAttribute('data-place');
     };
     var start = function () {

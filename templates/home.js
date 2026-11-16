@@ -18,12 +18,13 @@ module.exports = function home(ctx) {
     .filter(Boolean);
 
   // The photographs across the top. The band is lower than the photographs are, so each is trimmed a little at its
-  // head and foot; a slide in site.json may say where its subject sits, as "focus": "50% 100%".
+  // head and foot; a slide in site.json may say where its subject sits, as "focus": "50% 100%". The line beneath
+  // names the project and its place, and is not a link: the firm asked for the names not to be clickable.
   const place = (v) => (typeof v === 'string' && /^\d{1,3}% \d{1,3}%$/.test(v) ? v : '');
   let pictures = '';
   if (slides.length) {
     const first = slides[0];
-    const frames = slides.map((s, i) => `<div class="hero-slide${i === 0 ? ' is-active' : ''}"${place(s.focus) ? ` style="--focus: ${s.focus}"` : ''} data-title="${esc(s.project.title)}" data-place="${esc(s.project.location)}" data-href="${u(s.project.url)}">
+    const frames = slides.map((s, i) => `<div class="hero-slide${i === 0 ? ' is-active' : ''}"${place(s.focus) ? ` style="--focus: ${s.focus}"` : ''} data-title="${esc(s.project.title)}" data-place="${esc(s.project.location)}">
       ${picture(ctx, s.project, s.photo, { sizes: '100vw', lazy: i > 0 })}
     </div>`).join('\n    ');
     pictures = `<section class="hero" data-hero aria-label="Photographs of selected projects">
@@ -31,7 +32,7 @@ module.exports = function home(ctx) {
     ${frames}
   </div>
   <div class="hero-bar">
-    <p class="hero-caption"><a data-hero-link href="${u(first.project.url)}">${esc(first.project.title)}</a><span data-hero-place>, ${esc(first.project.location)}</span></p>
+    <p class="hero-caption"><span data-hero-link>${esc(first.project.title)}</span><span data-hero-place>, ${esc(first.project.location)}</span></p>
     <button class="hero-toggle" type="button" data-hero-toggle hidden>Pause</button>
   </div>
 </section>`;
