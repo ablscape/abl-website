@@ -102,12 +102,12 @@
     root.classList.add('mark-ready');
   }
 
-  // Home: fade from one photograph to the next. Visitors can pause it.
+  // Home: fade from one photograph to the next. The photographs stop while the pointer rests on them; a keyboard
+  // finds a Pause button in their corner; and they do not move for a visitor whose system asks for less motion.
   var hero = document.querySelector('[data-hero]');
   if (hero) {
     var slides = hero.querySelectorAll('.hero-slide');
-    var link = hero.querySelector('[data-hero-link]');
-    var place = hero.querySelector('[data-hero-place]');
+    var frame = hero.querySelector('.hero-frame');
     var toggle = hero.querySelector('[data-hero-toggle]');
     var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var index = 0;
@@ -117,10 +117,7 @@
     var show = function (next) {
       slides[index].classList.remove('is-active');
       index = next % slides.length;
-      var slide = slides[index];
-      slide.classList.add('is-active');
-      link.textContent = slide.getAttribute('data-title');
-      place.textContent = ', ' + slide.getAttribute('data-place');
+      slides[index].classList.add('is-active');
     };
     var start = function () {
       if (timer || paused || slides.length < 2) return;
@@ -142,6 +139,8 @@
       document.addEventListener('visibilitychange', function () {
         if (document.hidden) stop(); else start();
       });
+      frame.addEventListener('mouseenter', stop);
+      frame.addEventListener('mouseleave', start);
       start();
     }
   }
