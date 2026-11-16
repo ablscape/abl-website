@@ -128,8 +128,12 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .draft-tag { margin-left: 0.6rem; padding: 0.15rem 0.4rem 0.2rem; background: var(--note); font-size: var(--fs-small); font-weight: 500; line-height: 1; letter-spacing: 0; vertical-align: middle; color: var(--ink-strong); }
 
 /* Header: the links at the left, the logo at the right. */
+/* The links stand level with the logo, centered on its height and a pixel lower, so that the middle of their
+   lowercase letters falls between the middle of the "abl" and the middle of the logo's words: the firm asked for
+   them "aligned vertically with the logo". The returning links (.float-nav) are placed to the same line; change
+   one and change the other. scripts/xheight.py measures the two. */
 .site-header {
-  display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   width: 100%; max-width: var(--page); margin: 0 auto; padding: var(--head-pad) var(--gutter) 1.5rem;
   /* On a wide screen the drawing behind a page's heading stands at the right and runs up behind the header, which
      stands above it. The drawing is lightened there and cleared where the logo stands (see the drawing's own
@@ -140,6 +144,7 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .site-header .logo { position: relative; }
 .site-header .logo img { position: relative; filter: var(--haze); }
 .site-header .site-nav a { text-shadow: var(--haze-text); }
+@media (min-width: 40rem) { .site-header .site-nav { position: relative; top: 1px; } }
 /* The links are set at 1rem, a little under running text, with room between them, so that the top left of the
    page has some weight against the logo at the right and their letters stand a little smaller than the logo's
    words (whose x-height is 9.25 px at the logo's 232 px; a link's is 8.2 px here): the firm found the top left
@@ -196,7 +201,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
    links themselves lie on top, unseen, to take the pointer and the keyboard, and show only their
    terracotta rule. */
 .float-nav, .float-links {
-  position: fixed; top: calc(var(--head-pad) - 0.7rem); left: calc(var(--edge-box) - 0.9rem);
+  position: fixed; top: calc(var(--head-pad) + (var(--logo-w) * 40 / 232 - 1.75rem - 1px) / 2 + 1px - 0.7rem); left: calc(var(--edge-box) - 0.9rem);
   padding: 0.7rem 0.9rem; font-weight: 500;
   opacity: 0; visibility: hidden; transform: translateY(-0.4rem);
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
