@@ -175,7 +175,9 @@ figcaption { margin-top: 0.6rem; font-size: var(--fs-small); line-height: 1.4; c
 .travel-mark svg { display: block; width: 100%; height: auto; fill: currentColor; }
 a.travel-mark:hover { color: var(--ink-strong); }
 .travel-mark-on-photo, .travel-mark-on-sheet { pointer-events: none; }
-.travel-mark-on-photo { color: #fff; filter: drop-shadow(0 1px 9px rgba(0, 0, 0, 0.3)); }
+/* Over a photograph the mark keeps its green, with the white glaze around it, as it has over the page: the firm
+   asked for "the glaze around it so we can keep the original colors" (it was white over photographs until then). */
+.travel-mark-on-photo { color: var(--sage); filter: var(--haze-deep); }
 .travel-mark-on-sheet { filter: var(--haze); }
 /* Rules later in this file that set "position" on a picture (the plan behind the statement) still apply. */
 .carries-mark { position: relative; z-index: 2; clip-path: inset(0); }
@@ -204,8 +206,7 @@ a.travel-mark:hover { color: var(--ink-strong); }
 }
 .float-links span { padding: 0.35rem 0 0.4rem; border-bottom: 1px solid transparent; }
 .float-links::before { content: ""; position: absolute; z-index: -1; inset: 0.5rem 0.3rem; border-radius: 1.5rem; background: var(--paper); filter: blur(0.4rem); opacity: 0.86; }
-.float-links-on-photo { color: #fff; text-shadow: 0 0 2px rgba(0, 0, 0, 0.65), 0 1px 3px rgba(0, 0, 0, 0.55), 0 2px 16px rgba(0, 0, 0, 0.5); }
-.float-links-on-photo::before { content: none; }
+/* The returning links keep their dark letters over a photograph as well, on the same white haze. */
 .nav-on .float-nav, .nav-on .float-links { opacity: 1; visibility: visible; transform: none; transition: opacity 0.3s ease, transform 0.3s ease; }
 
 /* Home opens with photographs of built work across the top of the page, which follow one another; the firm's
@@ -230,6 +231,16 @@ a.travel-mark:hover { color: var(--ink-strong); }
    them, and a Pause button stands in their lower right corner for a keyboard, unseen until it is reached. */
 .hero { position: relative; }
 .hero-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(0 0 0 / 0) 36%, rgb(0 0 0 / 0.5) 100%); pointer-events: none; }
+/* On a computer the photographs run up behind the header to the top of the window: the firm found the white band
+   above the photographs "too blank". The header's links and logo keep their own colors over the photograph, on the
+   white glaze they carry everywhere, which the firm asked for ("have the glaze around it so we can keep the
+   original colors"); the glaze is a little deeper there than over the page. On a phone the header keeps its white
+   band, since the photograph is low there. */
+@media (min-width: 40rem) {
+  .home .hero { margin-top: calc(-1 * var(--head-h)); }
+  .home .site-header .site-nav a { text-shadow: var(--haze-text), 0 0 18px var(--paper), 0 0 28px rgb(var(--paper-rgb) / 0.9); }
+  .home .site-header .logo img { filter: var(--haze-deep); }
+}
 .hero-words { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter) clamp(1.75rem, 3.6vw, 3.25rem); pointer-events: none; }
 .hero-title, .hero-place { margin: 0; color: #fff; text-shadow: 0 1px 2px rgb(0 0 0 / 0.45), 0 2px 18px rgb(0 0 0 / 0.35); }
 .hero-title { font-size: var(--fs-large); font-weight: 300; line-height: 1.15; letter-spacing: -0.012em; }
