@@ -1,0 +1,43 @@
+{
+  "title": "Kendal at Lexington",
+  "location": "Rockbridge County, Virginia",
+  "client": "",
+  "year": "",
+  "type": "Civic",
+  "role": "Master plan; full landscape architecture services, first phase",
+  "collaborators": [
+    "Dorsky Hodgson Architects"
+  ],
+  "status": "draft",
+  "featured": true,
+  "order": 6,
+  "summary": "The master plan and first-phase landscape of a continuing care retirement community, with a cultural landscape report for Sunnyside, its early nineteenth-century house.",
+  "reviewNote": "Existing text from the current site. The client, the year and the four-part story are still to come.",
+  "description": [
+    "Master Plan in collaboration with Dorsky Hodgson Architects and full Landscape Architecture services for first phase Kendal at Lexington Continuing Care Retirement Community. ABL not included in Phase II planning but called back following Phase II completion to address expansion related landscape issues. Cultural Landscape Report and Landscape Master Plan also prepared for the property's early 19th Century plantation home, \"Sunnyside\", now overnight lodge and community center."
+  ],
+  "cover": "01",
+  "photos": [
+    {
+      "file": "01",
+      "alt": "Lawn and a curving walk below residential buildings, with a wooded ridge in mist behind",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "02",
+      "alt": "Meadow and trees with the community's rooftops below and mountain ridges beyond",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "03",
+      "alt": "Two-story white house with a red metal roof, dark shutters and a long front porch",
+      "caption": "",
+      "credit": ""
+    }
+  ],
+  "legacyUrls": [
+    "kendal.html"
+  ]
+}

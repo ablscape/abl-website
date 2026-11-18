@@ -1,9 +1,11 @@
 'use strict';
 
-const { esc, picture } = require('../lib/html');
-const { projectCard } = require('./parts');
+const { esc, picture, liftStyle } = require('../lib/html');
+const { projectCard, sectionLabel, planBackdrop } = require('./parts');
 
-// Home: a few photographs, the firm's statement, and the featured projects.
+// Home: photographs of built work across the whole width of the window, in a low band; a short account of the
+// firm; one of the firm's own plans across the whole width of the window, with the firm's statement set over
+// it; the featured projects; and a row of the firm's drawings.
 module.exports = function home(ctx) {
   const { site, projects, u } = ctx;
 
@@ -11,35 +13,81 @@ module.exports = function home(ctx) {
     .map((slide) => {
       const project = projects.find((p) => p.slug === slide.project);
       const photo = project && project.photos.find((ph) => ph.file === slide.photo);
-      return project && photo ? { project, photo } : null;
+      return project && photo ? { project, photo, focus: slide.focus } : null;
     })
     .filter(Boolean);
 
-  let hero = '';
+  // The photographs across the top. The band is lower than the photographs are, so each is trimmed a little at its
+  // head and foot; a slide in site.json may say where its subject sits, as "focus": "50% 100%". Nothing is written
+  // beneath them: the line that named the project and its place came off at the firm's word. The photographs stop
+  // while the pointer rests on them, and a Pause button, shown only to a keyboard, stands in their corner.
+  const place = (v) => (typeof v === 'string' && /^\d{1,3}% \d{1,3}%$/.test(v) ? v : '');
+  let pictures = '';
   if (slides.length) {
-    const first = slides[0];
-    const frames = slides.map((s, i) => `<div class="hero-slide${i === 0 ? ' is-active' : ''}" data-title="${esc(s.project.title)}" data-place="${esc(s.project.location)}" data-href="${u(s.project.url)}">
+    const frames = slides.map((s, i) => `<div class="hero-slide${i === 0 ? ' is-active' : ''}"${place(s.focus) ? ` style="--focus: ${s.focus}"` : ''}>
       ${picture(ctx, s.project, s.photo, { sizes: '100vw', lazy: i > 0 })}
     </div>`).join('\n    ');
-    hero = `<section class="hero" data-hero aria-label="Photographs of selected projects">
-  <div class="hero-frame">
+    // The firm's name and its town stand over the photographs, in white at the lower left, as the opening of the
+    // site: with the photographs alone the firm found that the page "just doesn't look like a home page", and it
+    // wanted the statement kept over the plan below. The town is the last line of the address, without its ZIP code.
+    const town = (Array.isArray(site.address) && site.address.length ? String(site.address[site.address.length - 1]) : '').replace(/\s+\d{5}(-\d{4})?$/, '');
+    pictures = `<section class="hero" data-hero aria-label="Photographs of selected projects">
+  <div class="hero-frame" data-photo>
     ${frames}
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-words"><p class="hero-title">${esc(site.name)}</p>${town ? `<p class="hero-place">${esc(town)}</p>` : ''}</div>
   </div>
-  <div class="hero-bar">
-    <p class="hero-caption"><a data-hero-link href="${u(first.project.url)}">${esc(first.project.title)}</a><span data-hero-place>, ${esc(first.project.location)}</span></p>
-    <button class="hero-toggle" type="button" data-hero-toggle hidden>Pause</button>
-  </div>
+  <button class="hero-toggle" type="button" data-hero-toggle hidden>Pause</button>
 </section>`;
   }
+  // The statement over one of the firm's plans, shown at its file's own size and centered: "backdrop" in site.json
+  // names a project and one of its drawings. The firm likes the statement here ("i liked the text ... over the
+  // sketch"). On a phone the statement comes first and the whole plan follows.
+  const back = planBackdrop(ctx, site.backdrop, { lazy: true, wide: true });
+  const statement = `<section class="statement home-statement${back.plan ? ' has-plan' : ''}"${back.ratio ? ` style="--plan-ratio: ${back.ratio}; --plan-w: ${back.width}px"` : ''}>
+  ${back.plan}
+  <div class="statement-inner">
+    <p class="statement-text">${esc(site.statement)}</p>
+  </div>
+  ${back.credit}
+</section>`;
+
+  // A short account of the firm stands between the photographs and the plan: the first paragraph of the firm's
+  // introduction, which stands whole on the Capabilities page. It carries no label: "The firm", with its short rule,
+  // stood over it until the firm said "i don't like - the firm".
+  const caps = site.capabilities || {};
+  const intro = Array.isArray(caps.intro) && caps.intro.length ? caps.intro[0] : '';
+  const firm = intro ? `<section class="firm" aria-label="About the firm">
+  <p class="firm-text">${esc(intro)}</p>
+</section>` : '';
 
   const featured = projects.filter((p) => p.featured);
   const shown = featured.length ? featured : projects.slice(0, 3);
   const selected = shown.length ? `<section class="selected">
-  <h2>Selected work</h2>
-  <div class="selected-grid">
-    ${shown.map((p, i) => projectCard(ctx, p, i === 0 ? '(min-width: 900px) 58vw, 100vw' : '(min-width: 900px) 38vw, 100vw')).join('\n    ')}
-  </div>
-  <p class="more"><a href="${u('/work/')}">All work</a></p>
+  ${sectionLabel('Selected work')}
+  <ul class="project-list">
+    ${shown.map((p) => `<li>${projectCard(ctx, p, '(min-width: 1500px) 680px, (min-width: 768px) 46vw, 92vw')}</li>`).join('\n    ')}
+  </ul>
+  <p class="more"><a class="text-link" href="${u('/work/')}">All work</a></p>
+</section>` : '';
+
+  // The firm's own plans and sketches, each named by its project alone: the firm asked for the kind of drawing
+  // ("Plan of the entrance") to be left out, and for the drawings and their names not to be links.
+  const sheets = site.drawings
+    .map((entry) => {
+      const project = projects.find((p) => p.slug === entry.project);
+      const drawing = project && project.drawings.find((d) => d.file === entry.file);
+      return project && drawing ? { project, drawing } : null;
+    })
+    .filter(Boolean);
+  const drawings = sheets.length ? `<section class="drawings">
+  ${sectionLabel('Plans and drawings')}
+  <ul class="drawing-row">
+    ${sheets.map(({ project, drawing }) => `<li><div class="card card-still">
+      <span class="drawing-image" data-sheet${liftStyle(drawing)}>${picture(ctx, project, drawing, { sizes: '(min-width: 900px) 30vw, 100vw' })}</span>
+      <span class="card-title">${esc(project.title)}</span>
+    </div></li>`).join('\n    ')}
+  </ul>
 </section>` : '';
 
   return {
@@ -47,10 +95,10 @@ module.exports = function home(ctx) {
     bodyClass: 'home',
     image: slides.length ? `/work/${slides[0].project.slug}/photos/${slides[0].photo.variants[slides[0].photo.variants.length - 1].name}` : '',
     body: `<h1 class="visually-hidden">${esc(site.name)}</h1>
-${hero}
-<section class="statement">
-  <p>${esc(site.statement)}</p>
-</section>
-${selected}`,
+${pictures}
+${firm}
+${statement}
+${selected}
+${drawings}`,
   };
 };

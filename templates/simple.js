@@ -9,8 +9,8 @@ function sent(ctx) {
   <h1>Inquiry sent</h1>
 </div>
 <section class="plain">
-  <p>Thank you. Your inquiry has reached the studio.</p>
-  <p><a href="${ctx.u('/work/')}">See the work</a></p>
+  <p>Thank you. Your inquiry has reached the firm.</p>
+  <p><a class="text-link" href="${ctx.u('/work/')}">See the work</a></p>
 </section>`,
   };
 }
@@ -23,7 +23,7 @@ function notFound(ctx) {
 </div>
 <section class="plain">
   <p>That address does not match a page on this site. The project you want may have moved.</p>
-  <p><a href="${ctx.u('/work/')}">See all work</a></p>
+  <p><a class="text-link" href="${ctx.u('/work/')}">See all work</a></p>
 </section>`,
   };
 }

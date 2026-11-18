@@ -1,0 +1,50 @@
+{
+  "title": "Virginia Tech War Memorial Honor Court",
+  "location": "Blacksburg, Virginia",
+  "client": "",
+  "year": "",
+  "type": "Campus",
+  "role": "Conceptual design",
+  "collaborators": [
+    "Peter Giraudeau, perspectives"
+  ],
+  "status": "draft",
+  "featured": false,
+  "order": 9,
+  "summary": "A conceptual design to renew Virginia Tech's Alumni Mall as a plaza that can close to traffic, with bands of light set flush in the paving.",
+  "reviewNote": "Existing text from the current site. \"Softly- illuminated\" and the spelling of Torgersen were corrected. The client, the year and the four-part story are still to come.",
+  "description": [
+    "Conceptual design for renewal of Virginia Tech's historic Alumni Mall following its bifurcation by Torgersen Bridge completed 2000. The scheme envisions periodic closure of the space to vehicular traffic for conversion to a pedestrian-only, center-campus plaza. Softly illuminated, flush-with-paving light bands inspired by Peter Walker and Partners IBM Makuhari Building, Chiba Prefecture, Japan. The scheme manifests Tech's dedication to innovation while respectful of historic tradition. Perspectives by Peter Giraudeau. Design by Bartenstein while senior landscape architect with Hill Studio."
+  ],
+  "cover": "01",
+  "photos": [
+    {
+      "file": "01",
+      "alt": "Watercolor perspective from above of a tree-lined mall with banded paving leading to a stone building",
+      "caption": "Perspective by Peter Giraudeau.",
+      "credit": ""
+    },
+    {
+      "file": "02",
+      "alt": "Watercolor perspective of people sitting on lawn under trees beside the mall, with stone pylons beyond",
+      "caption": "Perspective by Peter Giraudeau.",
+      "credit": ""
+    },
+    {
+      "file": "03",
+      "alt": "Watercolor perspective at dusk from beneath an arch, with light bands in the paving and figures walking toward the pylons",
+      "caption": "Perspective by Peter Giraudeau.",
+      "credit": ""
+    }
+  ],
+  "drawings": [
+    {
+      "file": "04",
+      "alt": "Plan of the War Memorial court and Alumni Mall: a stone plaza with flush light bands between rows of trees, flanked by gardens",
+      "caption": "Plan"
+    }
+  ],
+  "legacyUrls": [
+    "vtwarmemorial.html"
+  ]
+}

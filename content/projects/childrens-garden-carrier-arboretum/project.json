@@ -1,0 +1,48 @@
+{
+  "title": "Children's Garden, Edith J. Carrier Arboretum",
+  "location": "Harrisonburg, Virginia",
+  "client": "",
+  "year": "",
+  "type": "Campus",
+  "role": "Master plan",
+  "collaborators": [],
+  "status": "draft",
+  "featured": false,
+  "order": 11,
+  "summary": "A master plan for the children's garden at James Madison University's Edith J. Carrier Arboretum in Harrisonburg.",
+  "reviewNote": "Existing text from the current site. The client, the year and the four-part story are still to come.",
+  "description": [
+    "Master plan for children's garden at the JMU's Edith J. Carrier Arboretum in Harrisonburg."
+  ],
+  "cover": "01",
+  "photos": [
+    {
+      "file": "01",
+      "alt": "Small tree-stump house with a shingled roof in the woods, an adult and a child beside it",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "02",
+      "alt": "Climbing structure of upright log sections among trees, with a carved wooden mushroom",
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "file": "03",
+      "alt": "Sculpted salamander on stone ledges among leaf litter and ferns",
+      "caption": "",
+      "credit": ""
+    }
+  ],
+  "drawings": [
+    {
+      "file": "04",
+      "alt": "Colored plan of winding paths linking named play areas under tree canopy, beside a small building",
+      "caption": "Master plan"
+    }
+  ],
+  "legacyUrls": [
+    "ejc.html"
+  ]
+}

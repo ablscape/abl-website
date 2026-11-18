@@ -1,14 +1,15 @@
 {
   "about": "Addresses from the old ablscape.com. The build forwards each one to its new page, or to Work when the project has no new page yet. Do not delete entries.",
   "pages": {
-    "firminfo.html": "/studio/",
-    "arthur.html": "/studio/",
-    "kelly.html": "/studio/",
+    "firminfo.html": "/people/",
+    "arthur.html": "/people/",
+    "kelly.html": "/people/",
     "contact.html": "/contact/",
     "inprogress.html": "/work/",
     "projects_residential.html": "/work/",
     "projects_preservation.html": "/work/",
-    "projects_civic&institutional.html": "/work/"
+    "projects_civic&institutional.html": "/work/",
+    "studio/": "/people/"
   },
   "projects": [
     "614stonewall.html",

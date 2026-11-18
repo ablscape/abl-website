@@ -12,20 +12,20 @@
   "status": "draft",
   "featured": true,
   "order": 1,
-  "summary": "A three-terrace renovation of the square in front of the old Rockbridge County courthouse, opened in April 2026.",
-  "reviewNote": "Text drafted from public sources (Main Street Lexington, The News-Gazette, Rockbridge Report). The firm to correct it and add its own research and intent. The photograph is a placeholder from the current site; new photography to come.",
+  "summary": "The renewal of the square before the old Rockbridge County courthouse: three level terraces, ramps in place of steep steps, and the Veterans Memorial reset in front of the building.",
+  "reviewNote": "Rewritten November 11, 2026 from Main Street Lexington's pages, The News-Gazette and the Rockbridge Report, with the account of Court Day from the firm's meeting that day. The firm to correct it and add its own research and intent. The photograph is a placeholder from the current site; new photography to come.",
   "story": {
     "problem": [
-      "The square in front of the old Rockbridge County courthouse had gathered additions over many years without an overall plan. Its brick paving had heaved and cracked, and steep steps stood at its entrance. Wheelchairs and strollers could not cross it easily."
+      "The square before the old Rockbridge County courthouse stands at the origin of Lexington: the act of 1777 that created the county directed that a town be laid off at the place appointed for holding its court. By 2023, when Main Street Lexington chose the square for renewal, its brick paving had heaved and broken and its changes of level were made by steep steps, so that it could be crossed only with difficulty in a wheelchair or with a stroller. The City's Downtown Enhancement Plan had recommended its renovation."
     ],
     "research": [
-      "In 1777 the General Assembly established Rockbridge County and the town of Lexington to place a court on this ground. On Court Day each month, people from across the county gathered at the square to trade, hear the news and see one another."
+      "ABL began with the history of the ground. The act of 1777 set the county court on the first Tuesday of each month, and Court Day brought the county to town: families from outlying farms came to trade, to hear the news and to see one another, and the square was where they gathered. From histories of Rockbridge County and of Virginia's courthouses the firm took the premise of its design, that the square is first a place of assembly, and that the old courthouse has an architectural presence the space had ceased to acknowledge."
     ],
     "response": [
-      "The design divides the square into three terraces of pervious pavers, with large planting beds on both sides. Ramps replace the steep steps. The Veterans Memorial moved about 25 feet north, to stand directly in front of the courthouse."
+      "The design divides the square into three level terraces of pervious pavers, with large planting beds along both sides, and replaces the steep steps with ramps. The terraces provide even ground for tables, chairs and seven new benches. The Rockbridge County Veterans Memorial was moved about twenty-five feet north to stand directly in front of the courthouse, and the German cannon of the First World War, Lexington's first war memorial, was placed beside it; the move gave the memorial a more prominent position and opened the square for gatherings."
     ],
     "result": [
-      "The square opened on April 30, 2026. At least 13 donors paid for the work, Washington and Lee University and Virginia Military Institute among them."
+      "Construction began in July 2025 under two Rockbridge County contractors, Robert L. Faulkner & Son, Inc. and Garrett Landscapes. The memorial was moved that autumn, before the Veterans Day that marked its twenty-fifth anniversary, and the completed square was dedicated on April 30, 2026. Main Street Lexington led the project, and at least thirteen donors, Washington and Lee University and the Virginia Military Institute among them, contributed to its cost."
     ]
   },
   "cover": "01",
@@ -37,7 +37,9 @@
       "credit": ""
     }
   ],
-  "legacyUrls": ["courthousesquare.html"],
+  "legacyUrls": [
+    "courthousesquare.html"
+  ],
   "sources": [
     "https://www.mainstreetlexington.org/court-house-square.html",
     "https://www.mainstreetlexington.org/court-house-square-faqs.html",

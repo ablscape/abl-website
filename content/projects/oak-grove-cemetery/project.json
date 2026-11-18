@@ -1,0 +1,51 @@
+{
+  "title": "Oak Grove Cemetery Expansion",
+  "location": "Lexington, Virginia",
+  "client": "",
+  "year": "",
+  "type": "Civic",
+  "role": "Schematic design",
+  "collaborators": [
+    "Amanda R. Merchant, 3D graphics"
+  ],
+  "status": "draft",
+  "featured": false,
+  "order": 10,
+  "summary": "A schematic design for a 2.3-acre expansion of Lexington's historic cemetery, with green burial sites, a park setting and a non-denominational sanctuary.",
+  "reviewNote": "Existing text from the current site. That page uses the cemetery's former name, Stonewall Jackson Cemetery; City Council renamed it Oak Grove Cemetery in September 2020, and the firm should confirm the title. The client, the year and the four-part story are still to come.",
+  "description": [
+    "Schematic design for 2.3 acre expansion to Lexington's historic Oak Grove Cemetery providing not only green burial sites but also a passive recreational park setting and non-denominational sanctuary. 3D graphics by Amanda R. Merchant."
+  ],
+  "cover": "04",
+  "photos": [
+    {
+      "file": "01",
+      "alt": "Rendering of a paved walk between flower beds and trees leading to a small white chapel with a red roof",
+      "caption": "3D graphic by Amanda R. Merchant.",
+      "credit": ""
+    },
+    {
+      "file": "02",
+      "alt": "Aerial rendering of curved walks and terraced lawn among trees beside a road",
+      "caption": "3D graphic by Amanda R. Merchant.",
+      "credit": ""
+    },
+    {
+      "file": "03",
+      "alt": "Rendering of an open lawn rising to trees, with the chapel's red roof beyond",
+      "caption": "3D graphic by Amanda R. Merchant.",
+      "credit": ""
+    }
+  ],
+  "drawings": [
+    {
+      "file": "04",
+      "alt": "Hand-colored plan: an open lawn ringed by trees, curved columbarium terrace walls, a chapel, a rain garden and scatter gardens",
+      "caption": "Schematic plan",
+      "lift": 1.2
+    }
+  ],
+  "legacyUrls": [
+    "sjcexpansion.html"
+  ]
+}
